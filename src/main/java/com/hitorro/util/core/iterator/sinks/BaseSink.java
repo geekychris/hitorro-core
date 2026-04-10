@@ -28,9 +28,7 @@ import com.hitorro.util.io.StoreException;
 
 import java.io.IOException;
 
-/**
- *
- */
+
 public abstract class BaseSink<E> implements Sink<E> {
     /**
      * Create an asynchronous put.

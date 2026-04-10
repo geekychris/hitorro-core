@@ -31,9 +31,7 @@ import com.hitorro.util.core.string.StringUtil;
 import com.hitorro.util.json.keys.BasefileProperty;
 import com.hitorro.util.json.keys.BooleanProperty;
 
-/**
- *
- */
+
 public class TLDDictionary {
     public static final BasefileProperty TLDFileKey = new BasefileProperty("tlddictionary.filename", "filename of tld dictionary", "file://${ht_data}/cctld/cctld.txt");
     public static final BooleanProperty LogMissing = new BooleanProperty("tlddictionary.logmissing", "", false);

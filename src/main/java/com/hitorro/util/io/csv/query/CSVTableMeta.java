@@ -29,9 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- *
- */
+
 public class CSVTableMeta {
     private List<CSVTableMetaItem> cols = new ArrayList();
     private Map<String, CSVTableMetaItem> map = new HashMap();

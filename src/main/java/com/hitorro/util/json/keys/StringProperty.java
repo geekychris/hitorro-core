@@ -24,9 +24,7 @@ package com.hitorro.util.json.keys;
 import com.hitorro.util.json.keys.mappers.JsonNodeToString;
 import com.hitorro.util.json.keys.propaccess.Propaccess;
 
-/**
- *
- */
+
 public class StringProperty extends BaseMappingProperty<String> {
     public StringProperty(String path, String description, String defaultValue) {
         super(new Propaccess(path), description, defaultValue, JsonNodeToString.instance);

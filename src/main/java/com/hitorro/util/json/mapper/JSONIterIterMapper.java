@@ -28,9 +28,7 @@ import com.hitorro.util.json.JSONElement;
 import com.hitorro.util.json.JSONType;
 import com.hitorro.util.json.iterators.JSONIterFromJSONList;
 
-/**
- *
- */
+
 public class JSONIterIterMapper extends BaseMapper<JSONElement, AbstractIterator<JSONElement>> {
     public static final JSONIterIterMapper jsonIterIterMapper = new JSONIterIterMapper();
 

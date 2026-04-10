@@ -23,9 +23,7 @@ package com.hitorro.util.testframework;
 
 import java.util.HashMap;
 
-/**
- *
- */
+
 public enum RunLevel {
     None("none"), Smoke("smoke"), Full("full"), All("all"), Stress("stress"), Never("never");
 

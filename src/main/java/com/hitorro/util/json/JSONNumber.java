@@ -27,9 +27,7 @@ import com.hitorro.util.json.visitors.JSONVisitor;
 
 import java.io.IOException;
 
-/**
- *
- */
+
 public class JSONNumber extends JSONElement<Number> {
     private Number s;
 

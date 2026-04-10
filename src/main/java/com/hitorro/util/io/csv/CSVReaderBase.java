@@ -28,9 +28,7 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
-/**
- *
- */
+
 public class CSVReaderBase {
     protected BufferedReader m_reader = null;
     protected String[] m_colNames = null;

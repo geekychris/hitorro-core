@@ -23,9 +23,7 @@ package com.hitorro.util.basefile.fs.configfactories;
 
 import com.hitorro.util.basefile.fs.file.FileFileSystem;
 
-/**
- *
- */
+
 public class FileConfig extends FileSystemConfig {
     String path;
 

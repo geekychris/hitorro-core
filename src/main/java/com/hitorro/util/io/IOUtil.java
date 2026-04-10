@@ -42,16 +42,18 @@ public class IOUtil {
      * @throws UnsupportedEncodingException
      */
     public static List<String> getTailStringListFromFile(int limit, InputStream is) {
-        List<String> list = new ArrayList();
+        // Use a circular buffer to keep only the last 'limit' lines,
+        // avoiding loading the entire file into memory.
+        java.util.LinkedList<String> buffer = new java.util.LinkedList<>();
 
         Iterator<String> iter = IOUtil.getLineReaderIteratorFromStream(is);
         while (iter.hasNext()) {
-            list.add(iter.next());
+            buffer.add(iter.next());
+            if (buffer.size() > limit) {
+                buffer.removeFirst();
+            }
         }
-        if (list.size() < limit) {
-            return list;
-        }
-        return list.subList(list.size() - 1 - limit, list.size() - 1);
+        return new ArrayList<>(buffer);
     }
 
     public static final Iterator<String> getLineReaderIteratorFromStream(

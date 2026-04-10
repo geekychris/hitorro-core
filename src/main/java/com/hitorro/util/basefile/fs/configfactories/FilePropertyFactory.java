@@ -31,9 +31,7 @@ import com.hitorro.util.json.keys.StringProperty;
 import java.io.File;
 import java.io.IOException;
 
-/**
- *
- */
+
 public class FilePropertyFactory extends BaseFilePropertyFactory<FileConfig, FileFile> {
     private static final String FS = "file";
     public static StringProperty PathKey = new StringProperty("path", "path to file root", null);

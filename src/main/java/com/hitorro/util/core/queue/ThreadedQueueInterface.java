@@ -23,9 +23,7 @@ package com.hitorro.util.core.queue;
 
 import java.util.concurrent.BlockingQueue;
 
-/**
- *
- */
+
 public interface ThreadedQueueInterface<E> extends BlockingQueue<E> {
     boolean isEmpty();
 

@@ -28,9 +28,7 @@ import com.hitorro.util.json.keys.propaccess.PropaccessError;
 
 import java.text.ParseException;
 
-/**
- *
- */
+
 public class CommandArgsMapper extends BaseMapper<String, ObjectNode> {
     public static final CommandArgsMapper instance = new CommandArgsMapper();
 

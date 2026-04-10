@@ -25,9 +25,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.hitorro.util.basefile.fs.BaseFile;
 import com.hitorro.util.core.HTAssert;
 
-/**
- *
- */
+
 public class FileNameContains extends FileFilterBase {
     private String str;
     private boolean ignoreCase;

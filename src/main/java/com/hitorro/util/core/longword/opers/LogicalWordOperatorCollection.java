@@ -22,9 +22,7 @@
 package com.hitorro.util.core.longword.opers;
 
 
-/**
- *
- */
+
 
 public abstract class LogicalWordOperatorCollection implements LongOperator {
     protected LongOperator m_constraints[];

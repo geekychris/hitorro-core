@@ -25,9 +25,7 @@ import com.hitorro.util.core.Log;
 
 import java.util.Iterator;
 
-/**
- *
- */
+
 public class SurpressException<INITER, OUTITER> implements NestingIteratorErrorHandler<INITER, OUTITER> {
 
     @Override

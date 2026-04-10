@@ -26,9 +26,7 @@ import com.hitorro.util.json.visitors.JSONVisitor;
 
 import java.io.IOException;
 
-/**
- *
- */
+
 public class JSONNull extends JSONElement<Object> {
     public static final JSONNull me = new JSONNull();
 

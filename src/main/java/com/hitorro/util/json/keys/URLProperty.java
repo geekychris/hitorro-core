@@ -26,9 +26,7 @@ import com.hitorro.util.json.keys.propaccess.Propaccess;
 
 import java.net.URL;
 
-/**
- *
- */
+
 public class URLProperty extends BaseMappingProperty<URL> {
     public URLProperty(String path, String description, URL defaultValue) {
         super(new Propaccess(path), description, defaultValue, JsonNodeToUrl.instance);

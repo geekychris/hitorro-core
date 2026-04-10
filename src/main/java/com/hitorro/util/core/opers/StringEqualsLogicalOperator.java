@@ -24,9 +24,7 @@ package com.hitorro.util.core.opers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.hitorro.util.core.HTAssert;
 
-/**
- *
- */
+
 public class StringEqualsLogicalOperator implements HTPredicate<String> {
     private boolean m_ignoreCase;
     private String term;

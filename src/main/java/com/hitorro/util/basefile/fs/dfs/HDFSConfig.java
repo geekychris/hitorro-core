@@ -24,9 +24,7 @@ package com.hitorro.util.basefile.fs.dfs;
 import com.hitorro.util.basefile.fs.BaseFileSystem;
 import com.hitorro.util.basefile.fs.configfactories.FileSystemConfig;
 
-/**
- *
- */
+
 public class HDFSConfig extends FileSystemConfig {
     String hdfsURI;
     String rootPath;

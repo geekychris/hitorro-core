@@ -24,9 +24,7 @@ package com.hitorro.util.core.classes;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.hitorro.util.core.opers.HTPredicate;
 
-/**
- *
- */
+
 public class MatchClass implements HTPredicate<Class> {
     private Class c;
 

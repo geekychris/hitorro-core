@@ -25,9 +25,7 @@ import com.hitorro.util.core.iterator.mappers.BaseMapper;
 import com.hitorro.util.json.JSONElement;
 import com.hitorro.util.json.JSONType;
 
-/**
- *
- */
+
 public class JSONFieldToStringMapper extends BaseMapper<JSONElement, String> {
     private String field;
 

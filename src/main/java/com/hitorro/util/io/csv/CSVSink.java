@@ -38,9 +38,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
+
 public class CSVSink extends BaseSink<String[]> {
     public static final BasefileProperty OutputFileKey = new BasefileProperty("file", "outputfile using basefile syntax");
     public static final StringListFromDelimitedKey ColumnsKey = new StringListFromDelimitedKey("columns", "", ",", null);

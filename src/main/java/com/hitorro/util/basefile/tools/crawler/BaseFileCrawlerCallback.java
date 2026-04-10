@@ -26,9 +26,7 @@ import com.hitorro.util.core.iterator.sinks.Sink;
 
 import java.io.IOException;
 
-/**
- *
- */
+
 public abstract class BaseFileCrawlerCallback implements Sink<BaseFile> {
     @Override
     public boolean stop() throws IOException {

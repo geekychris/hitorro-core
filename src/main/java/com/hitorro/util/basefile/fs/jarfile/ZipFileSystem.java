@@ -24,9 +24,7 @@ package com.hitorro.util.basefile.fs.jarfile;
 import com.hitorro.util.basefile.fs.BaseFile;
 import com.hitorro.util.basefile.fs.BaseFileSystem;
 
-/**
- *
- */
+
 public class ZipFileSystem extends BaseFileSystem<ZipFileFile, ZipFileSystem> {
 
     @Override

@@ -25,9 +25,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import gnu.trove.map.hash.TLongObjectHashMap;
 import com.hitorro.util.basefile.fs.BaseFile;
 
-/**
- *
- */
+
 public abstract class LongObjectBaseFileStateSink<E, S> extends BaseFileStatsSink<E> {
     protected TLongObjectHashMap<S> map;
 

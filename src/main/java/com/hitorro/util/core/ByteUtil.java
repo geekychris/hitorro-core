@@ -21,9 +21,7 @@
  */
 package com.hitorro.util.core;
 
-/**
- *
- */
+
 public class ByteUtil {
     public static final int Mask = 0xff;
 

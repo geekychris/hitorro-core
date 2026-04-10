@@ -35,9 +35,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.zip.*;
 
-/**
- *
- */
+
 public class DictCompressor implements Compressor {
     public static final FileProperty DictPath = new FileProperty("compression.dictionary.dir", "", "${HT_DATA}/compression_dictionaries");
     private int version;

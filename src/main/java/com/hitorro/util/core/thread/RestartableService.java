@@ -25,9 +25,7 @@ import com.hitorro.util.core.Log;
 
 import java.util.HashMap;
 
-/**
- *
- */
+
 public class RestartableService {
     private static HashMap<String, EnhancedThreadGroup> s_groups = new HashMap<String, EnhancedThreadGroup>();
     private int m_restartCount;

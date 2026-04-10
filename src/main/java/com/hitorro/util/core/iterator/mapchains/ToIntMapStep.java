@@ -24,9 +24,7 @@ package com.hitorro.util.core.iterator.mapchains;
 import com.hitorro.util.core.iterator.mappers.BaseMapper;
 
 
-/**
- *
- */
+
 public class ToIntMapStep extends BaseMapper<String, Integer> {
     public Class inputType() {
         return String.class;

@@ -25,9 +25,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.hitorro.util.core.opers.HTPredicate;
 import com.hitorro.util.json.JSONElement;
 
-/**
- *
- */
+
 public class JSONFieldExists implements HTPredicate<JSONElement> {
     private String field;
 

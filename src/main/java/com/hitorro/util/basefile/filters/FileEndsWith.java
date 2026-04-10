@@ -27,9 +27,7 @@ import com.hitorro.util.basefile.fs.CompressionType;
 import com.hitorro.util.core.HTAssert;
 import com.hitorro.util.core.string.StringUtil;
 
-/**
- *
- */
+
 public class FileEndsWith extends FileFilterBase {
     private String endsWith;
     private boolean ignoreCase;

@@ -27,9 +27,7 @@ import com.hitorro.util.core.Log;
 import java.io.IOException;
 import java.io.OutputStream;
 
-/**
- *
- */
+
 public class JSONSinkAsArray extends JsonSink {
     public JSONSinkAsArray(OutputStream os) {
         super(os);

@@ -21,9 +21,7 @@
  */
 package com.hitorro.util.core.iterator.mappers;
 
-/**
- *
- */
+
 public class StringToDoubleMapper extends BaseMapper<String, Double> {
     public Class inputType() {
         return String.class;

@@ -28,9 +28,7 @@ import org.w3c.dom.Node;
 
 import java.net.URL;
 
-/**
- *
- */
+
 public class DumpTree extends HTMLTreeWalker<DumpTreeCollector> {
     @Override
     public void processNode(final String name, final Node child, final Document doc, final URL sourceUrl, final DumpTreeCollector c) {

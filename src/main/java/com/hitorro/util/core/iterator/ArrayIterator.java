@@ -21,9 +21,7 @@
  */
 package com.hitorro.util.core.iterator;
 
-/**
- *
- */
+
 public class ArrayIterator<E> extends BaseArrayIterator<E> {
     public ArrayIterator(E e[], int maxPos) {
         this.e = e;

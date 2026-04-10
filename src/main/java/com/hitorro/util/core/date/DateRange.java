@@ -28,9 +28,7 @@ import com.hitorro.util.core.string.StringUtil;
 import java.text.ParseException;
 import java.util.Date;
 
-/**
- *
- */
+
 public class DateRange {
 
     private DateResolution res;

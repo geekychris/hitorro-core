@@ -29,9 +29,7 @@ import javax.management.remote.JMXServiceURL;
 import java.lang.management.ManagementFactory;
 import java.net.MalformedURLException;
 
-/**
- *
- */
+
 public class JMXUtil {
     private static final String FMTString = "service:jmx:rmi:///jndi/rmi://%s:/jmxrmi";
 

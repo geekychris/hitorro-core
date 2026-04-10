@@ -24,9 +24,7 @@ package com.hitorro.util.core;
 import java.util.Date;
 import java.util.HashMap;
 
-/**
- *
- */
+
 public enum CompOperEnum {
     Equals("=") {
         public boolean isTrue(double d1, double d2) {

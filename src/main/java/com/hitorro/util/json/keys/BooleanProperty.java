@@ -25,9 +25,7 @@ package com.hitorro.util.json.keys;
 import com.hitorro.util.json.keys.mappers.JsonNodeToBoolean;
 import com.hitorro.util.json.keys.propaccess.Propaccess;
 
-/**
- *
- */
+
 public class BooleanProperty extends BaseMappingProperty<Boolean> {
     public BooleanProperty(String path, String description, Boolean defaultValue) {
         super(new Propaccess(path), description, defaultValue, JsonNodeToBoolean.instance);

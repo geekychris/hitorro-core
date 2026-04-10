@@ -26,9 +26,7 @@ import com.hitorro.util.core.thread.TimerCallback;
 
 import java.io.IOException;
 
-/**
- *
- */
+
 public class Watchdog implements TimerCallback {
     private MaturingBucketWriter mbw;
 

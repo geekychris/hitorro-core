@@ -25,9 +25,7 @@ import com.hitorro.util.basefile.fs.BaseFile;
 import com.hitorro.util.core.iterator.sinks.BaseSink;
 
 
-/**
- *
- */
+
 public abstract class BaseFileStatsSink<E> extends BaseSink<E> {
     protected BaseFile outputFile;
 

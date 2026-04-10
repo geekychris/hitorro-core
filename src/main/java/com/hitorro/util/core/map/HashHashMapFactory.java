@@ -21,9 +21,7 @@
  */
 package com.hitorro.util.core.map;
 
-/**
- *
- */
+
 public interface HashHashMapFactory<LAYER1TYPE extends Object, LAYER2TYPE extends Object, PAYLOAD extends Object> {
     public PAYLOAD create(LAYER1TYPE m, LAYER2TYPE n);
 

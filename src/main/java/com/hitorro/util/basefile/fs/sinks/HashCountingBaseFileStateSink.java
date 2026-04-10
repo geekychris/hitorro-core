@@ -29,9 +29,7 @@ import com.hitorro.util.io.StoreException;
 
 import java.io.IOException;
 
-/**
- *
- */
+
 public abstract class HashCountingBaseFileStateSink<E> extends BaseFileStatsSink<E> {
     protected TObjectIntHashMap<E> set = new TObjectIntHashMap();
 

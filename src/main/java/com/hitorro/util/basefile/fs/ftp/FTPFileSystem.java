@@ -31,9 +31,7 @@ import org.apache.commons.net.ftp.FTPReply;
 
 import java.io.IOException;
 
-/**
- *
- */
+
 public class FTPFileSystem extends BaseFileSystem<FileTranProtFile, FTPFileSystem> {
     private FTPClient client = new FTPClient();
     private FTPConfig config;

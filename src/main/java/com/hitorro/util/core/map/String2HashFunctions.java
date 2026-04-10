@@ -25,9 +25,7 @@ import com.hitorro.util.core.hash.FPHash64;
 import com.hitorro.util.core.iterator.mappers.BaseMapper;
 import com.hitorro.util.core.string.StringUtil;
 
-/**
- *
- */
+
 public class String2HashFunctions {
     public static BaseMapper<String, Long> string2hash = new BaseMapper<String, Long>() {
         @Override

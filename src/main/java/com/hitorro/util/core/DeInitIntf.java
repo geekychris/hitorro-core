@@ -21,9 +21,7 @@
  */
 package com.hitorro.util.core;
 
-/**
- *
- */
+
 public interface DeInitIntf {
     public void deinit();
 }

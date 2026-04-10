@@ -27,9 +27,7 @@ import com.hitorro.util.json.JSONList;
 
 import java.util.List;
 
-/**
- *
- */
+
 public class JSONIterFromJSONList extends AbstractIterator<JSONElement> {
     private List<JSONElement> list;
     private int pos = 0;

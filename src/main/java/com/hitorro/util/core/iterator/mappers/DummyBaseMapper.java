@@ -21,9 +21,7 @@
  */
 package com.hitorro.util.core.iterator.mappers;
 
-/**
- *
- */
+
 public class DummyBaseMapper<I, O> extends BaseMapper<I, O> {
     @Override
     public O apply(final I e) {

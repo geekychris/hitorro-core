@@ -26,9 +26,7 @@ import com.hitorro.util.io.largedata.BaseFileAccessingObjectFactory;
 import java.io.IOException;
 import java.util.HashMap;
 
-/**
- *
- */
+
 public class HashWrappedArrayBucketWriterContainer<T> extends ArrayBucketWriterContainer<T> {
     private HashMap<T, T> map = new HashMap();
 

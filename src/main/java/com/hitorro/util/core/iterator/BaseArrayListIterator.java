@@ -23,9 +23,7 @@ package com.hitorro.util.core.iterator;
 
 import java.util.List;
 
-/**
- *
- */
+
 public class BaseArrayListIterator<E> extends AbstractIterator<E> {
     protected List<E> e;
     protected int pos = 0;

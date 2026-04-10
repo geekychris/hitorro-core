@@ -24,9 +24,7 @@ package com.hitorro.util.basefile.fs.jarfile;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- *
- */
+
 public class ZipInputWrapper extends InputStream {
     private InputStream m_is;
 

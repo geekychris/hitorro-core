@@ -25,9 +25,7 @@ import com.hitorro.util.core.classes.ClassAnoUtil;
 import com.hitorro.util.core.classes.MatchClass;
 import com.hitorro.util.core.string.Fmt;
 
-/**
- *
- */
+
 public class TestCaseWrapper {
     public static final MatchClass mc = new MatchClass(HTTest.class);
     public HTTest testDef;

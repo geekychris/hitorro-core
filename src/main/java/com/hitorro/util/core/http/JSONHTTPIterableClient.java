@@ -25,9 +25,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.hitorro.util.basefile.tools.BaseFileUtil;
 import com.hitorro.util.io.FileUtil;
 
-/**
- *
- */
+
 public class JSONHTTPIterableClient extends HTTPIterableClient<JsonNode, JsonNode> {
     public JSONHTTPIterableClient(String name, String password) {
         super(name, password, FileUtil.inputstream2JacksonjsonReader, BaseFileUtil.os2JJsonSink);

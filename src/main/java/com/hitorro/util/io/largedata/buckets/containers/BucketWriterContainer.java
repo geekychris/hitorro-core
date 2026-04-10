@@ -27,9 +27,7 @@ import com.hitorro.util.io.largedata.buckets.ContainerFlushNotification;
 
 import java.io.IOException;
 
-/**
- *
- */
+
 public interface BucketWriterContainer<T> {
     void setBucketWriter(BucketWriter<T> writer);
 

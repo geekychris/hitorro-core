@@ -27,9 +27,7 @@ import com.hitorro.util.io.largedata.buckets.containers.BucketWriterContainer;
 import java.io.IOException;
 import java.util.List;
 
-/**
- *
- */
+
 public interface BucketWriter<T> extends Sink<T> {
     List<T> writeList(List<T> list) throws IOException;
 

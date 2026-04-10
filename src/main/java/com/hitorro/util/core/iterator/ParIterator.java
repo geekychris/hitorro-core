@@ -29,9 +29,7 @@ import com.hitorro.util.core.thread.farm.MapperFarmCommand;
 import java.util.Iterator;
 import java.util.function.Function;
 
-/**
- *
- */
+
 public class ParIterator<IN, OUT> extends AbstractIterator<OUT> implements Runnable {
     private Iterator<IN> iter;
     private Iterator<OUT> currIter;

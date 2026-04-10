@@ -24,9 +24,7 @@ package com.hitorro.util.io.csv.query;
 import com.hitorro.util.core.UtilDataType;
 import com.hitorro.util.core.iterator.mappers.BaseMapper;
 
-/**
- *
- */
+
 public class CSVTableMetaItem {
     private String field;
     private UtilDataType dt;

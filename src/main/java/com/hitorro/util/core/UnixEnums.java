@@ -21,9 +21,7 @@
  */
 package com.hitorro.util.core;
 
-/**
- *
- */
+
 public class UnixEnums {
 
     public enum SystemResources {

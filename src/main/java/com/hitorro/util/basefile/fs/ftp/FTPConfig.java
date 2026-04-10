@@ -25,9 +25,7 @@ import com.hitorro.util.basefile.fs.configfactories.FileSystemConfig;
 
 import java.io.IOException;
 
-/**
- *
- */
+
 public class FTPConfig extends FileSystemConfig<FTPFileSystem> {
     String host;
     String userName;

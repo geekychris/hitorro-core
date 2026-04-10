@@ -24,9 +24,7 @@ package com.hitorro.util.json.keys.mappers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.hitorro.util.core.iterator.Mapper;
 
-/**
- *
- */
+
 public class JsonNodeToString implements Mapper<JsonNode, String> {
     public static JsonNodeToString instance = new JsonNodeToString();
 

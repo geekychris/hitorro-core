@@ -29,9 +29,7 @@ import com.hitorro.util.io.largedata.compressedstreams.RAMInputStream;
 
 import java.io.IOException;
 
-/**
- *
- */
+
 public class CompressedPointerMapQuery {
     protected TLongIntHashMap longHM;
     protected TIntIntHashMap intHM;

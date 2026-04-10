@@ -24,9 +24,7 @@ package com.hitorro.util.urlparser;
 import com.hitorro.util.core.events.cache.SingletonCache;
 import com.hitorro.util.core.iterator.mappers.BaseMapper;
 
-/**
- *
- */
+
 public class TLDDictionarySingleton extends BaseMapper<Object, TLDDictionary> {
     public static final String Eventname = "TLDDictionarySingleton";
 

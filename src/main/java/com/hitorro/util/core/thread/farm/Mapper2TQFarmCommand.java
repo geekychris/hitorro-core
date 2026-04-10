@@ -28,9 +28,7 @@ import com.hitorro.util.core.opers.HTPredicate;
 
 import java.io.IOException;
 
-/**
- *
- */
+
 public class Mapper2TQFarmCommand<InputType, IntermediateType, OutputType, ThreadDateType> extends FarmCommand<InputType, OutputType, ThreadDateType> {
     private Mapper<InputType, AbstractIterator<IntermediateType>> iterMapper;
     private Mapper<IntermediateType, OutputType> mapper;

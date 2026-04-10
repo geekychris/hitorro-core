@@ -23,9 +23,7 @@ package com.hitorro.util.core.iterator;
 
 import java.io.IOException;
 
-/**
- *
- */
+
 public class NullIterator<T> extends AbstractIterator<T> {
     public static final NullIterator me = new NullIterator();
 

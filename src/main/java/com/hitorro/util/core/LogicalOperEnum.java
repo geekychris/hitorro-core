@@ -23,9 +23,7 @@ package com.hitorro.util.core;
 
 import java.util.HashMap;
 
-/**
- *
- */
+
 public enum LogicalOperEnum {
     Xor("^") {
         @Override

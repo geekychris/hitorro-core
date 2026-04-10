@@ -21,9 +21,7 @@
  */
 package com.hitorro.util.core.iterator.mappers;
 
-/**
- *
- */
+
 public class StringToShortMapper extends BaseMapper<String, Short> {
     public Class inputType() {
         return String.class;

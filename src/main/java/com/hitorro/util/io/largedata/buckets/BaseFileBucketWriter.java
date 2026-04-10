@@ -34,9 +34,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- *
- */
+
 public class BaseFileBucketWriter<T> extends BaseBucketWriter<T> {
     protected BaseFile m_directory;
     protected String m_extension;

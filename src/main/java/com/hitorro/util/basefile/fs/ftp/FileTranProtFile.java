@@ -45,9 +45,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
 
-/**
- *
- */
+
 public class FileTranProtFile extends BaseFile<FileTranProtFile, FTPFileSystem> implements Comparable {
     private FTPFileSystem provider;
     private FTPFile file;

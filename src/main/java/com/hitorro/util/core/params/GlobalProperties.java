@@ -25,24 +25,45 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.util.function.Supplier;
+
 /**
  * Static holder for the global properties JsonNode.
  * This replaces JVSProperties for modules that cannot depend on the jsontypesystem module.
  * The properties are typically set at startup by the application layer.
+ *
+ * A property provider can be registered (e.g., by JVSProperties) to supply properties
+ * when the local defaultProperties hasn't been explicitly set.
  */
 public class GlobalProperties {
     private static JsonNode defaultProperties = JsonNodeFactory.instance.objectNode();
+    private static volatile Supplier<JsonNode> propertyProvider;
 
     public synchronized static void setDefaultProperties(JsonNode props) {
         defaultProperties = props;
     }
 
+    /**
+     * Register a provider that supplies the properties JsonNode.
+     * This allows JVSProperties (in jsontypesystem) to bridge its properties
+     * to hitorro-core without a compile dependency.
+     */
+    public static void setPropertyProvider(Supplier<JsonNode> provider) {
+        propertyProvider = provider;
+    }
+
     public static JsonNode getProperties() {
+        if (propertyProvider != null) {
+            JsonNode provided = propertyProvider.get();
+            if (provided != null) {
+                return provided;
+            }
+        }
         return defaultProperties;
     }
 
     public static String resolveJsonVariable(String value) {
-        return PropertiesUtil.resolveJsonVariable(value, true, null, defaultProperties);
+        return PropertiesUtil.resolveJsonVariable(value, true, null, getProperties());
     }
 
     /**

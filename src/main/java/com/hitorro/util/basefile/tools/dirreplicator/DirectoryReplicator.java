@@ -28,9 +28,7 @@ import com.hitorro.util.core.opers.HTPredicate;
 
 import java.io.IOException;
 
-/**
- *
- */
+
 public class DirectoryReplicator {
     public static String CopyInfoFile = "copyinfofile.ser";
     public static String MachineInfo = "machine.txt";

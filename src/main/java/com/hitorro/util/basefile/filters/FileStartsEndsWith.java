@@ -24,9 +24,7 @@ package com.hitorro.util.basefile.filters;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.hitorro.util.basefile.fs.BaseFile;
 
-/**
- *
- */
+
 public class FileStartsEndsWith extends FileFilterBase {
     private String matchMe;
     private boolean ignoreCase;

@@ -21,9 +21,7 @@
  */
 package com.hitorro.util.core.iterator.mappers;
 
-/**
- *
- */
+
 public class BaseMappers {
     public static final BaseMapper<String, Integer> S2I = new StringToIntMapper();
     public static final BaseMapper<String, Long> S2L = new StringToLongMapper();

@@ -27,9 +27,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.List;
 
-/**
- *
- */
+
 public class MemberVarAnnotations extends BaseAnnotation {
     private Field f;
 

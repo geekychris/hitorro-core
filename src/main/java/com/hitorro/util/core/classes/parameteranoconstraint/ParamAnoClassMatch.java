@@ -26,9 +26,7 @@ import com.hitorro.util.core.opers.HTPredicate;
 
 import java.lang.annotation.Annotation;
 
-/**
- *
- */
+
 public class ParamAnoClassMatch implements HTPredicate<Annotation> {
     private Class classToMatch;
 

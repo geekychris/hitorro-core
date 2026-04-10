@@ -24,9 +24,7 @@ package com.hitorro.util.core.iterator.sinks;
 import java.io.IOException;
 import java.util.Iterator;
 
-/**
- *
- */
+
 public interface IteratorSink<T> {
     /**
      * Set the iterator to pull from.

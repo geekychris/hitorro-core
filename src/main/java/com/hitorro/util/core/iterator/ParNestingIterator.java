@@ -29,9 +29,7 @@ import com.hitorro.util.core.thread.farm.Mapper2TQFarmCommand;
 
 import java.util.Iterator;
 
-/**
- *
- */
+
 public class ParNestingIterator<INITER, INTERMEDIATE, OUTITER> extends AbstractIterator<OUTITER> implements Runnable {
     private Iterator<INITER> iter;
     private Iterator<OUTITER> currIter;

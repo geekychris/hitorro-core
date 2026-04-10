@@ -32,9 +32,7 @@ import java.io.InputStream;
 import java.io.Reader;
 
 
-/**
- *
- */
+
 public class BaseJsonIterator extends AbstractIterator<JsonNode> {
     private final static JsonFactory factory = new JsonFactory();
 

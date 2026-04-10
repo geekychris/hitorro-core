@@ -24,9 +24,7 @@ package com.hitorro.util.basefile.tools.transactiondir;
 import com.hitorro.util.basefile.fs.BaseFile;
 import com.hitorro.util.core.string.StringUtil;
 
-/**
- *
- */
+
 public class TransactingFileEntry implements Comparable<TransactingFileEntry> {
     private BaseFile bf;
     private String namePart;

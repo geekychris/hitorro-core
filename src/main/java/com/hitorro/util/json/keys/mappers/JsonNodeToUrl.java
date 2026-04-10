@@ -28,9 +28,7 @@ import com.hitorro.util.core.params.PropertiesUtil;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-/**
- *
- */
+
 public class JsonNodeToUrl implements Mapper<JsonNode, URL> {
     public static JsonNodeToUrl instance = new JsonNodeToUrl();
 

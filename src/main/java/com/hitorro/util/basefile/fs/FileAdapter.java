@@ -26,9 +26,7 @@ import com.hitorro.util.basefile.fs.file.FileFileSystem;
 
 import java.io.File;
 
-/**
- *
- */
+
 public class FileAdapter implements ProtocolAdapter<FileFile> {
 
     private static final String FS = "file";

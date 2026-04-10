@@ -21,9 +21,7 @@
  */
 package com.hitorro.util.core.iterator.mappers;
 
-/**
- *
- */
+
 public class StringToIntMapper extends BaseMapper<String, Integer> {
     public Class inputType() {
         return String.class;

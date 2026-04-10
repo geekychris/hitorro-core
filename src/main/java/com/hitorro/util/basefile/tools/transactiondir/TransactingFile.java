@@ -26,9 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- *
- */
+
 public class TransactingFile {
     private List<TransactingFileEntry> entries = new ArrayList();
     private TransactingFileEntry entry;

@@ -23,9 +23,7 @@ package com.hitorro.util.io.csv.query;
 
 import com.hitorro.util.basefile.fs.BaseFile;
 
-/**
- *
- */
+
 public class MatrixedCorrelationCoefficientCalculator {
     private BaseFile baseFile;
 

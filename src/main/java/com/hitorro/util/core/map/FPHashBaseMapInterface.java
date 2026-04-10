@@ -27,9 +27,7 @@ import gnu.trove.map.hash.TLongLongHashMap;
 import com.hitorro.util.core.longword.WordBits;
 import com.hitorro.util.core.longword.opers.LongOperator;
 
-/**
- *
- */
+
 public interface FPHashBaseMapInterface {
     TLongLongHashMap getMap(int layer);
 

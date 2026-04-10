@@ -26,9 +26,7 @@ import com.hitorro.util.basefile.fs.BaseFile;
 import com.hitorro.util.core.HTAssert;
 import com.hitorro.util.core.string.StringUtil;
 
-/**
- *
- */
+
 public class FileStartsWith extends FileFilterBase {
     private String startsWith;
     private boolean ignoreCase;

@@ -28,9 +28,7 @@ import com.hitorro.util.core.iterator.sinks.Sink;
 
 import java.io.IOException;
 
-/**
- *
- */
+
 public class CompressedIOSinkMapper<T extends CompressedStreamIO> implements Mapper<BaseFile, Sink<T>> {
     private BaseFileAccessingObjectFactory factory;
 

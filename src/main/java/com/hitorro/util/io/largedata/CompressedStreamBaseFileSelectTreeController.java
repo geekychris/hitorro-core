@@ -27,9 +27,7 @@ import com.hitorro.util.io.largedata.iterator.BaseFileSelectTreeController;
 
 import java.io.IOException;
 
-/**
- *
- */
+
 public class CompressedStreamBaseFileSelectTreeController<T extends CompressedStreamIO> extends BaseFileSelectTreeController {
     protected BaseFileAccessingObjectFactory<T> factory;
 

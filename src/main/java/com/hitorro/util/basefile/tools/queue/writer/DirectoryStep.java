@@ -34,9 +34,7 @@ import com.hitorro.util.io.largedata.BaseFileAccessingObjectFactory;
 
 import java.io.IOException;
 
-/**
- *
- */
+
 public abstract class DirectoryStep<E> extends BasePivot implements Runnable, DirectoryStepInterface {
     protected int sleepBetweenPoll = 60;
     protected Object notificationObject = new Object();

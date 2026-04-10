@@ -26,9 +26,7 @@ import com.hitorro.util.core.string.StringUtil;
 
 import java.util.Comparator;
 
-/**
- *
- */
+
 public class FileComparator implements Comparator<BaseFile> {
     public int compare(BaseFile o1, BaseFile o2) {
         long o1l = StringUtil.getLongNumberFromText(o1.getName());

@@ -21,9 +21,7 @@
  */
 package com.hitorro.util.core.iterator;
 
-/**
- *
- */
+
 public abstract class BaseArrayIterator<E> extends AbstractIterator<E> {
     protected E e[];
     protected int pos = 0;

@@ -26,9 +26,7 @@ import com.hitorro.util.basefile.fs.configfactories.BaseFilePropertyFactory;
 import com.hitorro.util.basefile.fs.configfactories.FileSystemConfig;
 import com.hitorro.util.json.keys.StringProperty;
 
-/**
- *
- */
+
 public class FTPPropertyFactory extends BaseFilePropertyFactory<FTPConfig, FileTranProtFile> {
     public static final String FTP = "ftp";
 

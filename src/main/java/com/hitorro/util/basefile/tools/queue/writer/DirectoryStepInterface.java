@@ -23,9 +23,7 @@ package com.hitorro.util.basefile.tools.queue.writer;
 
 import com.hitorro.util.basefile.fs.BaseFile;
 
-/**
- *
- */
+
 public interface DirectoryStepInterface {
     void notifyMeOfWork();
 

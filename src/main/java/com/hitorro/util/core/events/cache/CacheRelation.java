@@ -21,9 +21,7 @@
  */
 package com.hitorro.util.core.events.cache;
 
-/**
- *
- */
+
 public class CacheRelation {
     private Cache rootCache;
     private Cache derivedCache;

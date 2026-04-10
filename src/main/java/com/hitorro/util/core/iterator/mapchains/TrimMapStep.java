@@ -23,9 +23,7 @@ package com.hitorro.util.core.iterator.mapchains;
 
 import com.hitorro.util.core.iterator.mappers.BaseMapper;
 
-/**
- *
- */
+
 public class TrimMapStep extends BaseMapper<String, String> {
     public Class inputType() {
         return String.class;

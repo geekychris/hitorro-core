@@ -29,9 +29,7 @@ import com.hitorro.util.io.largedata.compressedstreams.COutputStream;
 
 import java.io.IOException;
 
-/**
- *
- */
+
 public class CompressedIOSink<T extends CompressedStreamIO> implements Sink<T> {
 
     private COutputStream m_os;

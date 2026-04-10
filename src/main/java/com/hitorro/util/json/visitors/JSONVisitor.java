@@ -25,9 +25,7 @@ import com.hitorro.util.core.iterator.JsonValueSource;
 
 import java.io.IOException;
 
-/**
- *
- */
+
 public interface JSONVisitor {
     /**
      * @param elem

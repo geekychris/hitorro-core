@@ -24,9 +24,7 @@ package com.hitorro.util.core.iterator;
 import java.io.IOException;
 import java.util.Iterator;
 
-/**
- *
- */
+
 public class NullRemovingIterator<E> extends AbstractIterator<E> {
     private Iterator<E> t;
     private boolean first = true;

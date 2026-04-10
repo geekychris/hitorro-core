@@ -31,9 +31,7 @@ import java.io.IOException;
 import java.io.Reader;
 
 
-/**
- *
- */
+
 public class CSVIteratorImpl extends AbstractIterator<String[]> implements CSVIterator {
     private String[] line;
     private ColumnTableMeta meta = null;

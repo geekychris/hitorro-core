@@ -25,9 +25,7 @@ package com.hitorro.util.json.keys;
 import com.hitorro.util.core.ArrayUtil;
 import com.hitorro.util.core.string.StringUtil;
 
-/**
- *
- */
+
 public class PropertyParts {
     private String[] parts;
     private String path;

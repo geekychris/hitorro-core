@@ -27,9 +27,7 @@ import com.hitorro.util.core.string.StringUtil;
 
 import java.text.ParseException;
 
-/**
- *
- */
+
 public class ShardKey {
     private DateRange dateRange;
     private String fullName;

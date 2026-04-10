@@ -21,9 +21,7 @@
  */
 package com.hitorro.util.core.tandemarrays;
 
-/**
- *
- */
+
 public class TandemArraySorterLongPeer extends TandemArraySorterPeer {
     private long m_d[];
 

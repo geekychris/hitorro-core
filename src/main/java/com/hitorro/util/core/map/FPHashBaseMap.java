@@ -31,9 +31,7 @@ import com.hitorro.util.core.longword.opers.LongOperator;
 
 import java.util.List;
 
-/**
- *
- */
+
 public class FPHashBaseMap implements FPHashBaseMapInterface {
     public static final int defaultInitialSize = 1000000;
     protected TLongLongHashMap map;

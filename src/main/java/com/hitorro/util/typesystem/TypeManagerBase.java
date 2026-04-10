@@ -21,9 +21,7 @@
  */
 package com.hitorro.util.typesystem;
 
-/**
- *
- */
+
 public abstract class TypeManagerBase {
     private static TypeManagerBase tmb;
 

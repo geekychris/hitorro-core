@@ -23,9 +23,7 @@ package com.hitorro.util.io.compression;
 
 import java.io.IOException;
 
-/**
- *
- */
+
 public interface Compressor {
     boolean init(int version) throws IOException;
 

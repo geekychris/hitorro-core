@@ -24,9 +24,7 @@ package com.hitorro.util.io.largedata.compressedstreams;
 
 import java.io.IOException;
 
-/**
- *
- */
+
 
 /**
  * Abstract class for output to a file in a Directory.  A random-access output stream.  Used for all Lucene index output

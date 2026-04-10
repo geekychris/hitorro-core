@@ -30,9 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- *
- */
+
 public abstract class SingleFilePropertyReader implements PropertiesReader {
     private boolean participatesInFileDiffCheck;
     private FileChangeSet changeContainer;

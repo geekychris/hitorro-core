@@ -26,9 +26,7 @@ import com.hitorro.util.core.classes.MemberVarAnnotations;
 import com.hitorro.util.core.opers.HTPredicate;
 
 
-/**
- *
- */
+
 public class MethodVarAnoMatches implements HTPredicate<MemberVarAnnotations> {
     private Class clazz;
 

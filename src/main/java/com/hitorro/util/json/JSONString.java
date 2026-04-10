@@ -27,9 +27,7 @@ import com.hitorro.util.json.visitors.JSONVisitor;
 import java.io.IOException;
 
 
-/**
- *
- */
+
 public class JSONString extends JSONElement<String> {
     private String s;
 

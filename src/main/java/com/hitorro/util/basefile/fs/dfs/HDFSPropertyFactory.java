@@ -29,9 +29,7 @@ import com.hitorro.util.json.keys.StringProperty;
 
 import java.io.IOException;
 
-/**
- *
- */
+
 public class HDFSPropertyFactory extends BaseFilePropertyFactory<HDFSConfig, DFSFile> {
     public static final String HDFS = "hdfs";
 

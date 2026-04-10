@@ -29,9 +29,7 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-/**
- *
- */
+
 public class JarItemIterator extends AbstractIterator<BaseFile> {
     private ZipInputStream zis;
     private ZipEntry ze;

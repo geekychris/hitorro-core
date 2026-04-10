@@ -23,9 +23,7 @@ package com.hitorro.util.basefile.tools.queue.reader;
 
 import com.hitorro.util.basefile.fs.BaseFile;
 
-/**
- *
- */
+
 public class DirRow {
     BaseFile bf;
     String fileName;

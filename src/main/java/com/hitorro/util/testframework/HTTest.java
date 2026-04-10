@@ -26,9 +26,7 @@ import com.hitorro.util.core.Platform;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/**
- *
- */
+
 @Retention(RetentionPolicy.RUNTIME)
 public @interface HTTest {
     Platform[] platform() default {Platform.Linux, Platform.MacOSX, Platform.Windows, Platform.Solaris, Platform.Other};

@@ -45,7 +45,12 @@ public class JsonNodeClassMapper<T> implements Mapper<JsonNode, T> {
 
     @Override
     public T apply(final JsonNode s) {
-        return getValidated(classKey.apply(s), requiredSuper, key);
+        try {
+            return getValidated(classKey.apply(s), requiredSuper, key);
+        } catch (Exception | Error e) {
+            // Class not found or failed to initialize — return null gracefully
+            return null;
+        }
     }
 
     public T getValidated(String sValue, Class requiredSuper, String key) {

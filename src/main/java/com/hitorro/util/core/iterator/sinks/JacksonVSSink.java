@@ -28,9 +28,7 @@ import com.hitorro.util.core.iterator.JsonValueSource;
 import java.io.IOException;
 import java.io.OutputStream;
 
-/**
- *
- */
+
 public class JacksonVSSink extends BaseSink<JsonValueSource> {
     private JsonSink sink;
 

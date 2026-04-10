@@ -25,9 +25,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.hitorro.util.core.BooleanUtil;
 import com.hitorro.util.core.iterator.Mapper;
 
-/**
- *
- */
+
 public class JsonNodeToBoolean implements Mapper<JsonNode, Boolean> {
     public static JsonNodeToBoolean instance = new JsonNodeToBoolean();
 

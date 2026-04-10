@@ -38,9 +38,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- *
- */
+
 public class CSVQuery {
     private String cols[];
     private BaseFile sourceFile;

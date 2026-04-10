@@ -34,9 +34,7 @@ import com.hitorro.util.core.string.StringUtil;
 
 import java.io.*;
 
-/**
- *
- */
+
 public class JsonSink extends BaseSink<JsonNode> {
     protected ObjectMapper mapper = new ObjectMapper();
     protected OutputStream os;

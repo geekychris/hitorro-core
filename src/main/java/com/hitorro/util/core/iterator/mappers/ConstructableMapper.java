@@ -23,8 +23,6 @@ package com.hitorro.util.core.iterator.mappers;
 
 import com.hitorro.util.core.iterator.Mapper;
 
-/**
- *
- */
+
 public abstract class ConstructableMapper<I, O> implements Mapper<I, O> {
 }

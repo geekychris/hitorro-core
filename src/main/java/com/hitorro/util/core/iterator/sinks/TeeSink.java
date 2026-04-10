@@ -28,9 +28,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
-/**
- *
- */
+
 public class TeeSink<I> extends BaseSink<I> {
     protected Sink<I> sink1;
     protected Sink<I> sink2;

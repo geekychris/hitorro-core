@@ -27,9 +27,7 @@ import com.hitorro.util.core.iterator.Mapper;
 import com.hitorro.util.io.largedata.BaseFileAccessingObjectFactory;
 import com.hitorro.util.io.largedata.iterator.BaseFileSelectTreeController;
 
-/**
- *
- */
+
 public class MergerDirectoryStep<E> extends DirectoryStep<E> {
 
     public MergerDirectoryStep(String fileExtensionOut,

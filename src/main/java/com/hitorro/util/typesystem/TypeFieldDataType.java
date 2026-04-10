@@ -29,9 +29,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 
-/**
- *
- */
+
 public enum TypeFieldDataType {
 
     Long("long", Long.class, 64, false, null) {

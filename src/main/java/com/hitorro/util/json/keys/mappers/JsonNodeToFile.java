@@ -27,9 +27,7 @@ import com.hitorro.util.core.params.PropertiesUtil;
 
 import java.io.File;
 
-/**
- *
- */
+
 public class JsonNodeToFile implements Mapper<JsonNode, File> {
     public static JsonNodeToFile instance = new JsonNodeToFile();
 

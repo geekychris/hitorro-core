@@ -27,9 +27,7 @@ import gnu.trove.map.hash.TLongLongHashMap;
 import com.hitorro.util.core.longword.WordBits;
 import com.hitorro.util.core.longword.opers.LongOperator;
 
-/**
- *
- */
+
 public class CascadingFPHashBaseMap implements FPHashBaseMapInterface {
     private FPHashBaseMapInterface elems[];
     private int size;

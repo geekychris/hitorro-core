@@ -27,9 +27,7 @@ import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
+
 public class BaseAnnotation {
     protected List<Annotation> anno = new ArrayList<Annotation>();
 

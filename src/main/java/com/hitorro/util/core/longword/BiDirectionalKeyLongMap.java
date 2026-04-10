@@ -25,9 +25,7 @@ package com.hitorro.util.core.longword;
 import gnu.trove.map.hash.TLongObjectHashMap;
 import gnu.trove.map.hash.TObjectLongHashMap;
 
-/**
- *
- */
+
 public class BiDirectionalKeyLongMap {
     private TObjectLongHashMap<String> map = new TObjectLongHashMap();
     private TLongObjectHashMap<String> reverse = new TLongObjectHashMap();

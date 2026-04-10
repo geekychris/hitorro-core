@@ -36,9 +36,7 @@ import com.hitorro.util.typesystem.valuesource.ValueMapMapper;
 import java.io.IOException;
 import java.util.*;
 
-/**
- *
- */
+
 public class JSONMap extends JSONElement<Map<String, JSONElement>> implements Map<String, JSONElement> {
     private Map<String, JSONElement> map;
     private TypeIntf httype;

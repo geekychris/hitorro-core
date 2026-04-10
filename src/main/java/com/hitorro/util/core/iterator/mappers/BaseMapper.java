@@ -24,9 +24,7 @@ package com.hitorro.util.core.iterator.mappers;
 import com.hitorro.util.core.iterator.AbstractIterator;
 import com.hitorro.util.core.iterator.Mapper;
 
-/**
- *
- */
+
 public abstract class BaseMapper<I, O> implements Mapper<I, O> {
     public boolean isThreadSafe() {
         return true;

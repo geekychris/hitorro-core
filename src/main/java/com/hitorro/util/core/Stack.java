@@ -21,9 +21,7 @@
  */
 package com.hitorro.util.core;
 
-/**
- *
- */
+
 public interface Stack<T extends Object> {
     /**
      * Insert a new item into the stack.

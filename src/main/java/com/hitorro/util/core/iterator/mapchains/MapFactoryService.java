@@ -29,9 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- *
- */
+
 public class MapFactoryService {
     public static final String BaseMappers = "basemappers";
     private static MapFactoryService service;

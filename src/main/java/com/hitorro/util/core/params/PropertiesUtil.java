@@ -57,17 +57,18 @@ public class PropertiesUtil {
     }
 
     private static String getString(final JsonNode topArgs, final JsonNode args, final String variable, final StringProperty prop) {
-        String substValue;
+        // Look up the variable in topArgs first, then args
+        JsonNode valueNode = null;
         if (topArgs != null) {
-            prop.setPath(variable);
-            substValue = prop.apply(topArgs);
-            if (substValue == null) {
-                substValue = prop.apply(args);
-            }
-        } else {
-            substValue = prop.apply(args);
+            valueNode = topArgs.get(variable);
         }
-        return substValue;
+        if (valueNode == null && args != null) {
+            valueNode = args.get(variable);
+        }
+        if (valueNode != null && !valueNode.isNull()) {
+            return valueNode.asText();
+        }
+        return null;
     }
 
     public static final String getProperty(Properties props, String field, String defaultValue) {

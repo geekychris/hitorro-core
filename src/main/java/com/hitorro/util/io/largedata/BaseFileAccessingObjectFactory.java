@@ -31,9 +31,7 @@ import java.lang.reflect.Array;
 import java.util.Comparator;
 import java.util.function.Function;
 
-/**
- *
- */
+
 public class BaseFileAccessingObjectFactory<T> {
     protected Comparator<T> comparator;
     protected LikeRowMerger<T> merger = TakeRightRowMerger.me;

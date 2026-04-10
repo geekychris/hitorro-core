@@ -25,9 +25,7 @@ import com.hitorro.util.basefile.fs.BaseFile;
 
 import java.util.Comparator;
 
-/**
- *
- */
+
 public class BaseFileComparator implements Comparator<BaseFile> {
     private int ascending;
 

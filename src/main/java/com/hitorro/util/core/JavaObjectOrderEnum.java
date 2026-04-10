@@ -25,9 +25,7 @@ import com.hitorro.util.core.string.StringUtil;
 
 import java.util.HashMap;
 
-/**
- *
- */
+
 public enum JavaObjectOrderEnum {
     STRING_ASC(String.class, true, "AS") {
         public int compare(Object o1, Object o2) {

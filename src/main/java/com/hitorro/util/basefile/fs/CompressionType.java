@@ -33,9 +33,7 @@ import java.util.HashMap;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-/**
- *
- */
+
 public enum CompressionType {
     gz("gz") {
         @Override

@@ -34,9 +34,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- *
- */
+
 public class ArrayBucketWriterContainer<T> implements BucketWriterContainer<T> {
     protected LikeRowMerger<T> m_merger;
     protected Comparator<T> m_comparator;

@@ -37,9 +37,7 @@ import com.hitorro.util.typesystem.valuesource.ValueSourceForClass;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
+
 public class JsonValueSource implements ValueSourceForClass {
     public static String TypeField = "ht_type";
     private JsonNode node;

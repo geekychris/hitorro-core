@@ -33,11 +33,16 @@ public class JsonNode2JsonInitable<T extends JsonInitable> extends JsonNodeClass
         if (s == null) {
             return null;
         }
-        T t = super.apply(s);
-        if (t == null) {
+        try {
+            T t = super.apply(s);
+            if (t == null) {
+                return null;
+            }
+            t.init(s);
+            return t;
+        } catch (Exception | Error e) {
+            // Class not found, failed to initialize, or init error — skip gracefully
             return null;
         }
-        t.init(s);
-        return t;
     }
 }

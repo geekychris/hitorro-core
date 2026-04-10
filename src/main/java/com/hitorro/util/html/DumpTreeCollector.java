@@ -21,9 +21,7 @@
  */
 package com.hitorro.util.html;
 
-/**
- *
- */
+
 public class DumpTreeCollector {
     public StringBuilder sb = new StringBuilder();
 }

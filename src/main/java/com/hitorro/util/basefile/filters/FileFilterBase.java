@@ -25,9 +25,7 @@ import com.hitorro.util.basefile.fs.BaseFile;
 import com.hitorro.util.core.opers.HTPredicate;
 import com.hitorro.util.core.opers.LogicalNotOperator;
 
-/**
- *
- */
+
 public abstract class FileFilterBase implements HTPredicate<BaseFile> {
     public static HTPredicate<BaseFile> not(HTPredicate<BaseFile> filt) {
         return new LogicalNotOperator(filt);

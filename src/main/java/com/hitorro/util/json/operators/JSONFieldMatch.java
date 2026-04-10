@@ -26,9 +26,7 @@ import com.hitorro.util.core.opers.HTPredicate;
 import com.hitorro.util.json.JSONElement;
 import com.hitorro.util.json.JSONType;
 
-/**
- *
- */
+
 public class JSONFieldMatch implements HTPredicate<JSONElement> {
     private String field;
     private String value;

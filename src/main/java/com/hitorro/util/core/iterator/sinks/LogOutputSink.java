@@ -33,9 +33,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-/**
- *
- */
+
 public class LogOutputSink<T> extends BaseSink<T> {
     protected BaseMapper<File, Sink<T>> sinkMap;
     protected Sink<T> sink;

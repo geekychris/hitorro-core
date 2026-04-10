@@ -22,6 +22,7 @@
 package com.hitorro.util.json.keys;
 
 
+import com.hitorro.util.core.Env;
 import com.hitorro.util.core.params.GlobalProperties;
 import com.hitorro.util.core.string.StringUtil;
 import com.hitorro.util.json.keys.mappers.JsonNodeToFile;
@@ -29,14 +30,13 @@ import com.hitorro.util.json.keys.propaccess.Propaccess;
 
 import java.io.File;
 
-/**
- *
- */
+
 public class FileProperty extends BaseMappingProperty<File> {
     public FileProperty(String path, String description, String defaultValue) {
         super(new Propaccess(path), description,
                 getDefaultFile(defaultValue),
                 JsonNodeToFile.instance);
+        this.rawDefault = defaultValue;
     }
 
     public FileProperty(String path, String description) {
@@ -55,11 +55,46 @@ public class FileProperty extends BaseMappingProperty<File> {
         super(path, description, null, JsonNodeToFile.instance);
     }
 
+    private String rawDefault;
+
     private static File getDefaultFile(String defaultValue) {
         String resolved = GlobalProperties.resolveJsonVariable(defaultValue);
         if (StringUtil.nullOrEmptyString(resolved)) {
             return null;
         }
         return new File(resolved);
+    }
+
+    @Override
+    public File apply() {
+        File result = super.apply();
+        // If the result is the default and the raw default had variables, re-resolve lazily.
+        // This handles the case where GlobalProperties wasn't populated at class-load time
+        // (e.g., Spring Boot where JVSProperties is set but GlobalProperties is empty).
+        if (result != null && result.equals(defaultValue) && rawDefault != null
+                && rawDefault.contains("${")) {
+            String resolved = resolveWithEnv(rawDefault);
+            if (!StringUtil.nullOrEmptyString(resolved) && !resolved.contains("${")) {
+                return new File(resolved);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Resolve Hitorro path variables using Env directly.
+     * GlobalProperties.resolveJsonVariable silently drops unresolvable variables,
+     * so we use Env as the canonical source for path variables.
+     */
+    private String resolveWithEnv(String value) {
+        String bin = Env.getBin().getAbsolutePath();
+        String home = Env.getHome().getAbsolutePath();
+        String data = Env.getData().getAbsolutePath();
+        return value.replace("${HT_BIN}", bin)
+                    .replace("${HT_HOME}", home)
+                    .replace("${HT_DATA}", data)
+                    .replace("${ht_bin}", bin)
+                    .replace("${ht_home}", home)
+                    .replace("${ht_data}", data);
     }
 }

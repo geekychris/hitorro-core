@@ -32,9 +32,7 @@ import com.hitorro.util.typesystem.valuesource.ValueSourceForClass;
 
 import java.io.IOException;
 
-/**
- *
- */
+
 public abstract class JSONElement<E> implements ValueSourceForClass {
     public static JSONElement getJSONElementFromRaw(final Object value, final Class clazz) {
         if (clazz.equals(String.class)) {

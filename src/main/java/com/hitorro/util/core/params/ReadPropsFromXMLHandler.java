@@ -30,9 +30,7 @@ import java.util.Map;
 import java.util.Stack;
 import java.util.TreeMap;
 
-/**
- *
- */
+
 public class ReadPropsFromXMLHandler extends DefaultHandler {
     public static final String ConfigRoot = "configroot";
     public Map<String, String> map = new TreeMap();

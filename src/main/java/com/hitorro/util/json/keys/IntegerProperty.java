@@ -25,9 +25,7 @@ package com.hitorro.util.json.keys;
 import com.hitorro.util.json.keys.mappers.JsonNodeToInteger;
 import com.hitorro.util.json.keys.propaccess.Propaccess;
 
-/**
- *
- */
+
 public class IntegerProperty extends BaseMappingProperty<Integer> {
     public IntegerProperty(String path, String description, Integer defaultValue) {
         super(new Propaccess(path), description, defaultValue, JsonNodeToInteger.instance);

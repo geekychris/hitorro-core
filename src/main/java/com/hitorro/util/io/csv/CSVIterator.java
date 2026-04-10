@@ -23,9 +23,7 @@ package com.hitorro.util.io.csv;
 
 import com.hitorro.util.core.iterator.ChainingIteratorIntf;
 
-/**
- *
- */
+
 public interface CSVIterator extends ChainingIteratorIntf<String[]> {
     String[] getColumnNames();
 }

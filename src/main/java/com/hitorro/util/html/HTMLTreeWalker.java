@@ -27,9 +27,7 @@ import org.w3c.dom.*;
 
 import java.net.URL;
 
-/**
- *
- */
+
 public abstract class HTMLTreeWalker<C> {
     private DOMParser m_parser; // object that creates DOM from m_htmlPage
 

@@ -21,9 +21,7 @@
  */
 package com.hitorro.util.core.iterator.mappers;
 
-/**
- *
- */
+
 public abstract class SettableMapper<E, I, O> extends BaseMapper<I, O> {
     protected E setElem;
 

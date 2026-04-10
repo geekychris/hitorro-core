@@ -24,9 +24,7 @@ package com.hitorro.util.json.keys;
 import com.hitorro.util.json.keys.mappers.JsonNodeToLong;
 import com.hitorro.util.json.keys.propaccess.Propaccess;
 
-/**
- *
- */
+
 public class LongProperty extends BaseMappingProperty<Long> {
     public LongProperty(String path, String description, Long defaultValue) {
         super(new Propaccess(path), description, defaultValue, JsonNodeToLong.instance);

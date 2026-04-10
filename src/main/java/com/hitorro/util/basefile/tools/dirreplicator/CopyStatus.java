@@ -21,9 +21,7 @@
  */
 package com.hitorro.util.basefile.tools.dirreplicator;
 
-/**
- *
- */
+
 public enum CopyStatus {
     Copied(true, true), AlreadyCopied(true, false), SourceMissing(false, false), TargetNewerThanSource(false, true), MaxRetriesReached(false, false);
 

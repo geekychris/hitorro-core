@@ -29,9 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
+
 public class JSONList extends JSONElement<List<JSONElement>> {
     private List<JSONElement> list;
 

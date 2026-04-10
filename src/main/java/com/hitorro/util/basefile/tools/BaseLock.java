@@ -26,9 +26,7 @@ import com.hitorro.util.basefile.fs.BaseFile;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-/**
- *
- */
+
 public class BaseLock {
     private BaseFile bf;
 
