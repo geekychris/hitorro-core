@@ -170,8 +170,8 @@ public class Propaccess {
         return indexPos;
     }
 
-    private boolean doSet(final SetMode set, final int i, boolean retLeaf) {
-        return (set == SetMode.Set || set == SetMode.Append || retLeaf) && i == length - 1;
+    private boolean doSet(final SetMode set, final int i, boolean retLeaf, int effectiveLength) {
+        return (set == SetMode.Set || set == SetMode.Append || retLeaf) && i == effectiveLength - 1;
     }
 
     public void computeParts(String path) throws PropertyException {
@@ -228,8 +228,8 @@ public class Propaccess {
         }
 
         JsonNode node = nodeIn;
-        length = Math.min(length, depth);
-        for (int i = 0; i < length; i++) {
+        int effectiveLength = Math.min(length, depth);
+        for (int i = 0; i < effectiveLength; i++) {
             if (node == null) {
                 return null;
             }
@@ -271,7 +271,7 @@ public class Propaccess {
                 }
 
                 if (node.isArray()) {
-                    if (doSet(set, i, retLeaf)) {
+                    if (doSet(set, i, retLeaf, effectiveLength)) {
                         if (retLeaf) {
                             return node;
                         }
@@ -299,7 +299,7 @@ public class Propaccess {
                     throw new PropaccessError("object node expected %s %s", this, i);
                 }
 
-                if (doSet(set, i, retLeaf)) {
+                if (doSet(set, i, retLeaf, effectiveLength)) {
                     if (retLeaf) {
                         return node.get(p.name());
                     }
