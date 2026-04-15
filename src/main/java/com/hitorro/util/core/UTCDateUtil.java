@@ -30,7 +30,7 @@ import java.text.ParseException;
 import java.util.*;
 
 public class UTCDateUtil {
-    public static final TimeZone UTC = TimeZone.getTimeZone("UTC");
+    public static TimeZone UTC = TimeZone.getTimeZone("UTC");
 
 
     /**
@@ -72,7 +72,7 @@ public class UTCDateUtil {
         return cal.getTime();
     }
 
-    public static final int[] getYMDAsInArray(Date d) {
+    public static int[] getYMDAsInArray(Date d) {
         int res[] = new int[3];
         Calendar c = UTCDateUtil.calendarForDate(d);
         res[0] = c.get(Calendar.YEAR);
@@ -350,7 +350,7 @@ public class UTCDateUtil {
     /**
      * @return Calendar with [Yesterday] as the Date and [23:59:59] as the Time
      */
-    public static final java.util.Calendar getCalendarYesterday() {
+    public static java.util.Calendar getCalendarYesterday() {
         java.util.Calendar cal = Calendar.getInstance(UTC);
         cal.add(java.util.Calendar.DAY_OF_MONTH, -1);
         cal.set(java.util.Calendar.HOUR_OF_DAY, 23);
@@ -360,11 +360,11 @@ public class UTCDateUtil {
     }
 
 
-    public static final Date getDate(String date, String dateFormat) {
+    public static Date getDate(String date, String dateFormat) {
         return null;
     }
 
-    public static final Date getDateFor(int year, int month, int day, int hour) {
+    public static Date getDateFor(int year, int month, int day, int hour) {
         Calendar outCal = Calendar.getInstance(UTC);
         outCal.set(GregorianCalendar.YEAR, year);
         outCal.set(GregorianCalendar.MONTH, month - 1);
@@ -377,7 +377,7 @@ public class UTCDateUtil {
     }
 
 
-    public static final Date getDateFor(int year, int month, int day) {
+    public static Date getDateFor(int year, int month, int day) {
         Calendar calen = Calendar.getInstance(UTC);
         calen.set(GregorianCalendar.YEAR, year);
         calen.set(GregorianCalendar.MONTH, month - 1);
@@ -386,7 +386,7 @@ public class UTCDateUtil {
     }
 
 
-    public static final Date getDateForNMinutesFromNow(int mins) {
+    public static Date getDateForNMinutesFromNow(int mins) {
         Calendar calen = Calendar.getInstance(UTC);
 
         calen.add(GregorianCalendar.MINUTE, mins);
@@ -394,7 +394,7 @@ public class UTCDateUtil {
     }
 
 
-    public static final Date getDateForNow() {
+    public static Date getDateForNow() {
         return getDateForNMinutesFromNow(0);
     }
 
@@ -404,7 +404,7 @@ public class UTCDateUtil {
      *
      * @return epoch as a date
      */
-    public static final Date getEpoch() {
+    public static Date getEpoch() {
         GregorianCalendar epoch = new GregorianCalendar(1970, 0, 1, 0, 0, 0);
         return epoch.getTime();
     }
@@ -487,7 +487,7 @@ public class UTCDateUtil {
      *
      * @return Date object if parsed or null if a valid format could not be found.
      */
-    public static final List getValidDateFormats() {
+    public static List getValidDateFormats() {
         return ValidDateFormats;
     }
 
@@ -496,7 +496,7 @@ public class UTCDateUtil {
      *
      * @param l
      */
-    public static final void setValidDateFormats(List l) {
+    public static void setValidDateFormats(List l) {
         ValidDateFormats = l;
     }
 
@@ -561,7 +561,7 @@ public class UTCDateUtil {
         return seconds;
     }
 
-    public static final Date shortDateToDate(short shortDate) {
+    public static Date shortDateToDate(short shortDate) {
         return new Date(shortDateToTimeMillis(shortDate));
     }
 

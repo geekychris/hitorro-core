@@ -31,8 +31,8 @@ import com.hitorro.util.io.FileUtil;
  */
 public class FileExtension extends FileFilterBase {
 
-    public static final FileExtension Json = new FileExtension("json", true);
-    public static final FileExtension ser = new FileExtension("ser", true);
+    public static FileExtension Json = new FileExtension("json", true);
+    public static FileExtension ser = new FileExtension("ser", true);
 
     private String ext;
     private boolean ignoreCase;

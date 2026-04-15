@@ -29,12 +29,12 @@ import java.util.ArrayList;
  * @author chris
  */
 public class WeakReferenceList<ELEM> {
-    private ArrayList<WeakReference<ELEM>> weakList = new ArrayList<WeakReference<ELEM>>();
+    private ArrayList<WeakReference<ELEM>> weakList = new ArrayList<>();
 
     /**
-     * Size of the listFiles (including dead references)
+     * Size of the list (including dead references)
      *
-     * @return size of listFiles including dead references
+     * @return size of list including dead references
      */
     public int size() {
         return weakList.size();
@@ -51,11 +51,11 @@ public class WeakReferenceList<ELEM> {
     }
 
     /**
-     * Only put T to the listFiles if it does not already exist. Note that this is not checking the weak reference, but the
-     * value the weak reference points to.
+     * Only add T to the list if it does not already exist. Note that this checks
+     * reference identity (==), not equals(), which is correct for listener registration.
      *
-     * @param o the object to put to the listFiles
-     * @return true if added, false if already in listFiles
+     * @param o the object to add
+     * @return true if added, false if already in list
      */
     public boolean addIfAbsent(ELEM o) {
         if (getIndexOfExistingObject(o) != -1) {
@@ -65,21 +65,36 @@ public class WeakReferenceList<ELEM> {
     }
 
     /**
-     * put an element, duplicates are allowed
+     * Add an element, duplicates are allowed
      *
      * @param o
      * @return always true
      */
     public boolean add(ELEM o) {
-        weakList.add(new WeakReference<ELEM>(o));
+        weakList.add(new WeakReference<>(o));
         return true;
     }
 
     /**
-     * Exam payload and look for an existing value
+     * Remove a specific element by reference identity.
+     *
+     * @param o element to remove
+     * @return true if found and removed
+     */
+    public boolean remove(ELEM o) {
+        int idx = getIndexOfExistingObject(o);
+        if (idx != -1) {
+            weakList.remove(idx);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Examine payload and look for an existing value by reference identity
      *
      * @param o
-     * @return index position of test if exists.
+     * @return index position if exists, -1 otherwise
      */
     public int getIndexOfExistingObject(ELEM o) {
         int size = weakList.size();
@@ -96,23 +111,25 @@ public class WeakReferenceList<ELEM> {
     }
 
     /**
-     * Scan listFiles and remove anything that has gone away
+     * Scan list and remove anything that has gone away.
+     * Preserves registration order.
      *
-     * @return true if something was removed from the listFiles.
+     * @return true if something was removed from the list.
      */
     public boolean removeNulls() {
-        int size = weakList.size();
         synchronized (this) {
-            ArrayList<WeakReference<ELEM>> tempList = new ArrayList<WeakReference<ELEM>>();
-            for (int i = size - 1; i >= 0; i--) {
+            ArrayList<WeakReference<ELEM>> tempList = new ArrayList<>();
+            int size = weakList.size();
+            for (int i = 0; i < size; i++) {
                 WeakReference<ELEM> wr = weakList.get(i);
                 ELEM t = wr.get();
                 if (t != null) {
                     tempList.add(wr);
                 }
             }
+            boolean removed = tempList.size() < weakList.size();
             weakList = tempList;
+            return removed;
         }
-        return true;
     }
 }

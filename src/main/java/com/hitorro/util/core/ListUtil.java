@@ -46,7 +46,7 @@ public class ListUtil {
         return gkvs;
     }
 
-    public static final boolean addIfAbsent(List target, Object o, Comparator c) {
+    public static boolean addIfAbsent(List target, Object o, Comparator c) {
         for (Object e : target) {
             if (c.compare(e, o) == 0) {
                 return false;
@@ -56,7 +56,7 @@ public class ListUtil {
         return true;
     }
 
-    public static final void remove(List target, Object o, Comparator c) {
+    public static void remove(List target, Object o, Comparator c) {
         for (int i = target.size() - 1; i >= 0; i--) {
             Object e = target.get(i);
             if (c.compare(e, o) == 0) {
@@ -65,7 +65,7 @@ public class ListUtil {
         }
     }
 
-    public static final <E, F> boolean addAllValuesFromMap(Map<E, F> sourceMap, List<F> targetList) {
+    public static <E, F> boolean addAllValuesFromMap(Map<E, F> sourceMap, List<F> targetList) {
         if (sourceMap.size() == 0) {
             return false;
         }
@@ -73,7 +73,7 @@ public class ListUtil {
         return true;
     }
 
-    public static final boolean equal(List old, List newL) {
+    public static boolean equal(List old, List newL) {
         if (old.size() != newL.size()) {
             return false;
         }
@@ -85,7 +85,7 @@ public class ListUtil {
         return true;
     }
 
-    public static final <T> void notNullAdd(List<T> list, T elem) {
+    public static <T> void notNullAdd(List<T> list, T elem) {
         if (elem != null) {
             list.add(elem);
         }
@@ -97,7 +97,7 @@ public class ListUtil {
      * @param target
      * @param source
      */
-    public static final void addAllAbsent(List target, List source) {
+    public static void addAllAbsent(List target, List source) {
         for (Object o : source) {
             if (!target.contains(o)) {
                 target.add(o);
@@ -105,20 +105,20 @@ public class ListUtil {
         }
     }
 
-    public static final void addIfAbsent(List target, Object o) {
+    public static void addIfAbsent(List target, Object o) {
         if (o != null && !target.contains(o)) {
             target.add(o);
         }
     }
 
-    public static final <E> List<E> getIntersection(List<E> a, List<E> b, Comparator<E> c) {
+    public static <E> List<E> getIntersection(List<E> a, List<E> b, Comparator<E> c) {
         GenericDifferContainer<E> cont = new GenericDifferContainer<E>();
         GenericDiffer<E> differ = new GenericDiffer<E>();
         differ.diff(a.iterator(), b.iterator(), c, cont);
         return cont.getModified();
     }
 
-    public static final List iteratorToList(Iterator iter, List list) {
+    public static List iteratorToList(Iterator iter, List list) {
         while (iter.hasNext()) {
             list.add(iter.next());
         }
@@ -139,7 +139,7 @@ public class ListUtil {
      * @deprecated Use {@code list != null && !list.isEmpty()}
      */
     @Deprecated
-    public static final boolean notNullAndContainsRows(List l) {
+    public static boolean notNullAndContainsRows(List l) {
         return l != null && l.size() > 0;
     }
 
@@ -147,7 +147,7 @@ public class ListUtil {
      * @deprecated Use {@code list == null || list.isEmpty()}
      */
     @Deprecated
-    public static final boolean nullOrEmpty(List l) {
+    public static boolean nullOrEmpty(List l) {
         return l == null || l.size() == 0;
     }
 
@@ -157,7 +157,7 @@ public class ListUtil {
      * @param list
      * @param maxLength
      */
-    public static final void pruneListToLength(List list, int maxLength) {
+    public static void pruneListToLength(List list, int maxLength) {
         int startIndex;
         int itemsToRemove = list.size() - maxLength;
         if (itemsToRemove > 0) {
@@ -176,7 +176,7 @@ public class ListUtil {
      * @param c
      * @return
      */
-    public static final boolean removeDuplicates(List l, Comparator c) {
+    public static boolean removeDuplicates(List l, Comparator c) {
         Collections.sort(l, c);
 
         int size = l.size();

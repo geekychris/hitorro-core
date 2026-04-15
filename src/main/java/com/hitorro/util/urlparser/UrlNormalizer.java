@@ -47,8 +47,8 @@ public class UrlNormalizer {
     private String host;
     private String port;
     private StringBuilder sb = new StringBuilder();
-    private List<String> pathParts = new ArrayList();
-    private List<String> args = new ArrayList();
+    private List<String> pathParts = new ArrayList<>();
+    private List<String> args = new ArrayList<>();
     private UrlMemoryCursor cur = new UrlMemoryCursor();
 
     private boolean removeWWW = false;
@@ -119,7 +119,6 @@ public class UrlNormalizer {
         args.clear();
         cur.scan(input);
         cur.resetToHost();
-        sb.append("http://");
         port = null;
         anchor = null;
 
@@ -198,7 +197,7 @@ public class UrlNormalizer {
         Collections.sort(args);
         sb.setLength(0);
         if (includeHttp) {
-            sb.append("http://");
+            sb.append(cur.isSecure() ? "https://" : "http://");
         }
         sb.append(host);
         if (port != null) {

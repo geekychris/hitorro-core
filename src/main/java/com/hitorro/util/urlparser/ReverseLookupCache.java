@@ -35,7 +35,7 @@ public class ReverseLookupCache {
     private LRUHashMap<String, String> m_map;
 
     public ReverseLookupCache(int size) {
-        m_map = new LRUHashMap(size);
+        m_map = new LRUHashMap<>(size);
     }
 
 

@@ -186,7 +186,7 @@ public class BaseFileUtil {
      * @return
      * @throws IOException
      */
-    public static final boolean writeStringFromTObjectString(BaseFile file, TObjectIntHashMap<String> map) throws IOException {
+    public static boolean writeStringFromTObjectString(BaseFile file, TObjectIntHashMap<String> map) throws IOException {
         Writer writer = BaseFileUtil.bf2utf8Writer.apply(file);
         for (TObjectIntIterator<String> it = map.iterator(); it.hasNext(); ) {
             it.advance();
@@ -196,7 +196,7 @@ public class BaseFileUtil {
         return true;
     }
 
-    public static final boolean writeStringStringCountFromTObjectString(BaseFile file, TObjectIntHashMap<String> map) throws IOException {
+    public static boolean writeStringStringCountFromTObjectString(BaseFile file, TObjectIntHashMap<String> map) throws IOException {
         Writer writer = BaseFileUtil.bf2utf8Writer.apply(file);
         for (TObjectIntIterator<String> it = map.iterator(); it.hasNext(); ) {
             it.advance();
@@ -208,7 +208,7 @@ public class BaseFileUtil {
         return true;
     }
 
-    public static final boolean writeStringFromSet(BaseFile file, Set<String> set) throws IOException {
+    public static boolean writeStringFromSet(BaseFile file, Set<String> set) throws IOException {
         Writer writer = BaseFileUtil.bf2utf8Writer.apply(file);
         for (String s : set) {
             writer.write(s);
@@ -217,7 +217,7 @@ public class BaseFileUtil {
         return true;
     }
 
-    public static final boolean writeTLongStringHashMap(BaseFile file, TLongObjectHashMap<String> map) throws IOException {
+    public static boolean writeTLongStringHashMap(BaseFile file, TLongObjectHashMap<String> map) throws IOException {
         OutputStream os = BaseFileUtil.bf2outputstream.apply(file);
         DataOutputStream dos = new DataOutputStream(os);
         for (TLongObjectIterator it = map.iterator(); it.hasNext(); ) {

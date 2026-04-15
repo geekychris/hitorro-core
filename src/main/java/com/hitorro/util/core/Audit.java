@@ -35,7 +35,7 @@ public class   Audit {
     public static final String WorkflowTopic = "workflow";
     public static final String AdministrateTopic = "admin";
 
-    public static final void audit(String host, String username, String topic, AuditStatus status, String message, Object... args) {
+    public static void audit(String host, String username, String topic, AuditStatus status, String message, Object... args) {
         if (Log.audit.isInfoEnabled()) {
             if (args != null && args.length > 0) {
                 message = Fmt.S(message, args);

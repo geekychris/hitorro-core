@@ -36,6 +36,26 @@ import java.util.function.Predicate;
  * mode.
  */
 public interface Sink<T> extends AutoCloseable, JsonInitable, Consumer<T> {
+
+    /**
+     * Create a simple sink from a Consumer. Useful for quick lambda-based sinks.
+     */
+    static <T> Sink<T> of(Consumer<T> consumer) {
+        return new BaseSink<T>() {
+            @Override public boolean init(JsonNode map) { return true; }
+            @Override public boolean start() { return true; }
+            @Override public boolean add(T o) { consumer.accept(o); return true; }
+            @Override public boolean stop() { return true; }
+        };
+    }
+
+    /**
+     * Create a sink that counts items added to it. Call getCount() after processing.
+     */
+    static <T> CountingSink<T> counting() {
+        return new CountingSink<>();
+    }
+
     boolean init(JsonNode node);
 
     boolean start() throws IOException;
@@ -45,11 +65,11 @@ public interface Sink<T> extends AutoCloseable, JsonInitable, Consumer<T> {
     }
 
     default Sink<T> filter(Predicate<T> predicate) {
-        return new PredicatedSink(this, predicate);
+        return new PredicatedSink<>(this, predicate);
     }
 
     default <I> Sink<I> map(Function<I, T> function) {
-        return new MappingSink(this, function);
+        return new MappingSink<>(this, function);
     }
 
     default Sink<T> tee(Sink<T> other) {

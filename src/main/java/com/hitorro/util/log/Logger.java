@@ -45,7 +45,7 @@ public class Logger {
         return new Logger(name);
     }
 
-    public static String generateMessageWithCallstack(String msg, Throwable t) {
+    public static final String generateMessageWithCallstack(String msg, Throwable t) {
         StringWriter sw = new StringWriter();
         sw.append(msg);
         sw.append("\n");

@@ -42,7 +42,7 @@ public class NetUtil {
     public static final String HOST_HASH_NAME = "host";
     public static final String HOST_HASH_ADDRESS = "address";
 
-    public static final void foo() throws SocketException {
+    public static void foo() throws SocketException {
         Enumeration<NetworkInterface> e = NetworkInterface.getNetworkInterfaces();
         while (e.hasMoreElements()) {
             NetworkInterface ni = e.nextElement();
@@ -59,7 +59,7 @@ public class NetUtil {
      * @param postData
      * @return the entire response text, or "Transmission error: 'error'" on error
      */
-    public static String post(String urlString, Map postData) {
+    public static final String post(String urlString, Map postData) {
         try {
             // open up the output connection
             URL url = new URL(urlString);
@@ -157,7 +157,7 @@ public class NetUtil {
     }
 
 
-    public static String findRssUrlFromUrl(String sourceUrl) {
+    public static final String findRssUrlFromUrl(String sourceUrl) {
         // try to read the contents of the source
         StringBuilder input = readUrl(sourceUrl, false);
 

@@ -60,7 +60,7 @@ import java.util.zip.GZIPOutputStream;
  * User: chris
  */
 public abstract class BaseFile<F extends BaseFile, FS extends BaseFileSystem> {
-    public static final BaseFile[] EmptyList = new BaseFile[0];
+    public static BaseFile[] EmptyList = new BaseFile[0];
 
     private static long fCounter = 0;
     protected String name = null;
@@ -77,7 +77,7 @@ public abstract class BaseFile<F extends BaseFile, FS extends BaseFileSystem> {
      * @param bf
      * @return
      */
-    public static final boolean notNullAndExists(BaseFile bf) {
+    public static boolean notNullAndExists(BaseFile bf) {
         return bf != null && bf.exists();
     }
 
@@ -87,12 +87,14 @@ public abstract class BaseFile<F extends BaseFile, FS extends BaseFileSystem> {
      * @param bf
      * @return
      */
-    public static final boolean notNullAndExistsAndContainsData(BaseFile bf) {
+    public static boolean notNullAndExistsAndContainsData(BaseFile bf) {
         return bf != null && bf.exists() && bf.length() > 0;
     }
 
     public String getDigest() throws IOException {
-        return DigestUtils.md5Hex(getDataInputStream());
+        try (DataInputStream dis = getDataInputStream()) {
+            return DigestUtils.md5Hex(dis);
+        }
     }
 
     public int hashCode() {
@@ -100,7 +102,7 @@ public abstract class BaseFile<F extends BaseFile, FS extends BaseFileSystem> {
     }
 
     public boolean equals(Object o) {
-        if (this.getClass() != o.getClass()) {
+        if (o == null || this.getClass() != o.getClass()) {
             return false;
         }
         if (o instanceof BaseFile) {
@@ -138,9 +140,10 @@ public abstract class BaseFile<F extends BaseFile, FS extends BaseFileSystem> {
         try {
             a.renameTo(temp);
         } catch (SecurityException se) {
-
             return false;
         } catch (IOException e) {
+            Log.filesystem.error("swap: IO error renaming a to temp: %s", e.getMessage());
+            return false;
         }
         try {
             b.renameTo(a);
@@ -151,17 +154,22 @@ public abstract class BaseFile<F extends BaseFile, FS extends BaseFileSystem> {
                 return false;
             } catch (SecurityException se2) {
                 return false;
-            } catch (IOException e) {
+            } catch (IOException e2) {
+                Log.filesystem.error("swap: IO error reverting rename: %s", e2.getMessage());
+                return false;
             }
         } catch (IOException e) {
+            Log.filesystem.error("swap: IO error renaming b to a: %s", e.getMessage());
+            return false;
         }
 
         try {
             temp.renameTo(b);
         } catch (SecurityException se) {
-            // should perhaps revert everything.
             return false;
         } catch (IOException e) {
+            Log.filesystem.error("swap: IO error renaming temp to b: %s", e.getMessage());
+            return false;
         }
         return true;
     }
@@ -243,7 +251,9 @@ public abstract class BaseFile<F extends BaseFile, FS extends BaseFileSystem> {
     public HTProperties getProperties() throws IOException {
         boolean isXML = this.path.endsWith("xmlprops");
         HTProperties props = new HTProperties();
-        props.readFile(this.getDataInputStream(), true, isXML);
+        try (DataInputStream dis = this.getDataInputStream()) {
+            props.readFile(dis, true, isXML);
+        }
         return props;
     }
 
@@ -260,30 +270,29 @@ public abstract class BaseFile<F extends BaseFile, FS extends BaseFileSystem> {
     }
 
     public boolean writeProperties(HTProperties props) throws IOException {
-        boolean isXML = this.path.endsWith("xmlprops");
-        DataOutputStream dos = this.getDataOutputStream();
-        props.write(dos);
-        dos.close();
+        try (DataOutputStream dos = this.getDataOutputStream()) {
+            props.write(dos);
+        }
         return true;
     }
 
 
     public CInputStream getInputStreamRAM() throws IOException {
-        DataInputStream dis = this.getDataInputStream();
-
-        byte buffer[] = new byte[(int) this.length()];
-        IOUtil.copyStream(dis, buffer);
-        RAMInputStream is = new RAMInputStream(null);
-        is.setBuffer(buffer);
-        return is;
+        try (DataInputStream dis = this.getDataInputStream()) {
+            byte[] buffer = new byte[(int) this.length()];
+            IOUtil.copyStream(dis, buffer);
+            RAMInputStream is = new RAMInputStream(null);
+            is.setBuffer(buffer);
+            return is;
+        }
     }
 
     public byte[] getBytes() throws IOException {
-        DataInputStream dis = this.getDataInputStream();
-
-        byte buffer[] = new byte[(int) this.length()];
-        IOUtil.copyStream(dis, buffer);
-        return buffer;
+        try (DataInputStream dis = this.getDataInputStream()) {
+            byte[] buffer = new byte[(int) this.length()];
+            IOUtil.copyStream(dis, buffer);
+            return buffer;
+        }
     }
 
     public abstract void touch();
@@ -309,14 +318,14 @@ public abstract class BaseFile<F extends BaseFile, FS extends BaseFileSystem> {
     }
 
     public String readString() throws IOException {
-        DataInputStream dis = this.getDataInputStream();
-        StringBuilder sb = StringUtil.readStreamIntoBuilder(dis);
-        dis.close();
-        return sb.toString();
+        try (DataInputStream dis = this.getDataInputStream()) {
+            StringBuilder sb = StringUtil.readStreamIntoBuilder(dis);
+            return sb.toString();
+        }
     }
 
     public Reader getReader() throws IOException {
-        return new InputStreamReader(this.getDataInputStream());
+        return new InputStreamReader(this.getDataInputStream(), java.nio.charset.StandardCharsets.UTF_8);
     }
 
     public Reader getReader(String encoding) throws IOException {
@@ -489,6 +498,7 @@ public abstract class BaseFile<F extends BaseFile, FS extends BaseFileSystem> {
             if (child.isDir()) {
                 if (recursive) {
                     deleteContentOfDir(recursive, child);
+                    child.delete();
                 } else {
                     child.delete();
                 }
@@ -639,6 +649,14 @@ public abstract class BaseFile<F extends BaseFile, FS extends BaseFileSystem> {
         return listFiles(AlwaysTrueOperator.oper);
     }
 
+    /**
+     * List files matching a glob pattern (e.g., "*.json", "data-*.csv").
+     * Uses JDK PathMatcher syntax matched against filenames.
+     */
+    public BaseFile[] listFiles(String globPattern) throws IOException {
+        return listFiles(new com.hitorro.util.basefile.filters.GlobFilter(globPattern));
+    }
+
     public AbstractIterator<BaseFile> list() throws IOException {
         return new ArrayIterator<BaseFile>(listFiles());
     }
@@ -661,7 +679,7 @@ public abstract class BaseFile<F extends BaseFile, FS extends BaseFileSystem> {
     }
 
     public List<String> getLines() throws IOException {
-        List<String> list = new ArrayList();
+        List<String> list = new ArrayList<>();
         AbstractIterator<String> iter = getLineReaderIteratorFromFile();
         iter.addAll(list);
         return list;
@@ -671,16 +689,18 @@ public abstract class BaseFile<F extends BaseFile, FS extends BaseFileSystem> {
         return new LineReaderIterator(getReader());
     }
 
+    @SuppressWarnings("unchecked")
     public AbstractIterator<F> dirIterator() throws IOException {
-        BaseFile l[] = listFiles();
+        BaseFile[] l = listFiles();
         if (l == null) {
             return null;
         }
         return new ArrayIterator(l);
     }
 
+    @SuppressWarnings("unchecked")
     public AbstractIterator<F> dirIterator(HTPredicate<BaseFile> filter) throws IOException {
-        BaseFile l[] = listFiles(filter);
+        BaseFile[] l = listFiles(filter);
         if (l == null) {
             return null;
         }
@@ -722,19 +742,15 @@ public abstract class BaseFile<F extends BaseFile, FS extends BaseFileSystem> {
     }
 
     public long readLong() throws IOException {
-        DataInputStream dis = this.getDataInputStream();
-        if (dis != null) {
-            long l = dis.readLong();
-            dis.close();
-            return l;
+        try (DataInputStream dis = this.getDataInputStream()) {
+            return dis.readLong();
         }
-        return -1;
     }
 
     public void writeLong(long l) throws IOException {
-        DataOutputStream dos = this.getDataOutputStream();
-        dos.writeLong(l);
-        dos.close();
+        try (DataOutputStream dos = this.getDataOutputStream()) {
+            dos.writeLong(l);
+        }
     }
 
     public TLongLongHashMap readTLongLong() throws IOException {

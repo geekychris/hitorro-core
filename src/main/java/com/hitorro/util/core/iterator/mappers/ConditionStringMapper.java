@@ -26,7 +26,7 @@ package com.hitorro.util.core.iterator.mappers;
  * Cleans up a string by removing non alpha and possibly numeric chars.
  */
 public class ConditionStringMapper extends BaseMapper<String, String> {
-    public static final ConditionStringMapper alpha = new ConditionStringMapper(true, true, ConditionStringMapper.Keep.Alpha);
+    public static ConditionStringMapper alpha = new ConditionStringMapper(true, true, ConditionStringMapper.Keep.Alpha);
     private StringBuilder sb = new StringBuilder();
     private Keep keep;
     private boolean lowerCase;

@@ -54,7 +54,7 @@ public class CommandArgs {
         return b.toString();
     }
 
-    public static final void getArgString(StringBuilder b, Map<String, String> targetMap) {
+    public static void getArgString(StringBuilder b, Map<String, String> targetMap) {
         Set<Map.Entry<String, String>> es = targetMap.entrySet();
         for (Map.Entry<String, String> entry : es) {
             b.append(entry.getKey());
@@ -64,7 +64,7 @@ public class CommandArgs {
         }
     }
 
-    public static final void getArgObject(StringBuilder b, Map<String, Object> targetMap) {
+    public static void getArgObject(StringBuilder b, Map<String, Object> targetMap) {
         Set<Map.Entry<String, Object>> es = targetMap.entrySet();
         for (Map.Entry<String, Object> entry : es) {
             b.append(entry.getKey());
@@ -83,7 +83,7 @@ public class CommandArgs {
      * @param param
      * @param supportFlags allows flags (keys with no value) to be specified
      */
-    public static final ObjectNode getParameters(String param, boolean supportFlags)
+    public static ObjectNode getParameters(String param, boolean supportFlags)
             throws ParseException, PropaccessError {
         return getParameters(param, supportFlags, false);
     }
@@ -99,13 +99,13 @@ public class CommandArgs {
      */
 
 
-    public static final ObjectNode getParameters(String param, boolean supportFlags, boolean lowerCaseKey)
+    public static ObjectNode getParameters(String param, boolean supportFlags, boolean lowerCaseKey)
             throws ParseException, PropaccessError {
         ObjectNode node = JsonNodeFactory.instance.objectNode();
         return getParameters(param, supportFlags, lowerCaseKey, node);
     }
 
-    public static final ObjectNode getParameters(String param, boolean supportFlags, boolean lowerCaseKey, ObjectNode props)
+    public static ObjectNode getParameters(String param, boolean supportFlags, boolean lowerCaseKey, ObjectNode props)
             throws ParseException, PropaccessError {
 
         StringBuilder buff = new StringBuilder();

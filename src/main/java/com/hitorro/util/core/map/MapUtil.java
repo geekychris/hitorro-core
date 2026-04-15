@@ -68,7 +68,7 @@ public class MapUtil {
         list.add(elem);
     }
 
-    public static final <K, V> void addToMapArray(Map<K, Collection<V>> groups,
+    public static <K, V> void addToMapArray(Map<K, Collection<V>> groups,
                                                   Collection<V> col, Function<V, K> f) {
         for (V g : col) {
             K key = f.apply(g);
@@ -88,7 +88,7 @@ public class MapUtil {
      * @param targetMap
      * @return
      */
-    public static final <E, F> boolean addAll(Map<E, F> sourceMap, Map<E, F> targetMap) {
+    public static <E, F> boolean addAll(Map<E, F> sourceMap, Map<E, F> targetMap) {
         if (sourceMap.size() == 0) {
             return false;
         }
@@ -100,7 +100,7 @@ public class MapUtil {
     }
 
 
-    public static final <E, J> void addAllToMap(Map<E, J> addToMe, Map<E, J> takeFromMe) {
+    public static <E, J> void addAllToMap(Map<E, J> addToMe, Map<E, J> takeFromMe) {
         Set<Map.Entry<E, J>> set = takeFromMe.entrySet();
         for (Map.Entry<E, J> ent : set) {
             addToMe.put(ent.getKey(), ent.getValue());
@@ -111,7 +111,7 @@ public class MapUtil {
      * @deprecated Use {@code map == null || map.isEmpty()}. Zero callers remain.
      */
     @Deprecated
-    public static final boolean nullOrEmpty(Map map) {
+    public static boolean nullOrEmpty(Map map) {
         if (map == null) {
             return true;
         }
@@ -123,7 +123,7 @@ public class MapUtil {
      *
      * @param map
      */
-    public static final void dumpMap(Map map) {
+    public static void dumpMap(Map map) {
         Set<Map.Entry> foo = map.entrySet();
         for (Map.Entry e : foo) {
             Console.println("key: %s, value: %s", e.getKey(), e.getValue());
@@ -139,7 +139,7 @@ public class MapUtil {
      * @param distinct if true, duplicates are not allowed in the listFiles.
      * @return true if added, false if not added (perhaps duplicate entry
      */
-    public static final <K, V> boolean addMapListValue(Map<K, List<V>> map,
+    public static <K, V> boolean addMapListValue(Map<K, List<V>> map,
                                                        K key,
                                                        V value,
                                                        boolean distinct) {
@@ -161,7 +161,7 @@ public class MapUtil {
     /**
      * Convenience method for where the array has only two conceptual columns of data.
      */
-    public static final Map createMapFromArray(Object[] array) {
+    public static Map createMapFromArray(Object[] array) {
         return createMapFromArray(array, 2, 0, 1);
     }
 
@@ -172,7 +172,7 @@ public class MapUtil {
      * @return apply of key value pairs, or null if the incrementor is not exactly divisible by the amount of array
      * elements.
      */
-    public static final Map<Object, Object> createMapFromArray(Object[] array,
+    public static Map<Object, Object> createMapFromArray(Object[] array,
                                                                int incrementor, int keyIndex, int valueIndex) {
         int mod = array.length % incrementor;
         if (mod > 0) {
@@ -194,7 +194,7 @@ public class MapUtil {
      * @param list
      * @return Identity apply
      */
-    public static final Map<String, String> createStringIdentityMap(List list) {
+    public static Map<String, String> createStringIdentityMap(List list) {
         Map<String, String> map = new HashMap<String, String>();
         for (Object a : list) {
             String s = a.toString();
@@ -209,7 +209,7 @@ public class MapUtil {
      * @param args
      * @return Identity apply
      */
-    public static final Map<String, String> createStringIdentityMap(String args[]) {
+    public static Map<String, String> createStringIdentityMap(String args[]) {
         Map<String, String> map = new HashMap<String, String>();
         for (String a : args) {
             map.put(a, a);
@@ -257,7 +257,7 @@ public class MapUtil {
      *
      * @return filtered apply with possibly translated key names.
      */
-    public static final Map<Object, Object> extractRows(
+    public static Map<Object, Object> extractRows(
             Map<Object, Object> map, Map<Object, Object> filterSet,
             boolean substituteFilterValueForKey) {
         Map<Object, Object> result = new HashMap<Object, Object>();
@@ -276,7 +276,7 @@ public class MapUtil {
         return result;
     }
 
-    public static final boolean getBooleanColumnFromColumMap(String name,
+    public static boolean getBooleanColumnFromColumMap(String name,
                                                              Map<String, Integer> columnMap, String[] row) {
         String s = getColumnFromColumMap(name, columnMap, row);
         if (StringUtil.nullOrEmptyString(s)) {
@@ -324,7 +324,7 @@ public class MapUtil {
      * @param key
      * @return
      */
-    public static final Integer getIntegerFromMapStringValue(Map map,
+    public static Integer getIntegerFromMapStringValue(Map map,
                                                              Object key) {
         Object value = map.get(key);
         if (value != null) {
@@ -354,7 +354,7 @@ public class MapUtil {
         return -1;
     }
 
-    public static final List<com.hitorro.util.core.GenericKeyValue> getKeyValueListFromMap(Map<String, Object> map) {
+    public static List<com.hitorro.util.core.GenericKeyValue> getKeyValueListFromMap(Map<String, Object> map) {
         List<com.hitorro.util.core.GenericKeyValue> l = new ArrayList<com.hitorro.util.core.GenericKeyValue>();
         Set<Map.Entry<String, Object>> set = map.entrySet();
         Iterator<Map.Entry<String, Object>> iter = set.iterator();
@@ -371,7 +371,7 @@ public class MapUtil {
      * @param map
      * @return
      */
-    public static final String[] getMapAsArgsArray(Map<String, String> map) {
+    public static String[] getMapAsArgsArray(Map<String, String> map) {
         String args[] = new String[map.size()];
         Set<Map.Entry<String, String>> entries = map.entrySet();
         int i = 0;
@@ -389,7 +389,7 @@ public class MapUtil {
      * @param header
      * @return Map<String, Integer> - column name to index within vector
      */
-    public static final Map<String, Integer> getMapColumnNameToIndexPosition(
+    public static Map<String, Integer> getMapColumnNameToIndexPosition(
             String header[], boolean lowerCase) {
         Map<String, Integer> map = new HashMap<String, Integer>();
         for (int i = 0; i < header.length; i++) {
@@ -505,7 +505,7 @@ public class MapUtil {
      * @param map
      * @return
      */
-    public static final List getSmallestMapListEntry(Map map) {
+    public static List getSmallestMapListEntry(Map map) {
         List currLowest = null;
         int lowestSize = 99999999;
         Iterator iter = MapUtil.valueIterator(map);
@@ -546,7 +546,7 @@ public class MapUtil {
      * @param key
      * @return
      */
-    public static final boolean keyExists(Map map, Object key) {
+    public static boolean keyExists(Map map, Object key) {
         Object value = map.get(key);
         return value != null;
 
@@ -558,12 +558,12 @@ public class MapUtil {
      * @param map
      * @return
      */
-    public static final Iterator keyIterator(Map map) {
+    public static Iterator keyIterator(Map map) {
         Collection c = map.keySet();
         return c.iterator();
     }
 
-    public static final boolean loadTextFileIntoIdentityMap(File f, IdentityMap<String> map) {
+    public static boolean loadTextFileIntoIdentityMap(File f, IdentityMap<String> map) {
         if (!FileUtil.nullOrNotExist(f)) {
             try {
                 Iterator<String> iter = FileUtil.getLineReaderIteratorFromFile(f);
@@ -586,7 +586,7 @@ public class MapUtil {
      * @param elems
      * @return a hash set of elems
      */
-    public static final HashSet<String> makeHashSet(String... elems) {
+    public static HashSet<String> makeHashSet(String... elems) {
         HashSet<String> hash = new HashSet<String>();
         for (String s : elems) {
             hash.add(s);
@@ -599,11 +599,11 @@ public class MapUtil {
      *
      * @return
      */
-    public static final Map map() {
+    public static Map map() {
         return new HashMap();
     }
 
-    public static final void merge(TLongLongHashMap target, TLongLongHashMap map) {
+    public static void merge(TLongLongHashMap target, TLongLongHashMap map) {
 
         for (TLongLongIterator it = map.iterator(); it.hasNext(); ) {
             it.advance();
@@ -637,7 +637,7 @@ public class MapUtil {
      * @param map2
      * @return merged apply of the two input maps.
      */
-    public static final <E, F> Map<E, F> mergeMaps(Map<E, F> map, Map<E, F> map2) {
+    public static <E, F> Map<E, F> mergeMaps(Map<E, F> map, Map<E, F> map2) {
         if (map == null) {
             return map2;
         }
@@ -682,7 +682,7 @@ public class MapUtil {
         return c.iterator();
     }
 
-    public static final boolean writeTIntIntMapToFile(File f, TIntIntHashMap map) throws IOException {
+    public static boolean writeTIntIntMapToFile(File f, TIntIntHashMap map) throws IOException {
         DataOutputStream dos = FileUtil.getDataOutputStreamForFile(f);
         dos.writeInt(map.size());
         for (TIntIntIterator it = map.iterator(); it.hasNext(); ) {
@@ -695,7 +695,7 @@ public class MapUtil {
         return true;
     }
 
-    public static final boolean writeTIntLongMapToFile(File f, TIntLongHashMap map) throws IOException {
+    public static boolean writeTIntLongMapToFile(File f, TIntLongHashMap map) throws IOException {
         DataOutputStream dos = FileUtil.getDataOutputStreamForFile(f);
         dos.writeInt(map.size());
         for (TIntLongIterator it = map.iterator(); it.hasNext(); ) {
@@ -745,7 +745,7 @@ public class MapUtil {
     }
 
 
-    public static final boolean loadTextFileIntoIdentityMap(File f, Set<String> map) throws UnsupportedEncodingException {
+    public static boolean loadTextFileIntoIdentityMap(File f, Set<String> map) throws UnsupportedEncodingException {
         if (!FileUtil.nullOrNotExist(f)) {
             try {
                 Iterator<String> iter = FileUtil.getLineReaderIteratorFromFile(f, "UTF-8");
@@ -762,7 +762,7 @@ public class MapUtil {
         return false;
     }
 
-    public static final boolean saveTextFileIntoIdentityMap(File f, Set<String> map) throws UnsupportedEncodingException {
+    public static boolean saveTextFileIntoIdentityMap(File f, Set<String> map) throws UnsupportedEncodingException {
 
         File tmp = FileUtil.getTempFileWithFromPeerFileWithExtension(f, "tmp");
         tmp.delete();

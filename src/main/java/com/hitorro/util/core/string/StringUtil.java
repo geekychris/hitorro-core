@@ -44,7 +44,7 @@ public final class StringUtil {
 // -------------------------- STATIC METHODS --------------------------
 
 
-    public static String after(String s, char c) {
+    public static final String after(String s, char c) {
         if (s == null) {
             return null;
         }
@@ -58,7 +58,7 @@ public final class StringUtil {
         return s.substring(index + 1);
     }
 
-    public static String collapseWhitespace(String trim) {
+    public static final String collapseWhitespace(String trim) {
         if (trim.isEmpty()) {
             return trim;
         }
@@ -81,7 +81,7 @@ public final class StringUtil {
     }
 
 
-    public static int mergeHashcodes(Object... args) {
+    public static final int mergeHashcodes(Object... args) {
         if (args.length == 0) {
             return 0;
         }
@@ -101,7 +101,7 @@ public final class StringUtil {
 
     }
 
-    public static int size(String... elems) {
+    public static final int size(String... elems) {
         int size = 0;
         for (String e : elems) {
             if (e == null) {
@@ -130,7 +130,7 @@ public final class StringUtil {
         return tmp;
     }
 
-    public static final ArrayNode getCallstackAsJsonArray(Throwable t) {
+    public static ArrayNode getCallstackAsJsonArray(Throwable t) {
         final ArrayNode an = JsonNodeFactory.instance.arrayNode();
         t.printStackTrace(new PrintWriter(new Writer() {
 
@@ -338,7 +338,7 @@ public final class StringUtil {
      * @param arr
      * @param list
      */
-    public static final void addAll(String arr[], List<String> list) {
+    public static void addAll(String arr[], List<String> list) {
         for (String s : arr) {
             list.add(s);
         }
@@ -485,7 +485,7 @@ public final class StringUtil {
      * @param s
      * @return
      */
-    public static final boolean isAlphaPunkt(String s) {
+    public static boolean isAlphaPunkt(String s) {
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             if (Character.isLetter(c)) {
@@ -504,7 +504,7 @@ public final class StringUtil {
      * @param s
      * @return
      */
-    public static final boolean nullOrEmptyStringOrSaysNull(String s) {
+    public static boolean nullOrEmptyStringOrSaysNull(String s) {
         if (StringUtil.nullOrEmptyString(s)) {
             return true;
         }
@@ -668,7 +668,7 @@ public final class StringUtil {
      * @throws java.io.IOException
      */
 
-    public static String readFileIntoString(File f) throws IOException {
+    public static final String readFileIntoString(File f) throws IOException {
         StringBuilder sb = new StringBuilder();
         readFileIntoBuilder(sb, f);
         return sb.toString();
@@ -770,7 +770,7 @@ public final class StringUtil {
      * @param test string
      * @return true only contains test char.
      */
-    public static final boolean containsAllSameChars(final String test,
+    public static boolean containsAllSameChars(final String test,
                                                      final char testChar) {
         int testSize = test.length();
         for (int i = 0; i < testSize; i++) {
@@ -846,7 +846,7 @@ public final class StringUtil {
      * @param test string
      * @return true only contains test char.
      */
-    public static final boolean doesNotContainChar(final String test,
+    public static boolean doesNotContainChar(final String test,
                                                    final char testChar) {
         int testSize = test.length();
         for (int i = 0; i < testSize; i++) {
@@ -922,7 +922,7 @@ public final class StringUtil {
         }
     }
 
-    public static final boolean endsWithIgnoringCase(String string, String test) {
+    public static boolean endsWithIgnoringCase(String string, String test) {
         return endsWithIgnoringCase(string, test, true);
     }
 
@@ -933,11 +933,11 @@ public final class StringUtil {
      * @param test
      * @return
      */
-    public static final boolean endsWithIgnoringCase(String string, String test, boolean ignoreCase) {
+    public static boolean endsWithIgnoringCase(String string, String test, boolean ignoreCase) {
         return endsWithIgnoringCase(string, test, ignoreCase, string.length());
     }
 
-    public static final boolean endsWithIgnoringCase(String string, String test, boolean ignoreCase, int lengthS) {
+    public static boolean endsWithIgnoringCase(String string, String test, boolean ignoreCase, int lengthS) {
         if (!ignoreCase) {
             return string.endsWith(test);
         }
@@ -966,7 +966,7 @@ public final class StringUtil {
      * @param ignoreCase
      * @return true if the same
      */
-    public static final boolean equals(String a, String b, boolean ignoreCase) {
+    public static boolean equals(String a, String b, boolean ignoreCase) {
         if (a == null && b == null) {
             return true;
         }
@@ -1101,7 +1101,7 @@ public final class StringUtil {
      * @param ignoreCase
      * @return true if found.
      */
-    public static final boolean inList(String s, String[] list,
+    public static boolean inList(String s, String[] list,
                                        boolean ignoreCase) {
         for (String test : list) {
             if (equals(test, s, ignoreCase)) {
@@ -1119,7 +1119,7 @@ public final class StringUtil {
      * @param ignoreCase
      * @return true if found.
      */
-    public static final boolean inList(String s, String[][] list,
+    public static boolean inList(String s, String[][] list,
                                        int columnNo, boolean ignoreCase) {
         for (int i = 0; i < list.length; i++) {
             if (equals(list[i][columnNo], s, ignoreCase)) {
@@ -1136,7 +1136,7 @@ public final class StringUtil {
      * @param listOfStrings
      * @return
      */
-    public static final String[] listToArray(final List listOfStrings) {
+    public static String[] listToArray(final List listOfStrings) {
         String[] result = new String[listOfStrings.size()];
         for (int i = 0; i < result.length; i++) {
             result[i] = listOfStrings.get(i).toString();
@@ -1165,7 +1165,7 @@ public final class StringUtil {
      * @param lineSeperator
      * @return
      */
-    public static final StringBuilder mapToBuffer(final Map map,
+    public static StringBuilder mapToBuffer(final Map map,
                                                   String keyValSep, final String lineSeperator) {
         StringBuilder buffer = new StringBuilder();
         Set s = map.keySet();
@@ -1181,7 +1181,7 @@ public final class StringUtil {
         return buffer;
     }
 
-    public static final String[] mergeStringArrays(String[] array1,
+    public static String[] mergeStringArrays(String[] array1,
                                                    String[] array2) {
         String[] array = new String[array1.length + array2.length];
         int idx = 0;
@@ -1306,7 +1306,7 @@ public final class StringUtil {
      * @param ignoreCase
      * @return
      */
-    public static final boolean notNullEquals(String a, String b, boolean ignoreCase) {
+    public static boolean notNullEquals(String a, String b, boolean ignoreCase) {
         if (!StringUtil.nullOrEmptyString(a) && !StringUtil.nullOrEmptyString(b)) {
             if (ignoreCase) {
                 return a.equalsIgnoreCase(b);
@@ -1323,7 +1323,7 @@ public final class StringUtil {
      * @param test string
      * @return true if null or empty string
      */
-    public static final boolean nullOrEmptyOrBlankString(final String test) {
+    public static boolean nullOrEmptyOrBlankString(final String test) {
         return test == null || test.length() == 0
                 || containsAllSameChars(test, ' ');
     }
@@ -1334,11 +1334,11 @@ public final class StringUtil {
      * @param test string
      * @return true if null or empty string
      */
-    public static final boolean nullOrEmptyString(final String test) {
+    public static boolean nullOrEmptyString(final String test) {
         return test == null || test.length() == 0;
     }
 
-    public static final boolean nullOrEmptyString(final String... tests) {
+    public static boolean nullOrEmptyString(final String... tests) {
         for (String t : tests) {
             if (nullOrEmptyString(t)) {
                 return true;
@@ -1353,7 +1353,7 @@ public final class StringUtil {
      * @param test string
      * @return true if null or empty string
      */
-    public static final boolean nullOrEmptyStringBuilder(
+    public static boolean nullOrEmptyStringBuilder(
             final StringBuilder test) {
         return test == null || test.length() == 0;
     }
@@ -1385,7 +1385,7 @@ public final class StringUtil {
      *
      * @return String array representation of the array of objects.
      */
-    public static final String[] objectArrayToStringArray(Object listOfObjects[]) {
+    public static String[] objectArrayToStringArray(Object listOfObjects[]) {
         String[] result = new String[listOfObjects.length];
         for (int i = 0; i < result.length; i++) {
             result[i] = listOfObjects[i].toString();
@@ -1420,7 +1420,7 @@ public final class StringUtil {
      * @param size
      * @param builder
      */
-    public static final void pad(Object padMe, char padding, int size,
+    public static void pad(Object padMe, char padding, int size,
                                  StringBuilder builder) {
         builder.append(padMe);
         for (int i = 0; i < size; i++) {
@@ -1428,7 +1428,7 @@ public final class StringUtil {
         }
     }
 
-    public static String padToLength(char padding, int size) {
+    public static final String padToLength(char padding, int size) {
         if (size <= 0) {
             return "";
         }
@@ -1460,7 +1460,7 @@ public final class StringUtil {
      * @param size
      * @param builder
      */
-    public static final void padToLength(Object padMe, char padding, int size,
+    public static void padToLength(Object padMe, char padding, int size,
                                          StringBuilder builder) {
         int sizeIn = builder.length();
         builder.append(padMe);
@@ -1505,7 +1505,7 @@ public final class StringUtil {
      * @param size
      * @param builder
      */
-    public static final void prependPadToLength(Object padMe, char padding, int size,
+    public static void prependPadToLength(Object padMe, char padding, int size,
                                                 StringBuilder builder) {
         String padMeStr = padMe.toString();
 
@@ -1541,7 +1541,7 @@ public final class StringUtil {
         return sb.toString();
     }
 
-    public static String replace(String a, String b, String c) {
+    public static final String replace(String a, String b, String c) {
         StringBuilder builder = new StringBuilder();
         int index = a.indexOf(b);
         int prev = 0;
@@ -1567,7 +1567,7 @@ public final class StringUtil {
      * @param c            character to test for.
      * @return
      */
-    public static int sloppyIndexOf(final String data, final int startIndex,
+    public static final int sloppyIndexOf(final String data, final int startIndex,
                                     final int slopDistance, final char c) {
         int dataLength = data.length();
         if (dataLength < startIndex) {
@@ -1590,7 +1590,7 @@ public final class StringUtil {
      *
      * @return null if no token found, else 2 element string array divided by the token
      */
-    public static final String[] splitByToken(final String line,
+    public static String[] splitByToken(final String line,
                                               final char token) {
         int index = line.indexOf(token);
         if (index == -1) {
@@ -1609,7 +1609,7 @@ public final class StringUtil {
     }
 
 
-    public static final String[] splitByFirstToken(final String line,
+    public static String[] splitByFirstToken(final String line,
                                                    final String token) {
         if (StringUtil.nullOrEmptyOrBlankString(line)) {
             return null;
@@ -1654,7 +1654,7 @@ public final class StringUtil {
      * @param test
      * @return true if same
      */
-    public static final boolean startsWithIgnoreCase(String s, int index, String test) {
+    public static boolean startsWithIgnoreCase(String s, int index, String test) {
         if (s.length() - index < test.length()) {
             return false;
         }
@@ -1675,7 +1675,7 @@ public final class StringUtil {
      * @param test
      * @return
      */
-    public static final boolean startsWithIgnoreCase(String s, String test) {
+    public static boolean startsWithIgnoreCase(String s, String test) {
         return startsWithIgnoreCase(s, test, true);
     }
 
@@ -1686,7 +1686,7 @@ public final class StringUtil {
      * @param test
      * @return
      */
-    public static final boolean startsWithIgnoreCase(String s, String test, boolean ignore) {
+    public static boolean startsWithIgnoreCase(String s, String test, boolean ignore) {
         if (s.length() < test.length()) {
             return false;
         }
@@ -1729,7 +1729,7 @@ public final class StringUtil {
      * @param searchString
      * @return
      */
-    public static final boolean stringContains(final String test,
+    public static boolean stringContains(final String test,
                                                final String searchString) {
         return test.indexOf(searchString) >= 0;
     }
@@ -1741,7 +1741,7 @@ public final class StringUtil {
      * @param searchString
      * @return
      */
-    public static final boolean stringContainsIgnoreCase(final String test,
+    public static boolean stringContainsIgnoreCase(final String test,
                                                          final String searchString) {
         return stringContains(test.toLowerCase(), searchString.toLowerCase());
     }
@@ -1799,7 +1799,7 @@ public final class StringUtil {
      * @param tag
      * @return
      */
-    public static final boolean subStringEqualsIgnoreCase(String buffer, int start, int entityNameLength, String tag) {
+    public static boolean subStringEqualsIgnoreCase(String buffer, int start, int entityNameLength, String tag) {
         if (tag.length() != entityNameLength) {
             return false;
         }
@@ -1839,7 +1839,7 @@ public final class StringUtil {
      * @param tagSize
      * @return
      */
-    public static final boolean subStringEqualsIgnoreCase(String buffer, int start, int entityNameLength, String tag, int tagPos, int tagSize) {
+    public static boolean subStringEqualsIgnoreCase(String buffer, int start, int entityNameLength, String tag, int tagPos, int tagSize) {
         if (tagSize != entityNameLength) {
             return false;
         }
@@ -1878,7 +1878,7 @@ public final class StringUtil {
      * @param list
      * @return
      */
-    public static final String[] toArray(List<String> list) {
+    public static String[] toArray(List<String> list) {
         int size = list.size();
         String array[] = new String[size];
         for (int i = 0; i < size; i++) {
@@ -2020,7 +2020,7 @@ public final class StringUtil {
      * @param trimIt    , run trim on the strings to remove whitespace
      * @return an array of resulting tokens. Won't ever be null but may have zero length
      */
-    public static final String[] tokenizeEscapedString(final String theString,
+    public static String[] tokenizeEscapedString(final String theString,
                                                        final char separator, final boolean trimIt) {
         List<String> parts = new ArrayList<String>();
         boolean inQuotes = false;
@@ -2094,7 +2094,7 @@ public final class StringUtil {
      * @param ar
      * @return list
      */
-    public static final List<String> toList(String... ar) {
+    public static List<String> toList(String... ar) {
         ArrayList<String> list = new ArrayList<String>();
         for (String o : ar) {
             list.add(o);
@@ -2102,7 +2102,7 @@ public final class StringUtil {
         return list;
     }
 
-    public static String trimString(String str, int length) {
+    public static final String trimString(String str, int length) {
         return truncateToLength(str, length);
     }
 
@@ -2195,7 +2195,7 @@ public final class StringUtil {
      * @param r
      * @return
      */
-    public static final boolean ensureBalance(String s, char l, char r) {
+    public static boolean ensureBalance(String s, char l, char r) {
         int count = 0;
         int length = s.length();
 

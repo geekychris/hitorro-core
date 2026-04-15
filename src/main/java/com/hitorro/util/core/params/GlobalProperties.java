@@ -62,14 +62,14 @@ public class GlobalProperties {
         return defaultProperties;
     }
 
-    public static String resolveJsonVariable(String value) {
+    public static final String resolveJsonVariable(String value) {
         return PropertiesUtil.resolveJsonVariable(value, true, null, getProperties());
     }
 
     /**
      * Get a string value from the global properties using a path key.
      */
-    public static String getString(String path) {
+    public static final String getString(String path) {
         if (defaultProperties == null) {
             return null;
         }

@@ -185,11 +185,11 @@ public class FileUtil {
     private static String s_lnCommand = null;
     private static long fCounter = 0;
 
-    public static final File getFormattedFile(File directory, String pattern, Object... args) {
+    public static File getFormattedFile(File directory, String pattern, Object... args) {
         return new File(directory, Fmt.Sargs(pattern, args));
     }
 
-    public static final boolean deleteAndRecreateDir(File dir) {
+    public static boolean deleteAndRecreateDir(File dir) {
         FileUtil.deleteDirectoryContent(dir, true);
         FileUtil.ensureDirectoryExists(dir);
         return true;
@@ -277,7 +277,7 @@ public class FileUtil {
         dos.close();
     }
 
-    public static String getSingleStringFromFile(File file)
+    public static final String getSingleStringFromFile(File file)
             throws IOException {
         DataInputStream dis = getDataInputStreamForFile(file);
         String result = dis.readUTF();
@@ -315,7 +315,7 @@ public class FileUtil {
         return wrapper;
     }
 
-    public static int copyByteArrayToChar(byte[] array, char[] result) {
+    public static final int copyByteArrayToChar(byte[] array, char[] result) {
         for (int i = 0; i < array.length; i++) {
             result[i] = (char) array[i];
         }
@@ -328,7 +328,7 @@ public class FileUtil {
      * @param file
      * @return if successfull.  False if file does not exist or it is not deletable.
      */
-    public static final boolean deleteIfNotNull(File file) {
+    public static boolean deleteIfNotNull(File file) {
         if (FileUtil.nullOrNotExist(file)) {
             return false;
         }
@@ -343,7 +343,7 @@ public class FileUtil {
      * @return
      * @throws FileNotFoundException
      */
-    public static final boolean writeStringListToFile(File file, List<String> list)
+    public static boolean writeStringListToFile(File file, List<String> list)
             throws FileNotFoundException {
         OutputStream os = FileUtil.getBufferedFileOutputStream(file);
         PrintStream ps = new PrintStream(os);
@@ -363,7 +363,7 @@ public class FileUtil {
      * @return
      * @throws FileNotFoundException
      */
-    public static final boolean writeStringToFile(File file, String msg)
+    public static boolean writeStringToFile(File file, String msg)
             throws FileNotFoundException {
         OutputStream os = FileUtil.getBufferedFileOutputStream(file);
         PrintStream ps = new PrintStream(os);
@@ -381,7 +381,7 @@ public class FileUtil {
      * @return
      * @throws java.io.IOException
      */
-    public static final boolean copyDirectory(File inputDir, File outputDir) throws IOException {
+    public static boolean copyDirectory(File inputDir, File outputDir) throws IOException {
         File files[] = inputDir.listFiles();
         for (File file : files) {
             File target = new File(outputDir, file.getName());
@@ -401,7 +401,7 @@ public class FileUtil {
      * @param file
      * @return
      */
-    public static final boolean nullOrNotExistOrNotFile(File file) {
+    public static boolean nullOrNotExistOrNotFile(File file) {
         if (nullOrNotExist(file)) {
             return true;
         }
@@ -414,7 +414,7 @@ public class FileUtil {
      * @param file
      * @return
      */
-    public static final boolean nullOrNotExist(File file) {
+    public static boolean nullOrNotExist(File file) {
         if (file != null) {
             return !file.exists();
         }
@@ -422,7 +422,7 @@ public class FileUtil {
 
     }
 
-    public static final boolean nullOrNotExistOrEmpty(File file) {
+    public static boolean nullOrNotExistOrEmpty(File file) {
         if (nullOrNotExist(file)) {
             return false;
         }
@@ -435,7 +435,7 @@ public class FileUtil {
      * @param file
      * @return
      */
-    public static final boolean notNullAndExists(File file) {
+    public static boolean notNullAndExists(File file) {
         if (file != null) {
             return file.exists();
         }
@@ -450,7 +450,7 @@ public class FileUtil {
      * @param b
      * @return true if a has become b and be has become a
      */
-    public static final boolean swap(File a, File b) {
+    public static boolean swap(File a, File b) {
         File temp = getTempFileWithFromPeerFileWithExtension(a, "tmp");
         try {
             a.renameTo(temp);
@@ -633,7 +633,7 @@ public class FileUtil {
         return Fmt.S("%s.%s", peer, ext);
     }
 
-    public static final File getFilePeerWithExtension(File file, String extension) {
+    public static File getFilePeerWithExtension(File file, String extension) {
         return new File(file.getParent(), Fmt.S("%s.%s", FileUtil.getFileNameSansExtension(file), extension));
     }
 
@@ -645,12 +645,12 @@ public class FileUtil {
      * @param ext
      * @return File that should be unique with a given file extension in the same directory as a
      */
-    public static final File getTempFileWithFromPeerFileWithExtension(File a,
+    public static File getTempFileWithFromPeerFileWithExtension(File a,
                                                                       String ext) {
         return getTempFileWithFromDirectoryExtension(a.getParentFile(), ext);
     }
 
-    public static String getPeerFromName(String name, String extension) {
+    public static final String getPeerFromName(String name, String extension) {
         int index = name.lastIndexOf(".");
         if (index != -1) {
             name = name.substring(0, index);
@@ -669,13 +669,13 @@ public class FileUtil {
      * @param ext
      * @return File that should be unique with a given file extension in the same directory as a
      */
-    public static final File getTempFileWithFromDirectoryExtension(
+    public static File getTempFileWithFromDirectoryExtension(
             File directory, String ext) {
         return new File(Fmt.S("%s/%s-%s.%s", directory.getAbsolutePath(),
                 fileCounter(), System.currentTimeMillis(), ext));
     }
 
-    public static final List<File> deleteDirectoryContent(File dir,
+    public static List<File> deleteDirectoryContent(File dir,
                                                           boolean includeSelf) {
         List<File> l = new ArrayList<File>();
         deleteDirectoryContent(dir, includeSelf, l);
@@ -716,7 +716,7 @@ public class FileUtil {
      * @return CInputStream if we were able to open against a file
      * @throws FileNotFoundException
      */
-    public static final InputStream getBufferedFileInputStream(File file)
+    public static InputStream getBufferedFileInputStream(File file)
             throws FileNotFoundException {
         return new BufferedInputStream(new FileInputStream(file));
     }
@@ -728,7 +728,7 @@ public class FileUtil {
      * @return COutputStream if we were able to open against a file
      * @throws FileNotFoundException
      */
-    public static final OutputStream getBufferedFileOutputStream(File file)
+    public static OutputStream getBufferedFileOutputStream(File file)
             throws FileNotFoundException {
         return getBufferedFileOutputStream(file, false);
     }
@@ -741,7 +741,7 @@ public class FileUtil {
      * @return COutputStream if we were able to open against a file
      * @throws FileNotFoundException
      */
-    public static final OutputStream getBufferedFileOutputStream(File file,
+    public static OutputStream getBufferedFileOutputStream(File file,
                                                                  boolean append) throws FileNotFoundException {
         return new BufferedOutputStream(new FileOutputStream(file, append));
     }
@@ -753,7 +753,7 @@ public class FileUtil {
      * @return PrintWriter if we were able to open against a file
      * @throws FileNotFoundException
      */
-    public static final PrintWriter getBufferedPrintWriterFromFile(File file) {
+    public static PrintWriter getBufferedPrintWriterFromFile(File file) {
         try {
             return getBufferedPrintWriterFromOutputStream(getBufferedFileOutputStream(file));
         } catch (FileNotFoundException e) {
@@ -769,7 +769,7 @@ public class FileUtil {
      * @throws UnsupportedEncodingException
      * @throws FileNotFoundException
      */
-    public static final PrintWriter getBufferedPrintWriterFromFile(File file,
+    public static PrintWriter getBufferedPrintWriterFromFile(File file,
                                                                    String encoding) throws UnsupportedEncodingException {
         try {
             return new PrintWriter(file, encoding);
@@ -785,7 +785,7 @@ public class FileUtil {
      * @return PrintWriter if we were able to open against a file
      * @throws FileNotFoundException
      */
-    public static final PrintWriter getBufferedPrintWriterFromOutputStream(
+    public static PrintWriter getBufferedPrintWriterFromOutputStream(
             OutputStream os) {
         return new PrintWriter(os);
     }
@@ -796,7 +796,7 @@ public class FileUtil {
      * @param file
      * @return Reader if able to read file.
      */
-    public static final Reader getBufferedReaderFromFile(File file)
+    public static Reader getBufferedReaderFromFile(File file)
             throws FileNotFoundException {
         return new InputStreamReader(getBufferedFileInputStream(file));
     }
@@ -808,7 +808,7 @@ public class FileUtil {
      * @return Reader if able to read file.
      * @throws UnsupportedEncodingException
      */
-    public static final Reader getBufferedReaderFromFile(File file,
+    public static Reader getBufferedReaderFromFile(File file,
                                                          String encoding) throws FileNotFoundException,
             UnsupportedEncodingException {
         return new InputStreamReader(getBufferedFileInputStream(file), encoding);
@@ -821,7 +821,7 @@ public class FileUtil {
      * @return DataInputStream if successfull.
      * @throws FileNotFoundException
      */
-    public static final DataInputStream getDataInputStreamForFile(File file)
+    public static DataInputStream getDataInputStreamForFile(File file)
             throws FileNotFoundException {
         return new DataInputStream(getBufferedFileInputStream(file));
     }
@@ -833,12 +833,12 @@ public class FileUtil {
      * @return DataOutputStream if successfull.
      * @throws FileNotFoundException
      */
-    public static final DataOutputStream getDataOutputStreamForFile(File file)
+    public static DataOutputStream getDataOutputStreamForFile(File file)
             throws FileNotFoundException {
         return new DataOutputStream(getBufferedFileOutputStream(file));
     }
 
-    public static final DataOutputStream getDataOutputStreamForFile(File file, boolean append)
+    public static DataOutputStream getDataOutputStreamForFile(File file, boolean append)
             throws FileNotFoundException {
         return new DataOutputStream(getBufferedFileOutputStream(file, append));
     }
@@ -850,7 +850,7 @@ public class FileUtil {
      * @return DataOutputStream if successfull.
      * @throws FileNotFoundException
      */
-    public static final DataOutputStream getDataOutputStreamForFileAppend(File file)
+    public static DataOutputStream getDataOutputStreamForFileAppend(File file)
             throws FileNotFoundException {
         return new DataOutputStream(getBufferedFileOutputStream(file, true));
     }
@@ -862,21 +862,21 @@ public class FileUtil {
      * @return HTBaseObjectOutputStream if successfull.
      * @throws FileNotFoundException
      */
-    public static final ObjectOutputStream getObjectOutputStreamForFile(File file)
+    public static ObjectOutputStream getObjectOutputStreamForFile(File file)
             throws IOException {
         return new ObjectOutputStream(getBufferedFileOutputStream(file));
     }
 
-    public static final ObjectOutputStream getObjectOutputStreamForByteArray(int initialSize)
+    public static ObjectOutputStream getObjectOutputStreamForByteArray(int initialSize)
             throws IOException {
         return new ObjectOutputStream(getByteArrayOutputStream(initialSize));
     }
 
-    public static final ByteArrayOutputStream getByteArrayOutputStream(int initialSize) {
+    public static ByteArrayOutputStream getByteArrayOutputStream(int initialSize) {
         return new ByteArrayOutputStream(initialSize);
     }
 
-    public static final ByteArrayInputStream getByteArrayInputStream(byte array[]) {
+    public static ByteArrayInputStream getByteArrayInputStream(byte array[]) {
         return new ByteArrayInputStream(array);
     }
 
@@ -887,7 +887,7 @@ public class FileUtil {
      * @return HTBaseObjectInputStream if successfull.
      * @throws FileNotFoundException
      */
-    public static final ObjectInputStream getObjectInputStreamForFile(File file)
+    public static ObjectInputStream getObjectInputStreamForFile(File file)
             throws IOException {
         return new ObjectInputStream(getBufferedFileInputStream(file));
     }
@@ -899,7 +899,7 @@ public class FileUtil {
      * @return
      * @throws FileNotFoundException
      */
-    public static final Iterator<String> getLineReaderIteratorFromFile(
+    public static Iterator<String> getLineReaderIteratorFromFile(
             File file) throws FileNotFoundException {
         return new LineReaderIterator(getBufferedReaderFromFile(file));
     }
@@ -912,7 +912,7 @@ public class FileUtil {
      * @throws FileNotFoundException
      * @throws UnsupportedEncodingException
      */
-    public static final Iterator<String> getLineReaderIteratorFromFile(
+    public static Iterator<String> getLineReaderIteratorFromFile(
             File file, String encoding) throws FileNotFoundException,
             UnsupportedEncodingException {
         return new LineReaderIterator(getBufferedReaderFromFile(file, encoding));
@@ -925,7 +925,7 @@ public class FileUtil {
      * @return
      * @throws FileNotFoundException
      */
-    public static final List<String> getLinesFromFile(File file)
+    public static List<String> getLinesFromFile(File file)
             throws FileNotFoundException {
         List<String> list = new ArrayList<String>();
         Iterator<String> iter = getLineReaderIteratorFromFile(file);
@@ -941,7 +941,7 @@ public class FileUtil {
      * @return long value or throws an io exception of number format exception depending on if the file didnt exist /
      * couldnt be read, or the file was empty or didnt contain valid data.
      */
-    public static long getLongValFromFile(File logfile) throws IOException,
+    public static final long getLongValFromFile(File logfile) throws IOException,
             NumberFormatException {
         StringBuilder buff = readFromFileThrowException(logfile);
         boolean parseException = false;
@@ -994,7 +994,7 @@ public class FileUtil {
      * @return
      * @throws FileNotFoundException
      */
-    public static final StreamTokenizer getStringTokenizerFromFile(File file)
+    public static StreamTokenizer getStringTokenizerFromFile(File file)
             throws FileNotFoundException {
         Reader reader = getBufferedReaderFromFile(file);
         if (reader == null) {
@@ -1013,7 +1013,7 @@ public class FileUtil {
      * @throws FileNotFoundException
      * @see StreamTokenizer
      */
-    public static final Iterator<String> getIteratorFromFileStreamTokenizer(
+    public static Iterator<String> getIteratorFromFileStreamTokenizer(
             File file) throws FileNotFoundException {
         StreamTokenizer tok = getStringTokenizerFromFile(file);
         if (tok == null) {
@@ -1104,7 +1104,7 @@ public class FileUtil {
      * @return true if successfull.
      * @throws IOException
      */
-    public static final boolean zipFile(File inputFiles[], File outputFile)
+    public static boolean zipFile(File inputFiles[], File outputFile)
             throws IOException {
         byte[] buf = new byte[1024];
 
@@ -1137,7 +1137,7 @@ public class FileUtil {
      * @return true if successful
      * @throws IOException
      */
-    public static final boolean gzipFile(File inputFile, File outputFile, boolean deleteOnError)
+    public static boolean gzipFile(File inputFile, File outputFile, boolean deleteOnError)
             throws IOException {
         String filePathname = outputFile.getAbsolutePath();
         if (!filePathname.endsWith(".gz")) {
@@ -1179,7 +1179,7 @@ public class FileUtil {
      * @param destDirectory must be a directory (else IOException is thrown)
      * @throws IOException
      */
-    public static final void unzipFile(File zipFile, File destDirectory)
+    public static void unzipFile(File zipFile, File destDirectory)
             throws IOException {
         if (!destDirectory.isDirectory()) {
             throw new IOException(
@@ -1226,7 +1226,7 @@ public class FileUtil {
      * @return file if successful
      * @throws IOException
      */
-    public static final File gunzipFile(File gzipFile, File destDirectory,
+    public static File gunzipFile(File gzipFile, File destDirectory,
                                         boolean deleteOnError) throws IOException {
         String fileName = gzipFile.getName();
         if (!fileName.endsWith(".gz")) {
@@ -1272,12 +1272,12 @@ public class FileUtil {
      * @return
      * @throws IOException
      */
-    public static final boolean writeToFile(File file, StringBuilder buffer)
+    public static boolean writeToFile(File file, StringBuilder buffer)
             throws IOException {
         return writeToFile(file, buffer.toString());
     }
 
-    public static final boolean writeToFileUsingPrintWriter(File file, StringBuilder buffer, String encoding)
+    public static boolean writeToFileUsingPrintWriter(File file, StringBuilder buffer, String encoding)
             throws IOException {
         Writer writer = FileUtil.getBufferedPrintWriterFromFile(file, encoding);
         writer.write(buffer.toString());
@@ -1295,12 +1295,12 @@ public class FileUtil {
      * @return
      * @throws IOException
      */
-    public static final boolean writeToFile(File file, String buffer)
+    public static boolean writeToFile(File file, String buffer)
             throws IOException {
         return writeToFile(file, buffer, null);
     }
 
-    public static final boolean writeToFile(File file, String buffer, String encoding)
+    public static boolean writeToFile(File file, String buffer, String encoding)
             throws IOException {
         byte bytes[] = buffer.getBytes();
         return writeToFile(file, bytes, 0, bytes.length);
@@ -1316,7 +1316,7 @@ public class FileUtil {
      * @return
      * @throws IOException
      */
-    public static final boolean writeToFile(File file, byte buffer[],
+    public static boolean writeToFile(File file, byte buffer[],
                                             int start, int size) throws IOException {
         OutputStream os = getBufferedFileOutputStream(file);
         os.write(buffer);
@@ -1333,7 +1333,7 @@ public class FileUtil {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public static final boolean writeLongValToFile(File file, long val)
+    public static boolean writeLongValToFile(File file, long val)
             throws IOException {
         DataOutputStream dos = getDataOutputStreamForFile(file);
         dos.writeLong(val);
@@ -1389,7 +1389,7 @@ public class FileUtil {
         return Long.parseLong(s);
     }
 
-    public static final void writeLongStringValFromFile(File file, long l) {
+    public static void writeLongStringValFromFile(File file, long l) {
         FileUtil.ensureParentDirectories(file, true);
         PrintWriter pw = FileUtil.getBufferedPrintWriterFromFile(file);
         try {
@@ -1407,7 +1407,7 @@ public class FileUtil {
      * @return
      * @throws IOException
      */
-    public static final byte[] getFileAsByteArray(File file)
+    public static byte[] getFileAsByteArray(File file)
             throws IOException {
         int length = (int) file.length();
         byte[] buffer = new byte[length];
@@ -1445,7 +1445,7 @@ public class FileUtil {
      * @return
      * @throws IOException
      */
-    public static String getBinaryDiffExplanation(File a, File b) throws IOException {
+    public static final String getBinaryDiffExplanation(File a, File b) throws IOException {
         return FileUtil.BinaryDiffReasons[binaryFileDiff(a, b)];
     }
 
@@ -1466,7 +1466,7 @@ public class FileUtil {
     /**
      * Works on directories
      */
-    public static long getFileSize(String fileName) {
+    public static final long getFileSize(String fileName) {
         File file = new File(fileName);
         if (file.isDirectory()) {
             String[] files = file.list();
@@ -1486,7 +1486,7 @@ public class FileUtil {
      * @param filePath filePath expressed in unix terms ('/' as directory separator)
      * @return the path fixed to have this platform's correct separator
      */
-    public static String fixSeparators(String filePath) {
+    public static final String fixSeparators(String filePath) {
         char sep = File.separatorChar;
         if (sep != '/') {
             filePath = filePath.replace('/', sep);
@@ -1608,13 +1608,13 @@ public class FileUtil {
         }
     }
 
-    public static final List<File> findFilteredFiles(FilenameFilter filter, File dirFile, boolean recursive) {
+    public static List<File> findFilteredFiles(FilenameFilter filter, File dirFile, boolean recursive) {
         List<File> result = new ArrayList<File>();
         findFilteredFiles(filter, dirFile, recursive, result);
         return result;
     }
 
-    public static final void findFilteredFiles(FilenameFilter filter,
+    public static void findFilteredFiles(FilenameFilter filter,
                                                File dirFile,
                                                boolean recursive,
                                                List<File> result) {
@@ -1666,7 +1666,7 @@ public class FileUtil {
      * @param pattern
      * @return
      */
-    public static final File getDatedFileFromPattern(File directory,
+    public static File getDatedFileFromPattern(File directory,
                                                      String pattern, String extension) {
         Date ct = new Date(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HH-mm-SSSS");
@@ -1777,7 +1777,7 @@ public class FileUtil {
      * @param sortCriteria
      * @return null if directory is not a directory, else array of sorted files
      */
-    public static final File[] sortFiles(File directory,
+    public static File[] sortFiles(File directory,
                                          Comparator<File> sortCriteria, FilenameFilter filter) {
         File[] unsorted = directory.listFiles(filter);
         if (unsorted == null || unsorted.length == 0) {
@@ -1856,7 +1856,7 @@ public class FileUtil {
      * @throws IOException if the two paths has no common parent directory (such as <code>C:\foo.txt</code> and
      *                     <code>D:\foo.txt</code>), or the the paths are malformed.
      */
-    public static String getRelativePath(File fromDir, File toFileOrDir) throws IOException {
+    public static final String getRelativePath(File fromDir, File toFileOrDir) throws IOException {
         char sep = File.separatorChar;
         String ofrom = fromDir.getCanonicalPath();
         String oto = toFileOrDir.getCanonicalPath();

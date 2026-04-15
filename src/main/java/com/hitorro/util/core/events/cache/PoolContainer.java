@@ -34,7 +34,7 @@ import java.util.Stack;
 
 
 public class PoolContainer<K, V extends PooledObjectIntf> {
-    public static final BooleanProperty TrackWhereFrom = new BooleanProperty("debug.trackpool", "", true);
+    public static BooleanProperty TrackWhereFrom = new BooleanProperty("debug.trackpool", "", true);
 
     protected K key;
     private int maxElements;

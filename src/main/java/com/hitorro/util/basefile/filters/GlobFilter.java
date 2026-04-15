@@ -19,19 +19,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.hitorro.util.io;
+package com.hitorro.util.basefile.filters;
 
-import java.io.File;
+import com.hitorro.util.basefile.fs.BaseFile;
+
+import java.nio.file.FileSystems;
+import java.nio.file.PathMatcher;
+import java.nio.file.Paths;
 
 /**
- * of text and at word boundaries
+ * Filters files using a glob pattern matched against the filename.
+ * Uses the JDK's built-in PathMatcher for standard glob syntax
+ * (*, ?, [abc], {a,b,c}, etc.).
  */
-public class WordStream extends TextReader {
-    public WordStream(String buffer) {
-        super(buffer);
+public class GlobFilter extends FileFilterBase {
+    private final PathMatcher matcher;
+
+    public GlobFilter(String globPattern) {
+        this.matcher = FileSystems.getDefault().getPathMatcher("glob:" + globPattern);
     }
 
-    public WordStream(File file) {
-        super(file);
+    @Override
+    public boolean test(BaseFile baseFile) {
+        return matcher.matches(Paths.get(baseFile.getName()));
     }
 }

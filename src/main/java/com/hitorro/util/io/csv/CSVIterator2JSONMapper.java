@@ -29,7 +29,7 @@ import com.hitorro.util.core.iterator.mappers.BaseMapper;
  * Wrapper a csviterator in a json iterator
  */
 public class CSVIterator2JSONMapper extends BaseMapper<CSVIterator, AbstractIterator<JsonValueSource>> {
-    public static final CSVIterator2JSONMapper me = new CSVIterator2JSONMapper();
+    public static CSVIterator2JSONMapper me = new CSVIterator2JSONMapper();
 
     @Override
     public AbstractIterator<JsonValueSource> apply(final CSVIterator e) {

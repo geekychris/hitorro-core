@@ -37,7 +37,7 @@ import java.util.Map;
  Utils for loading props from files
  */
 public class PropReaderUtil {
-    public static final BooleanProperty DebugMode = new BooleanProperty("debug", "If debug mode is enabled loads extra config files", false);
+    public static BooleanProperty DebugMode = new BooleanProperty("debug", "If debug mode is enabled loads extra config files", false);
 
     public static List<File> getProps(final Map<String, String> cmdLineArgs, final HTProperties props, final File directory) {
         ObjectNode cmd = JsonNodeFactory.instance.objectNode();

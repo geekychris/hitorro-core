@@ -34,7 +34,7 @@ public class LangUtil {
     /*
         Given a string like en_us, returns en
     */
-    public static String getRootOfLocaleName(String lang) {
+    public static final String getRootOfLocaleName(String lang) {
         int pos = lang.indexOf("_");
         if (pos >= 0) {
             return lang.substring(0, pos);

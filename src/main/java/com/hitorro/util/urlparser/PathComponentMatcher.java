@@ -32,7 +32,7 @@ public class PathComponentMatcher<O extends TokenKey> {
     protected long[] hashes;
     protected O[] keys;
     protected O unknown;
-    protected TIntObjectHashMap map;
+    protected TIntObjectHashMap<O> map;
 
 
     public PathComponentMatcher(O unknown, O... keysIn) {
@@ -50,7 +50,7 @@ public class PathComponentMatcher<O extends TokenKey> {
         sorter.sort(hashes, peer);
 
 
-        map = new TIntObjectHashMap();
+        map = new TIntObjectHashMap<>();
         {
             for (O key : keys) {
                 map.put(key.getId(), key);

@@ -41,9 +41,9 @@ public abstract class BaseSink<E> implements Sink<E> {
      */
     public static <E> ThreadedQueueSink<E> async(Sink<E> sink, int queueLength, boolean sendCompleteOnStop,
                                                  String name, boolean startThread) {
-        ThreadedQueue tq = new ThreadedQueue(queueLength);
-        ThreadedQueueSink tqs = new ThreadedQueueSink(tq, sendCompleteOnStop);
-        SinkFromThreadedQueue dest = new SinkFromThreadedQueue(tq, sink, name, startThread);
+        ThreadedQueue<E> tq = new ThreadedQueue<>(queueLength);
+        ThreadedQueueSink<E> tqs = new ThreadedQueueSink<>(tq, sendCompleteOnStop);
+        SinkFromThreadedQueue<E> dest = new SinkFromThreadedQueue<>(tq, sink, name, startThread);
         tqs.setPeer(dest);
         return tqs;
     }

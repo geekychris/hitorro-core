@@ -46,8 +46,8 @@ import java.util.List;
         schemaVersion = Link.SerialVersion)
 public class Link implements HTSerializable, Comparable<Link> {
     public static final int SerialVersion = 2;
-    public static final UrlOnlyLinkComparitor URLOnlyComparitor = new UrlOnlyLinkComparitor();
-    public static final UrlAndTypeLinkComparitor UrlAndTypeComparitor = new UrlAndTypeLinkComparitor();
+    public static UrlOnlyLinkComparitor URLOnlyComparitor = new UrlOnlyLinkComparitor();
+    public static UrlAndTypeLinkComparitor UrlAndTypeComparitor = new UrlAndTypeLinkComparitor();
     private static final String[] BlockList = new String[]{"javascript", "skype", "callto", "webcal", "feed", "aim", "mms", "pcast", "news", "secondlife", "mailto", "irc"};
     private LinkType type;
     private String url;
@@ -72,7 +72,7 @@ public class Link implements HTSerializable, Comparable<Link> {
 
 
     public Link(String url, LinkType type, String title, String typeString, URL root, String source) {
-        this(url, type, title, typeString, root, new ArrayList());
+        this(url, type, title, typeString, root, new ArrayList<>());
         this.setSource(source);
     }
 
@@ -234,7 +234,7 @@ public class Link implements HTSerializable, Comparable<Link> {
 
     public enum LinkType {
         PingBack("pb"),
-        Alternate("a"),
+        Alternate("al"),
         StyleSheet("ss"),
         ShortCutIcon("sc"),
         Anchor("a"),
@@ -246,7 +246,7 @@ public class Link implements HTSerializable, Comparable<Link> {
         private String name;
 
         LinkType(String name) {
-            name = name.toLowerCase();
+            this.name = name.toLowerCase();
             setMapEntry(this);
         }
 
@@ -254,13 +254,13 @@ public class Link implements HTSerializable, Comparable<Link> {
             return s_byShortName.get(name.toLowerCase());
         }
 
-        public static int size() {
+        public static final int size() {
             return s_byShortName.size();
         }
 
         private static void setMapEntry(LinkType filter) {
             if (s_byShortName == null) {
-                s_byShortName = new HashMap<String, LinkType>();
+                s_byShortName = new HashMap<>();
             }
             s_byShortName.put(filter.getName(), filter);
         }
@@ -289,8 +289,8 @@ class UrlAndTypeLinkComparitor implements Comparator<Link> {
 
     public int compare(Link link, Link link1) {
         int i = link.getUrl().compareTo(link1.getUrl());
-        if (i == 0) {
-            return 0;
+        if (i != 0) {
+            return i;
         }
         return link.getLinkType().ordinal() - link1.getLinkType().ordinal();
     }

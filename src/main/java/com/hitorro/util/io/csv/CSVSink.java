@@ -40,9 +40,9 @@ import java.util.List;
 
 
 public class CSVSink extends BaseSink<String[]> {
-    public static final BasefileProperty OutputFileKey = new BasefileProperty("file", "outputfile using basefile syntax");
-    public static final StringListFromDelimitedKey ColumnsKey = new StringListFromDelimitedKey("columns", "", ",", null);
-    public static final StringProperty SepKey = new StringProperty("seperator", "", ",");
+    public static BasefileProperty OutputFileKey = new BasefileProperty("file", "outputfile using basefile syntax");
+    public static StringListFromDelimitedKey ColumnsKey = new StringListFromDelimitedKey("columns", "", ",", null);
+    public static StringProperty SepKey = new StringProperty("seperator", "", ",");
     private CSVWriter writer;
 
     public CSVSink() {

@@ -365,7 +365,7 @@ public class CPUInfo {
 	 *
 	 * @return Formatted string with CPU clock speed, or "Unknown" if unable to determine
 	 */
-	public static String getCPUClockSpeedFormatted() {
+	public static final String getCPUClockSpeedFormatted() {
 		ClockSpeed speed = getCPUClockSpeed();
 		return speed != null ? speed.toString() : "Unknown";
 	}

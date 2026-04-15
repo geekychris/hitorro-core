@@ -47,8 +47,16 @@ public abstract class FileFilterBase implements HTPredicate<BaseFile> {
         return new FileNameContains(ext, true);
     }
 
+    public static HTPredicate<BaseFile> startsWith(String prefix) {
+        return new FileStartsWith(prefix, true);
+    }
+
     public static HTPredicate<BaseFile> endsWith(String ends) {
         return new FileEndsWith(ends, true);
+    }
+
+    public static HTPredicate<BaseFile> glob(String pattern) {
+        return new GlobFilter(pattern);
     }
 
     public HTPredicate<BaseFile> not() {

@@ -52,10 +52,10 @@ import java.util.Iterator;
  * com.hitorro.util.core.iterator.mapchains.ToIntMapStep or com.hitorro.util.file.fs.BaseFileUtil#bf2utf8Writer
  */
 public class MapFactory {
-    public static final StaticVarProperty<BaseMapper> clazz = new StaticVarProperty("class", "class for the mapping", true, null, BaseMapper.class);
-    public static final StringProperty ParentName = new StringProperty("parent", "class for the mapping", null);
-    public static final StringProperty Name = new StringProperty("name", "class for the mapping", null);
-    public static final StringProperty Description = new StringProperty("description", "Description of this factory", "");
+    public static StaticVarProperty<BaseMapper> clazz = new StaticVarProperty("class", "class for the mapping", true, null, BaseMapper.class);
+    public static StringProperty ParentName = new StringProperty("parent", "class for the mapping", null);
+    public static StringProperty Name = new StringProperty("name", "class for the mapping", null);
+    public static StringProperty Description = new StringProperty("description", "Description of this factory", "");
     private HashMap<String, BaseMapper> nameToStep = new HashMap();
     private MapFactory parent;
     private String parentName;

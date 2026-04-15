@@ -23,9 +23,6 @@ package com.hitorro.util.core.hash;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
-/**
- */
 public class MD5Util {
     public static final String getMessageDigestAsString(String s) {
         return getMessageDigestAsString(s.getBytes());

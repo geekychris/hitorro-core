@@ -35,7 +35,7 @@ import java.util.List;
 public class UrlCollectionStats {
     private UrlCursor curs = new UrlCursor();
     private List<String> urls = new ArrayList<String>();
-    private TObjectIntHashMap tldFrequencyMap = null;
+    private TObjectIntHashMap<String> tldFrequencyMap = null;
 
     // high water mark
     private int maxValue = -1;
@@ -88,7 +88,7 @@ public class UrlCollectionStats {
 
     private void computeTLDDistribution() {
         if (tldFrequencyMap == null) {
-            tldFrequencyMap = new TObjectIntHashMap();
+            tldFrequencyMap = new TObjectIntHashMap<>();
             for (String url : urls) {
                 String tld = UrlCursor.getSiteFromURL(url);
                 if (tldFrequencyMap.contains(tld)) {
@@ -98,12 +98,12 @@ public class UrlCollectionStats {
                 }
             }
 
-            TObjectIntIterator iter = tldFrequencyMap.iterator();
+            TObjectIntIterator<String> iter = tldFrequencyMap.iterator();
 
             while (iter.hasNext()) {
                 iter.advance();
                 if (iter.value() > maxValue) {
-                    maxTld = (String) iter.key();
+                    maxTld = iter.key();
                     maxValue = iter.value();
                 }
 

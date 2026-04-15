@@ -35,7 +35,7 @@ import java.io.IOException;
         isPersisted = false,
         schemaVersion = LogicalNotOperator.SerializationVersion)
 public class AlwaysTrueOperator<E> implements HTPredicate<E>, HTSerializable {
-    public static final AlwaysTrueOperator oper = new AlwaysTrueOperator();
+    public static AlwaysTrueOperator oper = new AlwaysTrueOperator();
     public static final int SerializationVersion = 1;
 
     public AlwaysTrueOperator() {

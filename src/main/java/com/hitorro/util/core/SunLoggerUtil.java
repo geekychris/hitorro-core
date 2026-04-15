@@ -28,7 +28,7 @@ import java.util.logging.Logger;
  */
 public class SunLoggerUtil {
 
-    public static final void setLogLevel(String className) {
+    public static void setLogLevel(String className) {
         Logger.getLogger(className).setLevel(Level.SEVERE);
     }
 }

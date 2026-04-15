@@ -30,13 +30,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-/**
- * Copyright (c) 2003-2008 HiTorro, Inc.
- * <p/>
- * User: chris Date: Apr 18, 2004 Time: 9:54:38 AM
- * <p/>
- * Description:
- */
 public class SubsystemContext {
     private static Map s_subsystemsByName = new Hashtable();
     private static List s_subsystems = new Vector();
@@ -54,7 +47,7 @@ public class SubsystemContext {
         s_primed = true;
     }
 
-    public static String getSystemName() {
+    public static final String getSystemName() {
         return s_systemName;
     }
 

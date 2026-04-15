@@ -48,7 +48,7 @@ public final class Fmt {
     private static final int NotComplete = 0;
 
 
-    public static final void addCallstack(Throwable t, StringBuilder buff, boolean xml) {
+    public static void addCallstack(Throwable t, StringBuilder buff, boolean xml) {
         StackTraceElement[] elements = t.getStackTrace();
         buff.append(t.getClass().getSimpleName());
         String msg = t.getMessage();
@@ -71,7 +71,7 @@ public final class Fmt {
      * @param t    the target exception.
      * @param buff string buffer to receive the stack traces.
      */
-    public static final void addCallstackChain(Throwable t, StringBuilder buff, boolean xml) {
+    public static void addCallstackChain(Throwable t, StringBuilder buff, boolean xml) {
         Throwable cause = t.getCause();
         if (cause != null) {
             // first iterate and find out the depth of the stack
@@ -101,7 +101,7 @@ public final class Fmt {
         }
     }
 
-    public static final boolean f(StringBuilder buff, final String pattern,
+    public static boolean f(StringBuilder buff, final String pattern,
                                   final Object... args) {
         int patternLength = pattern.length();
         int currP = 0;
@@ -321,7 +321,7 @@ public final class Fmt {
      * Formats "u", a value of "units", with 3 significant digits in scientific notation, using the exponents <none>,
      * e3, e6, or e9.
      */
-    public static String formatUnits(double u) {
+    public static final String formatUnits(double u) {
         String exp;
         String format;
 

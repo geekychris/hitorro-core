@@ -50,7 +50,7 @@ public class BooleanUtil {
      * @param bIn
      * @return
      */
-    public static final boolean getBoolean(String bIn) {
+    public static boolean getBoolean(String bIn) {
         if (StringUtil.nullOrEmptyString(bIn)) {
             return false;
         }
@@ -72,7 +72,7 @@ public class BooleanUtil {
      * @param bIn The string to check
      * @return true if the string is a valid Boolean representation
      */
-    public static final boolean isBoolean(String bIn) {
+    public static boolean isBoolean(String bIn) {
         if (StringUtil.nullOrEmptyOrBlankString(bIn)) {
             return false;
         }
@@ -101,7 +101,7 @@ public class BooleanUtil {
      * @param value - default value for each arrya element, true or false
      * @return initialized array of size, size.
      */
-    public static final boolean[] getBooleanArray(int size, boolean value) {
+    public static boolean[] getBooleanArray(int size, boolean value) {
         if (size < 0) {
             size = 0;
         }

@@ -42,6 +42,6 @@ public interface Mapper<I, O> extends Function<I, O>, JsonInitable {
     }
 
     default <U> Mapper<I, GenericKeyValue<O, U>> tuple(Mapper<I, U> secondMapper) {
-        return (I i) -> new GenericKeyValue(apply(i), secondMapper.apply(i));
+        return (I i) -> new GenericKeyValue<>(apply(i), secondMapper.apply(i));
     }
 }

@@ -331,14 +331,10 @@ public class TagFinder {
                         state = 3;
                     } else {
                         // something else, its malformed
-                        if (true) {
-                            state = 1;
-                            props.put(buff.toString(), "true");
-                            buff.setLength(0);
-                            buff.append(c);
-                        } else {
-                            return null;
-                        }
+                        state = 1;
+                        props.put(buff.toString(), "true");
+                        buff.setLength(0);
+                        buff.append(c);
                     }
                     break;
                 case 3:
@@ -378,14 +374,10 @@ public class TagFinder {
         // deal with end of array case
         if (state == 1) {
             // could be we have a flag at the end of the line
-            if (true) {
-                state = 2;
-                props.put(buff.toString(), "true");
-                buff.setLength(0);
-                buff.append(c);
-            } else {
-                return null;
-            }
+            state = 2;
+            props.put(buff.toString(), "true");
+            buff.setLength(0);
+            buff.append(c);
         }
         if (state == 4) {
             if (inQuotes == false) {

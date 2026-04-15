@@ -56,18 +56,18 @@ public class IOUtil {
         return new ArrayList<>(buffer);
     }
 
-    public static final Iterator<String> getLineReaderIteratorFromStream(
+    public static Iterator<String> getLineReaderIteratorFromStream(
             InputStream is) {
         return new LineReaderIterator(new InputStreamReader(is));
     }
 
-    public static final Iterator<String> getLineReaderIteratorFromStream(
+    public static Iterator<String> getLineReaderIteratorFromStream(
             InputStream is, String encoding) throws
             UnsupportedEncodingException {
         return new LineReaderIterator(new InputStreamReader(is, encoding));
     }
 
-    public static final InputStream getBookshelfInputStream(String a, InputStream is, String b) {
+    public static InputStream getBookshelfInputStream(String a, InputStream is, String b) {
         return getBookshelfInputStream(new StringInputStream(a), is, new StringInputStream(b));
     }
 
@@ -80,7 +80,7 @@ public class IOUtil {
         return baos.toByteArray();
     }
 
-    public static final InputStream getBookshelfInputStream(InputStream... streams) {
+    public static InputStream getBookshelfInputStream(InputStream... streams) {
         ArrayList ar = new ArrayList<InputStream>();
         for (InputStream is : streams) {
             ar.add(is);
@@ -93,7 +93,7 @@ public class IOUtil {
      * <p/>
      * You must flush and close your streams yourself.
      */
-    public static final void copyStream(InputStream is, OutputStream os)
+    public static void copyStream(InputStream is, OutputStream os)
             throws IOException {
         byte[] buffer = new byte[4096];
         int readBytes = is.read(buffer);
@@ -103,7 +103,7 @@ public class IOUtil {
         }
     }
 
-    public static final void copyStream(InputStream is, byte buffer[])
+    public static void copyStream(InputStream is, byte buffer[])
             throws IOException {
         int remaining = buffer.length;
         int pos = 0;
@@ -115,7 +115,7 @@ public class IOUtil {
         }
     }
 
-    public static final boolean copyStream(InputStream is, OutputStream os, long bytesToCopy)
+    public static boolean copyStream(InputStream is, OutputStream os, long bytesToCopy)
             throws IOException {
         return copyStream(is, os, bytesToCopy, false);
     }
@@ -126,7 +126,7 @@ public class IOUtil {
      * <p/>
      * You must flush and close your streams yourself.
      */
-    public static final boolean copyStream(InputStream is, OutputStream os, long bytesToCopy, boolean closeStreams)
+    public static boolean copyStream(InputStream is, OutputStream os, long bytesToCopy, boolean closeStreams)
             throws IOException {
         byte[] buffer = new byte[BufferSize];
         long loops = bytesToCopy / BufferSize;
@@ -161,7 +161,7 @@ public class IOUtil {
      * @param stream
      * @return Reader that is buffered
      */
-    public static final BufferedReader getBufferedReader(InputStream stream) {
+    public static BufferedReader getBufferedReader(InputStream stream) {
         InputStreamReader r = new InputStreamReader(stream);
         return new BufferedReader(r);
     }
@@ -175,7 +175,7 @@ public class IOUtil {
      * @return true if streams are the same
      * @throws IOException
      */
-    public static final boolean getStreamsIdentical(InputStream a,
+    public static boolean getStreamsIdentical(InputStream a,
                                                     InputStream b) throws IOException {
         int aChar;
         int bChar;
@@ -212,7 +212,7 @@ public class IOUtil {
         return i;
     }
 
-    public static final void writeVInt(OutputStream os, int i) throws IOException {
+    public static void writeVInt(OutputStream os, int i) throws IOException {
         while ((i & ~0x7F) != 0) {
             os.write(((i & 0x7f) | 0x80));
             i >>>= 7;

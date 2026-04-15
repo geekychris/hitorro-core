@@ -58,6 +58,17 @@ public enum CompressionType {
             return bz2codec.createOutputStream(os);
         }
     },
+    zstd("zstd") {
+        @Override
+        public InputStream getInputCompressed(final InputStream is) throws IOException {
+            return new com.github.luben.zstd.ZstdInputStream(is);
+        }
+
+        @Override
+        public OutputStream getOutputStreamCompressed(final OutputStream os) throws IOException {
+            return new com.github.luben.zstd.ZstdOutputStream(os);
+        }
+    },
     none("null") {
         @Override
         public InputStream getInputCompressed(final InputStream is) {
@@ -99,13 +110,13 @@ public enum CompressionType {
         return ct;
     }
 
-    public static int size() {
+    public static final int size() {
         return s_byShortName.size();
     }
 
     private static void setMapEntry(CompressionType filter) {
         if (s_byShortName == null) {
-            s_byShortName = new HashMap<String, CompressionType>();
+            s_byShortName = new HashMap<>();
         }
         s_byShortName.put(filter.getExtension(), filter);
     }

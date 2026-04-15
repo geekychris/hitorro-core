@@ -29,7 +29,7 @@ import com.hitorro.util.core.iterator.LikeRowMerger;
  * User: chris
  */
 public class TakeRightRowMerger<T> implements LikeRowMerger<T> {
-    public static final TakeRightRowMerger me = new TakeRightRowMerger();
+    public static TakeRightRowMerger me = new TakeRightRowMerger();
 
     public T apply(final T old, final T newval) {
         return newval;

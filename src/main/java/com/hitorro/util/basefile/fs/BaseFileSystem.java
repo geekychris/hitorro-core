@@ -42,17 +42,17 @@ import java.util.HashMap;
  * User: chris
  */
 public abstract class BaseFileSystem<F extends BaseFile, S extends BaseFileSystem> {
-    public static final StringProperty HDFSNameSpace = new StringProperty("filesystem.subspace", "namespace within HDFS for data", "ht");
-    public static final BooleanProperty HDFSEnabled = new BooleanProperty("filesystem.enabled", "namespace within HDFS for data", false);
+    public static StringProperty HDFSNameSpace = new StringProperty("filesystem.subspace", "namespace within HDFS for data", "ht");
+    public static BooleanProperty HDFSEnabled = new BooleanProperty("filesystem.enabled", "namespace within HDFS for data", false);
 
-    public static final FileProperty FakeHDFS = new FileProperty("filesystem.fake.dir", "Fake location for filesystem using the local FS", "");
+    public static FileProperty FakeHDFS = new FileProperty("filesystem.fake.dir", "Fake location for filesystem using the local FS", "");
 
     private static HashMap<String, ProtocolAdapter> adapters = getInitialAdapters();
 
     protected String pathPart;
 
     private static HashMap<String, ProtocolAdapter> getInitialAdapters() {
-        HashMap<String, ProtocolAdapter> a = new HashMap();
+        HashMap<String, ProtocolAdapter> a = new HashMap<>();
         S3PropertyFactory s3Factory = new S3PropertyFactory();
         registerFS(a, s3Factory);
         // Register legacy s3:// protocol for backward compatibility

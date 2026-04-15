@@ -39,7 +39,7 @@ import java.util.List;
 
 
 public class JsonValueSource implements ValueSourceForClass {
-    public static String TypeField = "ht_type";
+    public static final String TypeField = "ht_type";
     private JsonNode node;
     private TypeIntf type;
     private PropertyParts pp = new PropertyParts("a");

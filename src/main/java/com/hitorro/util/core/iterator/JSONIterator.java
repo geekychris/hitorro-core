@@ -39,10 +39,10 @@ import java.io.Reader;
  * JSON Iterator for jackson JsonNode trees
  */
 public class JSONIterator extends AbstractIterator<JsonNode> {
-    public static final ObjectNode EmptyMap = JsonNodeFactory.instance.objectNode();
-    public static final ArrayNode EmptyList = JsonNodeFactory.instance.arrayNode();
+    public static ObjectNode EmptyMap = JsonNodeFactory.instance.objectNode();
+    public static ArrayNode EmptyList = JsonNodeFactory.instance.arrayNode();
     private final static JsonFactory factory = new JsonFactory();
-    public static String HTTypeKey = "ht_type";
+    public static final String HTTypeKey = "ht_type";
     private JsonParser parser = null;
     private JsonNode domlet;
 

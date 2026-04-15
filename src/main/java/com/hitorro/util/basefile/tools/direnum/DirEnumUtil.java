@@ -51,30 +51,30 @@ public class DirEnumUtil {
      * @param quarter starting at 0
      * @return
      */
-    public static final BaseFile getDirForQuarter(BaseFile rootDir, int year, int quarter) {
+    public static BaseFile getDirForQuarter(BaseFile rootDir, int year, int quarter) {
         return rootDir.getChild(Fmt.S("%s/Q%s", year, quarter + 1));
     }
 
-    public static final BaseFile getDirForMonth(BaseFile rootDir, int year, int month) {
+    public static BaseFile getDirForMonth(BaseFile rootDir, int year, int month) {
         return rootDir.getChild(Fmt.S("%s/%s", year, month));
     }
 
-    public static final BaseFile getDirForDay(BaseFile rootDir, int year, int month, int day) {
+    public static BaseFile getDirForDay(BaseFile rootDir, int year, int month, int day) {
         return rootDir.getChild(Fmt.S("%s/%s/%s", year, month, day));
     }
 
-    public static final BaseFile getDirForYear(BaseFile rootDir, int year) {
+    public static BaseFile getDirForYear(BaseFile rootDir, int year) {
         return rootDir.getChild(Fmt.S("%s", year));
     }
 
-    public static final HTPredicate<Integer> getConstraintRange(int ys, int ms, int ds, int ye, int me, int de) {
+    public static HTPredicate<Integer> getConstraintRange(int ys, int ms, int ds, int ye, int me, int de) {
         int dateStart = UTCDateUtil.dateAsInt(ys, ms, ds);
         int dateEnd = UTCDateUtil.dateAsInt(ye, me, de);
         return new LogicalAndOperator<Integer>(new IntegerOperator(IntegerOperator.GreaterThanOrEqual, dateStart),
                 new IntegerOperator(IntegerOperator.LessThanOrEqual, dateEnd));
     }
 
-    public static final HTPredicate<Integer> getMonthof(int ys, int ms) {
+    public static HTPredicate<Integer> getMonthof(int ys, int ms) {
         int dateStart = UTCDateUtil.dateAsInt(ys, ms, 1);
         int dateEnd = UTCDateUtil.dateAsInt(ys, ms, 31);
         return new LogicalAndOperator<Integer>(new IntegerOperator(IntegerOperator.GreaterThanOrEqual, dateStart),
@@ -88,7 +88,7 @@ public class DirEnumUtil {
      * @param quarter
      * @return
      */
-    public static final HTPredicate<Integer> getQuarterOf(int ys, int quarter) {
+    public static HTPredicate<Integer> getQuarterOf(int ys, int quarter) {
         int dateStart = UTCDateUtil.dateAsInt(ys, 1 + (3 * quarter), 1);
         int dateEnd = UTCDateUtil.dateAsInt(ys, 3 + (3 * quarter), 31);
         return new LogicalAndOperator<Integer>(new IntegerOperator(IntegerOperator.GreaterThanOrEqual, dateStart),

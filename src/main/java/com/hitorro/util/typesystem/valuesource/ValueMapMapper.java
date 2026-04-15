@@ -30,7 +30,7 @@ import com.hitorro.util.json.keys.StringProperty;
  * Must be re-entrant
  */
 public abstract class ValueMapMapper {
-    public static final StringProperty FieldKey = new StringProperty("srcfield", "", null);
+    public static StringProperty FieldKey = new StringProperty("srcfield", "", null);
     protected String fromField;
     protected JsonNode map;
 

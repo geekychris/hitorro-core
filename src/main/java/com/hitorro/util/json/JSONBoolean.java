@@ -28,8 +28,8 @@ import java.io.IOException;
 
 
 public class JSONBoolean extends JSONElement<Boolean> {
-    public static final JSONBoolean True = new JSONBoolean(true);
-    public static final JSONBoolean False = new JSONBoolean(false);
+    public static JSONBoolean True = new JSONBoolean(true);
+    public static JSONBoolean False = new JSONBoolean(false);
 
     private Boolean s;
 

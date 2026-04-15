@@ -56,7 +56,7 @@ public class ArchiveUtils {
     // byte buffer size
     private static final int BYTE_BUFSIZE = (32 * 1024);
 
-    public static final void jar(File jarFile,
+    public static void jar(File jarFile,
                                  File dir,
                                  boolean includeSrc)
             throws IOException {
@@ -71,7 +71,7 @@ public class ArchiveUtils {
      * @throws java.io.IOException        if cannot unjar <code>fileName</code>.
      * @throws java.util.jar.JarException if error extracting files from JAR file.
      */
-    public static final void extract(File jarFile, File dir)
+    public static void extract(File jarFile, File dir)
             throws IOException, JarException {
         if (!(jarFile.getName().endsWith(".jar") || jarFile.getName().endsWith(".zip"))) {
             throw new JarException(Fmt.S("Not a zip file: %s", jarFile.getAbsolutePath()));
@@ -138,7 +138,7 @@ public class ArchiveUtils {
      * @throws IOException  if cannot create JAR file.
      * @throws JarException if error putting files into JAR file.
      */
-    public static final void jar(File jarFile,
+    public static void jar(File jarFile,
                                  File dir,
                                  CompressionLevel compressionLevel,
                                  boolean includeSrc)
@@ -275,7 +275,7 @@ public class ArchiveUtils {
         }
     }
 
-    public static final File expandIfZipped(File f) {
+    public static File expandIfZipped(File f) {
         String ext = FileUtil.getFileExtension(f);
         if (ext.equals("jar") || ext.equals("zip")) {
             File targetDir = new File(f.getParent(), FileUtil.getFileNameSansExtension(f));

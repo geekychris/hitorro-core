@@ -35,11 +35,11 @@ import java.io.FilenameFilter;
  */
 public class FilenameExtensionFilter implements FilenameFilter {
 
-    public static final FilenameExtensionFilter Jar = new FilenameExtensionFilter("jar", true);
-    public static final FilenameExtensionFilter Zip = new FilenameExtensionFilter("zip", true);
-    public static final FilenameExtensionFilter Sh = new FilenameExtensionFilter("sh", true);
+    public static FilenameExtensionFilter Jar = new FilenameExtensionFilter("jar", true);
+    public static FilenameExtensionFilter Zip = new FilenameExtensionFilter("zip", true);
+    public static FilenameExtensionFilter Sh = new FilenameExtensionFilter("sh", true);
 
-    public static final OrCollection JarOrZip = new OrCollection(Jar, Zip);
+    public static OrCollection JarOrZip = new OrCollection(Jar, Zip);
 
     private String m_extension;
     private boolean m_ignoreCase;

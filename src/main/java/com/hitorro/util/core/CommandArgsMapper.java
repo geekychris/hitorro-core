@@ -30,7 +30,7 @@ import java.text.ParseException;
 
 
 public class CommandArgsMapper extends BaseMapper<String, ObjectNode> {
-    public static final CommandArgsMapper instance = new CommandArgsMapper();
+    public static CommandArgsMapper instance = new CommandArgsMapper();
 
     @Override
     public ObjectNode apply(final String s) {

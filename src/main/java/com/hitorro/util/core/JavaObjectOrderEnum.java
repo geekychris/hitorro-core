@@ -242,7 +242,7 @@ public enum JavaObjectOrderEnum {
         return s_byShortName.get(name);
     }
 
-    public static int size() {
+    public static final int size() {
         return s_byShortClassAsc.size() + s_byShortClassDescending.size();
     }
 

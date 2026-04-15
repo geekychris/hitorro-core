@@ -39,7 +39,7 @@ public class StringBuilderUtil {
         sb.append(s);
     }
 
-    public static final void appendIfNotNull(StringBuilder builder, String description, String value, String seperator) {
+    public static void appendIfNotNull(StringBuilder builder, String description, String value, String seperator) {
         if (!StringUtil.nullOrEmptyOrBlankString(value)) {
             if (builder.length() > 0 && !StringUtil.nullOrEmptyString(seperator)) {
                 builder.append(seperator);
@@ -57,7 +57,7 @@ public class StringBuilderUtil {
      * @param startPos
      * @param joinToken
      */
-    public static final void mergeWithJoinToken(final StringBuilder buff,
+    public static void mergeWithJoinToken(final StringBuilder buff,
                                                 final Object array[], final int startPos, final String joinToken) {
         for (int i = startPos; i < array.length; i++) {
             if (i != 0) {
@@ -75,7 +75,7 @@ public class StringBuilderUtil {
      * @param startPos
      * @param joinToken
      */
-    public static final void mergeWithJoinToken(final StringBuilder buff,
+    public static void mergeWithJoinToken(final StringBuilder buff,
                                                 final Object array[],
                                                 final int startPos,
                                                 final int endPos,
@@ -95,7 +95,7 @@ public class StringBuilderUtil {
      * @param array
      * @param joinToken
      */
-    public static final void mergeWithJoinToken(final StringBuilder buff,
+    public static void mergeWithJoinToken(final StringBuilder buff,
                                                 final Object array[], final String joinToken) {
         mergeWithJoinToken(buff, array, 0, joinToken);
     }
@@ -111,7 +111,7 @@ public class StringBuilderUtil {
      * @param length    how many positions to include in apply.
      * @return String of merged tokens.
      */
-    public static final void mergeWithJoinToken(final StringBuilder buff,
+    public static void mergeWithJoinToken(final StringBuilder buff,
                                                 final Object array[], final String joinToken, final int start,
                                                 final int length) {
 
@@ -129,7 +129,7 @@ public class StringBuilderUtil {
      * @param test string
      * @return true if null or empty string
      */
-    public static final boolean nullOrEmptyString(final StringBuilder test) {
+    public static boolean nullOrEmptyString(final StringBuilder test) {
         return test == null || test.length() == 0;
     }
 
@@ -210,7 +210,7 @@ public class StringBuilderUtil {
      * @param args
      * @return StringBuilder with concatinated content
      */
-    public static final StringBuilder strcat(StringBuilder buff, Object... args) {
+    public static StringBuilder strcat(StringBuilder buff, Object... args) {
         for (int i = 0; i < args.length; i++) {
             buff.append(args[i]);
         }

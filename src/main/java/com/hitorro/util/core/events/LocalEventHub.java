@@ -22,12 +22,14 @@
 package com.hitorro.util.core.events;
 
 import com.hitorro.util.core.GenericKeyValue;
+import com.hitorro.util.core.Log;
 import com.hitorro.util.core.thread.EnhancedThreadFactory;
 import com.hitorro.util.core.thread.EnhancedThreadGroup;
 
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -43,27 +45,27 @@ import java.util.concurrent.Executors;
  */
 public class LocalEventHub implements EventListener {
     public static final String Name = "LocalEventHubAsyncNotifiier";
-    public static final EnhancedThreadGroup s_tg = new EnhancedThreadGroup(Name);
+    public static EnhancedThreadGroup s_tg = new EnhancedThreadGroup(Name);
     private static final LocalEventHub s_localHub = new LocalEventHub();
-    public ExecutorService m_executors;
-    private HashMap<String, WeakReferenceList<EventListener>> type =
-            new HashMap<String, WeakReferenceList<EventListener>>();
+    private ExecutorService m_executors;
+    private final HashMap<String, WeakReferenceList<EventListener>> type = new HashMap<>();
 
     public LocalEventHub() {
         initThreadPool();
     }
 
-    public static final LocalEventHub get() {
+    public static LocalEventHub get() {
         return s_localHub;
     }
 
     /**
-     * Get listFiles of registered listeners
+     * Get list of registered listeners
      *
      * @return list of registered listeners
      */
+    @SuppressWarnings("unchecked")
     public List<GenericKeyValue> getRegisteredListeners() {
-        List<GenericKeyValue> kvList = new ArrayList<GenericKeyValue>();
+        List<GenericKeyValue> kvList = new ArrayList<>();
 
         Iterator<Map.Entry<String, WeakReferenceList<EventListener>>> iter = type.entrySet().iterator();
         while (iter.hasNext()) {
@@ -72,7 +74,9 @@ public class LocalEventHub implements EventListener {
             String key = entry.getKey();
             for (int i = wl.size() - 1; i >= 0; i--) {
                 EventListener el = wl.get(i);
-                kvList.add(new GenericKeyValue(key, el.eventName()));
+                if (el != null) {
+                    kvList.add(new GenericKeyValue<>(key, el.eventName()));
+                }
             }
         }
         return kvList;
@@ -94,34 +98,31 @@ public class LocalEventHub implements EventListener {
     }
 
     /**
-     * Called by someone that whishes to notify this process of an event.  All Observers of this event are notified.
+     * Called by someone that wishes to notify this process of an event.  All Observers of this event are notified.
+     * Returns list of listener names that were notified.
      */
-    public synchronized List<String> eventListingNotified(String eventName, String subEvent, List args) {
-        List<String> notified = new ArrayList<String>();
+    public synchronized List<String> eventListingNotified(String eventName, String subEvent, Object args) {
+        List<String> notified = new ArrayList<>();
         WeakReferenceList<EventListener> l = type.get(eventName);
         boolean hasNulls = false;
         if (l != null) {
             synchronized (l) {
-                // this is a course lock to take.
                 int size = l.size();
                 for (int i = 0; i < size; i++) {
                     EventListener el = l.get(i);
                     if (el == null) {
-                        // we need to clean up nulls later
                         hasNulls = true;
                     } else {
                         notified.add(el.eventName());
-                        executeEvent(eventName, subEvent, args, el);
+                        safeExecuteEvent(eventName, subEvent, args, el);
                     }
                 }
                 if (hasNulls) {
                     l.removeNulls();
                 }
             }
-            return notified;
-        } else {
-            return notified;
         }
+        return notified;
     }
 
     public synchronized boolean event(String eventName, String subEvent, Object args) {
@@ -135,7 +136,7 @@ public class LocalEventHub implements EventListener {
                     if (el == null) {
                         hasNulls = true;
                     } else {
-                        executeEvent(eventName, subEvent, args, el);
+                        safeExecuteEvent(eventName, subEvent, args, el);
                     }
                 }
                 if (hasNulls) {
@@ -148,65 +149,108 @@ public class LocalEventHub implements EventListener {
         }
     }
 
+    /**
+     * Convenience method to fire an event with no arguments.
+     */
+    public boolean fire(String eventName, String subEvent) {
+        return event(eventName, subEvent, null);
+    }
 
     /**
-     * Execute an event either synchronously or async (use a seperate thread).
-     * <p/>
-     * Notes: We should probably introduce a thread pool.  Within the thread pool, active threads should register the
-     * event and event listener that they are processing.  We should then be able to determine if we want duplicate
-     * events for a given listener to be executed or thrown away.
-     *
-     * @param eventName
-     * @param subEvent
-     * @param args
-     * @param el
+     * Execute an event, catching exceptions so one bad listener doesn't prevent others from being notified.
      */
-    void executeEvent(String eventName, String subEvent, Object args, EventListener el) {
-        if (el.runAsync()) {
-            AsyncEventNotification async =
-                    new AsyncEventNotification(el,
-                            eventName,
-                            subEvent,
-                            args);
-            m_executors.execute(async);
-        } else {
-            el.event(eventName, subEvent, args);
+    private void safeExecuteEvent(String eventName, String subEvent, Object args, EventListener el) {
+        try {
+            if (el.runAsync()) {
+                AsyncEventNotification async = new AsyncEventNotification(el, eventName, subEvent, args);
+                m_executors.execute(async);
+            } else {
+                el.event(eventName, subEvent, args);
+            }
+        } catch (Exception e) {
+            Log.util.error("Exception dispatching event '%s/%s' to listener '%s': %s",
+                    eventName, subEvent, el.eventName(), e.getMessage());
         }
     }
 
     /**
-     * Communicate to ALL observers that have registered with the LocalEventHub. This implies that Observers MUST ensure
-     * that the subevent is a sensible one for them to process.
-     *
-     * @param subEvent
-     * @param args
+     * Communicate to ALL observers that have registered with the LocalEventHub.
      */
-    public void eventAll(String subEvent, List args) {
-        Set set = type.keySet();
-        Iterator i = set.iterator();
-        while (i.hasNext()) {
-            String s = (String) i.next();
+    public void eventAll(String subEvent, Object args) {
+        Set<String> keys = type.keySet();
+        for (String s : keys) {
             event(s, subEvent, args);
         }
     }
 
     /**
      * Registration mechanism for an observer to register against the event hub for notification of events. Note that
-     * the event listFiles holds weak references. Therefore, the observer (i.e., the event handler) will disappear unless its
+     * the event list holds weak references. Therefore, the observer (i.e., the event handler) will disappear unless its
      * reference is held by another object.
      *
-     * @param el        instance that honors the EventListenter interface
-     * @param eventName that the observer whishes to listen on.
+     * @param el        instance that honors the EventListener interface
+     * @param eventName that the observer wishes to listen on.
      */
     public synchronized void addEventListener(EventListener el, String eventName) {
         WeakReferenceList<EventListener> l = type.get(eventName);
         if (l == null) {
-            l = new WeakReferenceList<EventListener>();
+            l = new WeakReferenceList<>();
             type.put(eventName, l);
         }
 
         synchronized (l) {
             l.addIfAbsent(el);
+        }
+    }
+
+    /**
+     * Explicitly remove a listener from a topic.
+     *
+     * @param el        the listener to remove
+     * @param eventName the topic to remove it from
+     * @return true if the listener was found and removed
+     */
+    public synchronized boolean removeEventListener(EventListener el, String eventName) {
+        WeakReferenceList<EventListener> l = type.get(eventName);
+        if (l != null) {
+            synchronized (l) {
+                return l.remove(el);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns the count of active (non-null) listeners for a given topic.
+     */
+    public synchronized int getListenerCount(String topic) {
+        WeakReferenceList<EventListener> l = type.get(topic);
+        if (l == null) {
+            return 0;
+        }
+        synchronized (l) {
+            int count = 0;
+            for (int i = 0; i < l.size(); i++) {
+                if (l.get(i) != null) {
+                    count++;
+                }
+            }
+            return count;
+        }
+    }
+
+    /**
+     * Shut down the executor service cleanly.
+     */
+    public void shutdown() {
+        m_executors.shutdown();
+        try {
+            if (!m_executors.awaitTermination(5, TimeUnit.SECONDS)) {
+                m_executors.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            m_executors.shutdownNow();
+            Thread.currentThread().interrupt();
         }
     }
 
@@ -222,10 +266,10 @@ public class LocalEventHub implements EventListener {
 }
 
 class AsyncEventNotification implements Runnable {
-    private EventListener m_el;
-    private String m_topic;
-    private String m_subTopic;
-    private Object m_args;
+    private final EventListener m_el;
+    private final String m_topic;
+    private final String m_subTopic;
+    private final Object m_args;
 
     public AsyncEventNotification(EventListener el, String topic, String subTopic, Object args) {
         m_el = el;
@@ -235,6 +279,11 @@ class AsyncEventNotification implements Runnable {
     }
 
     public void run() {
-        m_el.event(m_topic, m_subTopic, m_args);
+        try {
+            m_el.event(m_topic, m_subTopic, m_args);
+        } catch (Exception e) {
+            Log.util.error("Async event '%s/%s' failed in listener '%s': %s",
+                    m_topic, m_subTopic, m_el.eventName(), e.getMessage());
+        }
     }
 }

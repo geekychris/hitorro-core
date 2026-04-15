@@ -160,7 +160,7 @@ public class UrlCursor {
 
     public void getTokenUpperCase(StringBuilder s) {
         for (int i = 0; i < tokenLength; i++) {
-            sb.append(Character.toUpperCase(m_url.charAt(tokenStart + i)));
+            s.append(Character.toUpperCase(m_url.charAt(tokenStart + i)));
         }
     }
 

@@ -113,7 +113,7 @@ public class Base64 {
      * @return the encoded text.
      */
 
-    public static String encode(byte[] plain) {
+    public static final String encode(byte[] plain) {
         StringBuilder sb = new StringBuilder();
         //the encode buffer
         byte[] enc = new byte[3];
@@ -169,7 +169,7 @@ public class Base64 {
 
     }
 
-    public static String encode(String plain) {
+    public static final String encode(String plain) {
         return encode(plain.getBytes());
     }
 

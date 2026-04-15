@@ -21,6 +21,8 @@
  */
 package com.hitorro.util.html;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hitorro.util.basefile.fs.BaseFile;
 import com.hitorro.util.core.GenericKeyValue;
 import com.hitorro.util.core.ListUtil;
@@ -49,6 +51,7 @@ import java.util.*;
  */
 
 public class HTMLParser {
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     public static final String PAGE_TITLE = "TITLE";
     public static final String PAGE_META = "META";
     public static final String PAGE_META_KEYWORDS = "META-KEYWORDS";
@@ -67,7 +70,7 @@ public class HTMLParser {
     private Map<String, String> filters = null;
 
     private long publishDate;
-    private char seperator = SEPARATOR;
+    private char separator = SEPARATOR;
 
     /**
      * Default constructor
@@ -76,9 +79,9 @@ public class HTMLParser {
         initFilters(Filters);
     }
 
-    public HTMLParser(char seperator) {
+    public HTMLParser(char separator) {
         initFilters(Filters);
-        this.seperator = seperator;
+        this.separator = separator;
     }
 
     /**
@@ -106,11 +109,10 @@ public class HTMLParser {
     }
 
     public HTMLParser(File file) throws IOException {
+        initFilters(Filters);
         if (!file.exists()) {
             return;
         }
-
-        initFilters(Filters);
 
         StringBuilder sb = new StringBuilder();
         StringBuilderUtil.readFileIntoBuilder(sb, file);
@@ -123,7 +125,7 @@ public class HTMLParser {
      * @param data
      * @return
      */
-    public static final boolean testForXML(String data) {
+    public static boolean testForXML(String data) {
         int indexOf = data.indexOf("<");
         while (indexOf != -1) {
             if (StringUtil.sloppyIndexOf(data, indexOf + 1, 20, '>') != -1) {
@@ -147,7 +149,9 @@ public class HTMLParser {
      */
     public void reset() {
         this.page = null;
-        this.parser.reset();
+        if (this.parser != null) {
+            this.parser.reset();
+        }
     }
 
     /**
@@ -302,6 +306,122 @@ public class HTMLParser {
     }
 
     /**
+     * Extracts JSON-LD structured data from script tags with type="application/ld+json".
+     *
+     * @return list of parsed JsonNode objects, empty if none found or parsing fails
+     */
+    public List<JsonNode> getStructuredData() {
+        List<JsonNode> results = new ArrayList<>();
+        Document doc = getDocument();
+        if (doc == null) return results;
+        NodeList scripts = doc.getDocumentElement().getElementsByTagName("SCRIPT");
+        for (int i = 0; i < scripts.getLength(); i++) {
+            Element el = (Element) scripts.item(i);
+            String type = el.getAttribute("type");
+            if ("application/ld+json".equalsIgnoreCase(type)) {
+                String content = el.getTextContent();
+                if (!StringUtil.nullOrEmptyString(content)) {
+                    try {
+                        JsonNode node = OBJECT_MAPPER.readTree(content.trim());
+                        results.add(node);
+                    } catch (Exception e) {
+                        Log.util.error("Failed to parse JSON-LD: %s", e.getMessage());
+                    }
+                }
+            }
+        }
+        return results;
+    }
+
+    /**
+     * Extracts Open Graph meta tags (og:title, og:description, og:image, etc.)
+     *
+     * @return map of property name to content value, preserving insertion order
+     */
+    public Map<String, String> getOpenGraphTags() {
+        Map<String, String> og = new LinkedHashMap<>();
+        Document doc = getDocument();
+        if (doc == null) return og;
+        NodeList metas = doc.getDocumentElement().getElementsByTagName("META");
+        for (int i = 0; i < metas.getLength(); i++) {
+            Element el = (Element) metas.item(i);
+            String property = el.getAttribute("property");
+            if (property != null && property.startsWith("og:")) {
+                String content = el.getAttribute("content");
+                if (StringUtil.nullOrEmptyString(content)) {
+                    content = el.getAttribute("CONTENT");
+                }
+                og.put(property, content);
+            }
+        }
+        return og;
+    }
+
+    /**
+     * Extracts the canonical URL from a link rel="canonical" tag.
+     *
+     * @return the canonical URL, or null if not present
+     */
+    public String getCanonicalUrl() {
+        Document doc = getDocument();
+        if (doc == null) return null;
+        NodeList links = doc.getDocumentElement().getElementsByTagName("LINK");
+        for (int i = 0; i < links.getLength(); i++) {
+            Element el = (Element) links.item(i);
+            if ("canonical".equalsIgnoreCase(el.getAttribute("rel"))) {
+                String href = el.getAttribute("href");
+                if (!StringUtil.nullOrEmptyString(href)) {
+                    return href;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Extracts all headings (h1-h6) from the document.
+     *
+     * @return list of tag/text pairs (e.g., "h1"/"Welcome"), ordered by heading level
+     */
+    public List<GenericKeyValue<String, String>> getHeadings() {
+        List<GenericKeyValue<String, String>> headings = new ArrayList<>();
+        Document doc = getDocument();
+        if (doc == null) return headings;
+        for (String tag : new String[]{"H1", "H2", "H3", "H4", "H5", "H6"}) {
+            NodeList nodes = doc.getDocumentElement().getElementsByTagName(tag);
+            for (int i = 0; i < nodes.getLength(); i++) {
+                String text = nodes.item(i).getTextContent().trim();
+                if (!text.isEmpty()) {
+                    headings.add(new GenericKeyValue<>(tag.toLowerCase(), text));
+                }
+            }
+        }
+        return headings;
+    }
+
+    /**
+     * Extracts text content from all occurrences of the given tag as individual items.
+     * Unlike {@link #getText(String)} which concatenates all text, this returns each
+     * tag's text content separately.
+     *
+     * @param tagName the HTML tag name to extract text from
+     * @return list of non-empty text strings, one per tag occurrence
+     */
+    public List<String> getTextsByTag(String tagName) {
+        List<String> results = new ArrayList<>();
+        Document doc = getDocument();
+        if (doc == null) return results;
+        NodeList nodes = doc.getDocumentElement().getElementsByTagName(tagName.toUpperCase());
+        for (int i = 0; i < nodes.getLength(); i++) {
+            String text = nodes.item(i).getTextContent().trim();
+            if (!text.isEmpty()) {
+                results.add(text);
+            }
+        }
+        return results;
+    }
+
+    /**
      * Extracts non-tag text from all those portions of an HTML page bound to a given tag. To extract all text from the
      * page, specify a <code>tagName</code> of HTML or use the overloaded <code>getText(String)</code>.
      * <code>tagName</code> is case insensitive. Returns an empty string if the tag does not exist in the HTML page or
@@ -400,12 +520,12 @@ public class HTMLParser {
         if (list == null) {
             return null;
         }
-        List<GenericKeyValue<String, List<String>>> res = new ArrayList();
-        Map<String, GenericKeyValue<String, List<String>>> map = new HashMap();
+        List<GenericKeyValue<String, List<String>>> res = new ArrayList<>();
+        Map<String, GenericKeyValue<String, List<String>>> map = new HashMap<>();
         for (GenericKeyValue<String, String> k : list) {
             GenericKeyValue<String, List<String>> kM = map.get(k.getKey());
             if (kM == null) {
-                kM = new GenericKeyValue<String, List<String>>(k.getKey(), new LinkedList());
+                kM = new GenericKeyValue<>(k.getKey(), new LinkedList<>());
                 map.put(k.getKey(), kM);
                 res.add(kM);
             }
@@ -425,6 +545,9 @@ public class HTMLParser {
         Document doc = null;
         if (this.parser != null) {
             doc = this.parser.getDocument();
+        }
+        if (doc == null) {
+            return null;
         }
         Element htmlElement = doc.getDocumentElement();
         NodeList nodeList = htmlElement.getElementsByTagName("meta");
@@ -535,7 +658,7 @@ public class HTMLParser {
                     //XXX TODO Anti short circuit mechanism...cant see much having a depth of 100 or more!!!
                     return;
                 }
-                accumulateLinks(doc, (Element) child, list, sourceUrl, constraint, depth++);
+                accumulateLinks(doc, (Element) child, list, sourceUrl, constraint, depth + 1);
             }
 
             child = child.getNextSibling();
@@ -575,7 +698,7 @@ public class HTMLParser {
                     String typeString = t.getTextContent().toLowerCase();
                     if (typeString.equals("alternate")) {
                         type = Link.LinkType.Alternate;
-                    } else if (typeString.equals("stlesheet")) {
+                    } else if (typeString.equals("stylesheet")) {
                         type = Link.LinkType.StyleSheet;
                     } else if (typeString.equals("pingback")) {
                         type = Link.LinkType.PingBack;
@@ -637,14 +760,14 @@ public class HTMLParser {
     }
 
     private List<GenericKeyValue<String, String>> getAttributes(Node child) {
-        List<GenericKeyValue<String, String>> list = new ArrayList();
+        List<GenericKeyValue<String, String>> list = new ArrayList<>();
         NamedNodeMap nnm = child.getAttributes();
         int size = nnm.getLength();
         for (int i = 0; i < size; i++) {
             Node n = nnm.item(i);
             String name = n.getNodeName();
             String value = n.getNodeValue();
-            list.add(new GenericKeyValue(name, value));
+            list.add(new GenericKeyValue<>(name, value));
         }
         return list;
     }
@@ -686,7 +809,7 @@ public class HTMLParser {
                     String text = child.getNodeValue().trim();
                     if (text.length() > 0) {
                         appendNonXMLContent(buf, text, element.getNodeName().equalsIgnoreCase("textarea"));
-                        buf.append(seperator);
+                        buf.append(separator);
                     }
                 } else {
                     // do nothing
@@ -725,12 +848,9 @@ public class HTMLParser {
         this.parser = new DOMParser();
         try {
             String c1 = org.apache.html.dom.HTMLDocumentImpl.class.getCanonicalName();
-            //String c2 = com.sun.org.apache.xerces.internal.dom.DeferredDocumentImpl.class.getCanonicalName();
             parser.setProperty("http://apache.org/xml/properties/dom/document-class-name", c1);
-        } catch (SAXNotRecognizedException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (SAXNotSupportedException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (SAXNotRecognizedException | SAXNotSupportedException e) {
+            Log.util.error("Failed to set DOM parser property: %s %e", e, e);
         }
         try {
             this.parser.setFeature("http://xml.org/sax/features/namespaces", false);

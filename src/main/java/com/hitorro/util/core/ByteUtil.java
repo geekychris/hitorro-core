@@ -84,7 +84,7 @@ public class ByteUtil {
         return (s & 0xff) - 127;
     }
 
-    public static short combineTwoIntsInShort(int a, int b) {
+    public static final short combineTwoIntsInShort(int a, int b) {
         int ab = getShortFromByte(a);
 
         ab = ab << 8;

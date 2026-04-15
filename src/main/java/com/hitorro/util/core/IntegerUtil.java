@@ -70,7 +70,7 @@ public class IntegerUtil {
      * @param test
      * @return true if just digits.
      */
-    public static final boolean isNumber(String test) {
+    public static boolean isNumber(String test) {
         if (StringUtil.nullOrEmptyString(test)) {
             return false;
         }
@@ -83,7 +83,7 @@ public class IntegerUtil {
         return true;
     }
 
-    public static final boolean isNumber(char test) {
+    public static boolean isNumber(char test) {
         return (test >= Constants.ascii_0 && test <= Constants.ascii_9);
     }
 
@@ -127,7 +127,7 @@ public class IntegerUtil {
         return (s & 0xff) - 127;
     }
 
-    public static short combineSmallIntsAsShort(int a, int b) {
+    public static final short combineSmallIntsAsShort(int a, int b) {
         int ab = getShortFromByte(a);
 
         ab = ab << 8;

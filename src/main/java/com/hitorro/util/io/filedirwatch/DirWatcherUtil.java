@@ -28,7 +28,7 @@ import com.hitorro.util.core.Log;
  * 10:10:06 AM
  */
 public class DirWatcherUtil {
-    public static final DirectoryWatch getWatcherFromParams() {
+    public static DirectoryWatch getWatcherFromParams() {
         DirectoryWatch delete = null;
         if (Env.getArchiveLogDir() == null) {
             Log.util.error("Unable to get the archive directory for this server");

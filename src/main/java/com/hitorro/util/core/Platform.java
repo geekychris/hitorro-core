@@ -103,7 +103,7 @@ public enum Platform {
         this.isUnixVariant = isUnixVar;
     }
 
-    public static final Platform getPlatform() {
+    public static Platform getPlatform() {
         if (s_platform == null) {
             String plat = Env.getOsName().toLowerCase();
             if (plat.contains("mac")) {

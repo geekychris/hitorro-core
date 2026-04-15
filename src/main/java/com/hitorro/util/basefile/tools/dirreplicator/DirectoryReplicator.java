@@ -30,8 +30,8 @@ import java.io.IOException;
 
 
 public class DirectoryReplicator {
-    public static String CopyInfoFile = "copyinfofile.ser";
-    public static String MachineInfo = "machine.txt";
+    public static final String CopyInfoFile = "copyinfofile.ser";
+    public static final String MachineInfo = "machine.txt";
     private BaseFile source;
     private BaseFile target;
     private HTPredicate<BaseFile> oper;

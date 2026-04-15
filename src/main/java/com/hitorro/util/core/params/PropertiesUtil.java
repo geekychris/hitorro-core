@@ -95,7 +95,7 @@ public class PropertiesUtil {
         return Long.parseLong(t);
     }
 
-    public static final boolean getPropertyAsBool(Properties props, String field, boolean defaultValue) {
+    public static boolean getPropertyAsBool(Properties props, String field, boolean defaultValue) {
         String t = getProperty(props, field);
         if (StringUtil.nullOrEmptyString(t)) {
             return defaultValue;
@@ -103,7 +103,7 @@ public class PropertiesUtil {
         return Constants.getBool(t);
     }
 
-    public static final Boolean getPropertyAsBoolean(Properties props, String field, Boolean defaultValue) {
+    public static Boolean getPropertyAsBoolean(Properties props, String field, Boolean defaultValue) {
         String t = getProperty(props, field);
         if (StringUtil.nullOrEmptyString(t)) {
             return defaultValue;
@@ -111,7 +111,7 @@ public class PropertiesUtil {
         return Constants.getBoolean(t);
     }
 
-    public static final Integer getPropertyAsInteger(Properties props, String field, Integer defaultValue) {
+    public static Integer getPropertyAsInteger(Properties props, String field, Integer defaultValue) {
         String t = getProperty(props, field);
         if (StringUtil.nullOrEmptyString(t)) {
             return defaultValue;
@@ -352,7 +352,7 @@ public class PropertiesUtil {
      *
      * @return String or null on error.
      */
-    public static String Props2String(Properties props) {
+    public static final String Props2String(Properties props) {
         byte b[] = Props2Bytes(props);
         return (b == null) ? null : new String(b);
     }

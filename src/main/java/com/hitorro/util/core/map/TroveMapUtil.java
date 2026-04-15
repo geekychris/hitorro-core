@@ -89,7 +89,7 @@ public class TroveMapUtil {
      * @return
      * @throws IOException
      */
-    public static final TLongHashSet getTLongHashSetFromFile(File f, int initialSize) throws IOException {
+    public static TLongHashSet getTLongHashSetFromFile(File f, int initialSize) throws IOException {
 
         if (f.exists()) {
             int size = (int) (f.length() / 8);
@@ -113,7 +113,7 @@ public class TroveMapUtil {
      * @return
      * @throws IOException
      */
-    public static final boolean writeLongSetToFile(File file, TLongHashSet set, boolean append) throws IOException {
+    public static boolean writeLongSetToFile(File file, TLongHashSet set, boolean append) throws IOException {
         DataOutputStream dos;
         if (file.exists()) {
             if (append) {
@@ -143,12 +143,12 @@ public class TroveMapUtil {
      * @return
      * @throws IOException
      */
-    public static final boolean writeTLongLongMapToFile(File f, TLongLongHashMap map) throws IOException {
+    public static boolean writeTLongLongMapToFile(File f, TLongLongHashMap map) throws IOException {
         DataOutputStream dos = FileUtil.getDataOutputStreamForFile(f);
         return writeTLongLongMapToFile(map, dos);
     }
 
-    public static final boolean writeTLongLongMapToFile(BaseFile f, TLongLongHashMap map) throws IOException {
+    public static boolean writeTLongLongMapToFile(BaseFile f, TLongLongHashMap map) throws IOException {
         DataOutputStream dos = f.getDataOutputStream();
         return writeTLongLongMapToFile(map, dos);
     }
@@ -166,7 +166,7 @@ public class TroveMapUtil {
         return true;
     }
 
-    public static final TIntLongHashMap getReverseMapTlongIntMap(TLongIntHashMap map) {
+    public static TIntLongHashMap getReverseMapTlongIntMap(TLongIntHashMap map) {
         TIntLongHashMap returnMap = new TIntLongHashMap(map.size());
         for (TLongIntIterator it = map.iterator(); it.hasNext(); ) {
             it.advance();
@@ -184,7 +184,7 @@ public class TroveMapUtil {
      * @return
      * @throws IOException
      */
-    public static final boolean writeTLongIntMapToFile(File f, TLongIntHashMap map) throws IOException {
+    public static boolean writeTLongIntMapToFile(File f, TLongIntHashMap map) throws IOException {
         DataOutputStream dos = FileUtil.getDataOutputStreamForFile(f);
         dos.writeInt(map.size());
         for (TLongIntIterator it = map.iterator(); it.hasNext(); ) {
@@ -197,7 +197,7 @@ public class TroveMapUtil {
         return true;
     }
 
-    public static final void merge(TLongIntHashMap target, TLongIntHashMap map) {
+    public static void merge(TLongIntHashMap target, TLongIntHashMap map) {
 
         for (TLongIntIterator it = map.iterator(); it.hasNext(); ) {
             it.advance();
@@ -212,7 +212,7 @@ public class TroveMapUtil {
      * @param f
      * @return true if the file was loaded / false if file was not found
      */
-    public static final boolean loadTextFileAsFP64(File f, TLongIntHashMap map, int targetValue) {
+    public static boolean loadTextFileAsFP64(File f, TLongIntHashMap map, int targetValue) {
         if (!FileUtil.nullOrNotExist(f)) {
             try {
                 Iterator<String> iter = FileUtil.getLineReaderIteratorFromFile(f);
@@ -230,7 +230,7 @@ public class TroveMapUtil {
         return false;
     }
 
-    public static final TIntLongHashMap getTIntLongMapFromFile(File f, TIntLongHashMap map)
+    public static TIntLongHashMap getTIntLongMapFromFile(File f, TIntLongHashMap map)
             throws IOException {
         DataInputStream dis = FileUtil.getDataInputStreamForFile(f);
         int size = dis.readInt();
@@ -247,7 +247,7 @@ public class TroveMapUtil {
         return map;
     }
 
-    public static final TIntIntHashMap getTIntIntMapFromFile(File f, TIntIntHashMap map)
+    public static TIntIntHashMap getTIntIntMapFromFile(File f, TIntIntHashMap map)
             throws IOException {
         DataInputStream dis = FileUtil.getDataInputStreamForFile(f);
         int size = dis.readInt();
@@ -264,7 +264,7 @@ public class TroveMapUtil {
         return map;
     }
 
-    public static final TLongIntHashMap getTLongIntFromFile(File f, TLongIntHashMap map) throws IOException {
+    public static TLongIntHashMap getTLongIntFromFile(File f, TLongIntHashMap map) throws IOException {
         DataInputStream dis = FileUtil.getDataInputStreamForFile(f);
         int size = dis.readInt();
         if (map == null) {
@@ -280,12 +280,12 @@ public class TroveMapUtil {
         return map;
     }
 
-    public static final TLongLongHashMap getTLongLongFromFile(File f, TLongLongHashMap map) throws IOException {
+    public static TLongLongHashMap getTLongLongFromFile(File f, TLongLongHashMap map) throws IOException {
         DataInputStream dis = FileUtil.getDataInputStreamForFile(f);
         return gettLongLongHashMap(map, dis);
     }
 
-    public static final TLongLongHashMap getTLongLongFromFile(BaseFile f, TLongLongHashMap map) throws IOException {
+    public static TLongLongHashMap getTLongLongFromFile(BaseFile f, TLongLongHashMap map) throws IOException {
         DataInputStream dis = f.getDataInputStream();
         return gettLongLongHashMap(map, dis);
     }
@@ -305,7 +305,7 @@ public class TroveMapUtil {
         return map;
     }
 
-    public static final TLongLongHashMap getReverseMapTLongLongMap(TLongLongHashMap map) {
+    public static TLongLongHashMap getReverseMapTLongLongMap(TLongLongHashMap map) {
         TLongLongHashMap returnMap = new TLongLongHashMap(map.size());
         for (TLongLongIterator it = map.iterator(); it.hasNext(); ) {
             it.advance();
@@ -315,7 +315,7 @@ public class TroveMapUtil {
         return returnMap;
     }
 
-    public static final TIntLongHashMap getReverseMapTLongIntMap(TLongIntHashMap map) {
+    public static TIntLongHashMap getReverseMapTLongIntMap(TLongIntHashMap map) {
         TIntLongHashMap returnMap = new TIntLongHashMap(map.size());
         for (TLongIntIterator it = map.iterator(); it.hasNext(); ) {
             it.advance();

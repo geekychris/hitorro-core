@@ -38,7 +38,7 @@ public class Console {
     /**
      * Print a new line to stdout with carriage return
      */
-    public static final void println() {
+    public static void println() {
         m_out.println();
     }
 
@@ -47,7 +47,7 @@ public class Console {
      *
      * @param text to print out
      */
-    public static final void println(String text) {
+    public static void println(String text) {
         m_out.println(text);
     }
 
@@ -56,14 +56,14 @@ public class Console {
      *
      * @param text to print out formatted with all the arguments
      */
-    public static final void println(String text, Object... args) {
+    public static void println(String text, Object... args) {
         m_out.println(Fmt.S(text, args));
     }
 
     /**
      * Print text to stdout
      */
-    public static final void print(String text) {
+    public static void print(String text) {
         m_out.print(text);
     }
 
@@ -73,14 +73,14 @@ public class Console {
      * @param text to format
      * @param args to insert into formatted text
      */
-    public static final void print(String text, Object... args) {
+    public static void print(String text, Object... args) {
         m_out.print(Fmt.S(text, args));
     }
 
     /**
      * Print a new line to stdout with carriage return
      */
-    public static final void println(PrintStream out) {
+    public static void println(PrintStream out) {
         out.println();
     }
 
@@ -89,7 +89,7 @@ public class Console {
      *
      * @param text to print out
      */
-    public static final void println(PrintStream out, String text) {
+    public static void println(PrintStream out, String text) {
         out.println(text);
     }
 
@@ -98,7 +98,7 @@ public class Console {
      *
      * @param text to print out formatted with all the arguments
      */
-    public static final void println(PrintStream out, String text,
+    public static void println(PrintStream out, String text,
                                      Object... args) {
         out.println(Fmt.S(text, args));
     }
@@ -106,7 +106,7 @@ public class Console {
     /**
      * Print text to stdout
      */
-    public static final void print(PrintStream out, String text) {
+    public static void print(PrintStream out, String text) {
         out.print(text);
     }
 
@@ -116,7 +116,7 @@ public class Console {
      * @param text to format
      * @param args to insert into formatted text
      */
-    public static final void print(PrintStream out, String text,
+    public static void print(PrintStream out, String text,
                                    Object... args) {
         out.print(Fmt.S(text, args));
     }
@@ -124,7 +124,7 @@ public class Console {
     /**
      * Print a new line to stdout with carriage return
      */
-    public static final void eprintln() {
+    public static void eprintln() {
         outErr.println();
     }
 
@@ -133,7 +133,7 @@ public class Console {
      *
      * @param text to print out
      */
-    public static final void eprintln(String text) {
+    public static void eprintln(String text) {
         outErr.println(text);
     }
 
@@ -142,14 +142,14 @@ public class Console {
      *
      * @param text to print out formatted with all the arguments
      */
-    public static final void eprintln(String text, Object... args) {
+    public static void eprintln(String text, Object... args) {
         outErr.println(Fmt.S(text, args));
     }
 
     /**
      * Print text to stdout
      */
-    public static final void eprint(String text) {
+    public static void eprint(String text) {
         outErr.print(text);
     }
 
@@ -159,14 +159,14 @@ public class Console {
      * @param text to format
      * @param args to insert into formatted text
      */
-    public static final void eprint(String text, Object... args) {
+    public static void eprint(String text, Object... args) {
         outErr.print(Fmt.S(text, args));
     }
 
     /**
      * Print a new line to stdout with carriage return
      */
-    public static final void eprintln(PrintStream out) {
+    public static void eprintln(PrintStream out) {
         out.println();
     }
 
@@ -175,7 +175,7 @@ public class Console {
      *
      * @param text to print out
      */
-    public static final void eprintln(PrintStream out, String text) {
+    public static void eprintln(PrintStream out, String text) {
         out.println(text);
     }
 
@@ -184,7 +184,7 @@ public class Console {
      *
      * @param text to print out formatted with all the arguments
      */
-    public static final void eprintln(PrintStream out, String text,
+    public static void eprintln(PrintStream out, String text,
                                       Object... args) {
         out.println(Fmt.S(text, args));
     }
@@ -192,7 +192,7 @@ public class Console {
     /**
      * Print text to stdout
      */
-    public static final void eprint(PrintStream out, String text) {
+    public static void eprint(PrintStream out, String text) {
         out.print(text);
     }
 
@@ -202,7 +202,7 @@ public class Console {
      * @param text to format
      * @param args to insert into formatted text
      */
-    public static final void eprint(PrintStream out, String text,
+    public static void eprint(PrintStream out, String text,
                                     Object... args) {
         out.print(Fmt.S(text, args));
     }
@@ -212,7 +212,7 @@ public class Console {
      *
      * @param text to format to insert into formatted text
      */
-    public static final void bprint(StringBuilder buff, String text) {
+    public static void bprint(StringBuilder buff, String text) {
         buff.append(text);
     }
 
@@ -222,19 +222,19 @@ public class Console {
      * @param text to format
      * @param args to insert into formatted text
      */
-    public static final void bprint(StringBuilder buff, String text,
+    public static void bprint(StringBuilder buff, String text,
                                     Object... args) {
         Fmt.f(buff, text, args);
     }
 
 
-    public static final void appendIfNotEmpty(StringBuilder buff, String text) {
+    public static void appendIfNotEmpty(StringBuilder buff, String text) {
         if (buff.length() > 0) {
             buff.append(text);
         }
     }
 
-    public static final void appendIfNotEmpty(StringBuilder buff, char c) {
+    public static void appendIfNotEmpty(StringBuilder buff, char c) {
         if (buff.length() > 0) {
             buff.append(c);
         }
@@ -245,7 +245,7 @@ public class Console {
      *
      * @param text to buffer
      */
-    public static final void bprintln(StringBuilder buff, String text) {
+    public static void bprintln(StringBuilder buff, String text) {
         buff.append(text);
         buff.append(Constants.NewLineChar);
     }
@@ -255,7 +255,7 @@ public class Console {
      * <p/>
      * to print out blank line to buffer
      */
-    public static final void bprintln(StringBuilder buff) {
+    public static void bprintln(StringBuilder buff) {
         buff.append(Constants.NewLineChar);
     }
 
@@ -264,7 +264,7 @@ public class Console {
      *
      * @param text to print out formatted with all the arguments
      */
-    public static final void bprintln(StringBuilder buff, String text,
+    public static void bprintln(StringBuilder buff, String text,
                                       Object... args) {
         Fmt.f(buff, text, args);
         buff.append(Constants.NewLineChar);
@@ -273,7 +273,7 @@ public class Console {
     /**
      * Print a new line to stdout with carriage return
      */
-    public static final void println(PrintWriter out) {
+    public static void println(PrintWriter out) {
         out.println();
     }
 
@@ -282,7 +282,7 @@ public class Console {
      *
      * @param text to print out
      */
-    public static final void println(PrintWriter out, String text) {
+    public static void println(PrintWriter out, String text) {
         out.println(text);
     }
 
@@ -291,7 +291,7 @@ public class Console {
      *
      * @param text to print out formatted with all the arguments
      */
-    public static final void println(PrintWriter out, String text,
+    public static void println(PrintWriter out, String text,
                                      Object... args) {
         if (out == null) {
             return;
@@ -302,7 +302,7 @@ public class Console {
     /**
      * Print text to stdout
      */
-    public static final void print(PrintWriter out, String text) {
+    public static void print(PrintWriter out, String text) {
         out.print(text);
     }
 
@@ -312,7 +312,7 @@ public class Console {
      * @param text to format
      * @param args to insert into formatted text
      */
-    public static final void print(PrintWriter out, String text,
+    public static void print(PrintWriter out, String text,
                                    Object... args) {
         out.print(Fmt.S(text, args));
     }

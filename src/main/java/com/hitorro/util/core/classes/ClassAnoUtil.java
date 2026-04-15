@@ -50,7 +50,7 @@ public class ClassAnoUtil {
         return getMatchingClass(c.getAnnotations(), constraint);
     }
 
-    public static int getClassLevelAnnotation(Class c, HTPredicate<Class> constraint, List<Annotation> annos) {
+    public static final int getClassLevelAnnotation(Class c, HTPredicate<Class> constraint, List<Annotation> annos) {
         return getAllMatchingClass(c.getAnnotations(), constraint, annos);
     }
 
@@ -87,7 +87,7 @@ public class ClassAnoUtil {
      * @param includeSuper
      * @return
      */
-    public static int getAllMemberVariable(Class c, HTPredicate<MemberVarAnnotations> annosConstraint, List<MemberVarAnnotations> list, boolean includeSuper) {
+    public static final int getAllMemberVariable(Class c, HTPredicate<MemberVarAnnotations> annosConstraint, List<MemberVarAnnotations> list, boolean includeSuper) {
         if (includeSuper) {
             int cnt = 0;
             while (c != null) {
@@ -108,7 +108,7 @@ public class ClassAnoUtil {
      * @param annosConstraint
      * @return count of matches
      */
-    public static int getAllMemberVariable(Class c, HTPredicate<MemberVarAnnotations> annosConstraint, List<MemberVarAnnotations> list) {
+    public static final int getAllMemberVariable(Class c, HTPredicate<MemberVarAnnotations> annosConstraint, List<MemberVarAnnotations> list) {
         int cnt = 0;
         for (Field field : c.getDeclaredFields()) {
             Annotation[] annos = field.getAnnotations();
@@ -134,7 +134,7 @@ public class ClassAnoUtil {
      * @param list
      * @return
      */
-    public static int getAllBeanStyleMemberFunctions(Class c, HTPredicate<BeanStyleMethodAnnotation> annosConstraint, List<BeanStyleMethodAnnotation> list) {
+    public static final int getAllBeanStyleMemberFunctions(Class c, HTPredicate<BeanStyleMethodAnnotation> annosConstraint, List<BeanStyleMethodAnnotation> list) {
         Map<String, BeanStyleMethodAnnotation> fieldAnnotationMap = new HashMap();
         for (Method m : c.getDeclaredMethods()) {
             addFieldMethod(fieldAnnotationMap, m, null);
@@ -149,7 +149,7 @@ public class ClassAnoUtil {
         return cnt;
     }
 
-    public static int getAllMemberFunctions(Class c, HTPredicate<MethodAnnotation> methodConstraint,
+    public static final int getAllMemberFunctions(Class c, HTPredicate<MethodAnnotation> methodConstraint,
                                             HTPredicate<Class> annotationConstraint,
                                             List<MethodAnnotation> list) {
         int cnt = 0;
@@ -275,7 +275,7 @@ public class ClassAnoUtil {
     }
 
 
-    public static int getAllMatchingClass(Annotation[] arr, HTPredicate<Class> c, List<Annotation> annos) {
+    public static final int getAllMatchingClass(Annotation[] arr, HTPredicate<Class> c, List<Annotation> annos) {
         int cnt = 0;
         for (Annotation a : arr) {
             Class ac = a.annotationType();

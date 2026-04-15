@@ -28,7 +28,7 @@ import java.io.IOException;
 
 
 public class JSONNull extends JSONElement<Object> {
-    public static final JSONNull me = new JSONNull();
+    public static JSONNull me = new JSONNull();
 
     @Override
     public Object get() {

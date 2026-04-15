@@ -31,7 +31,7 @@ public class InetUtil {
      * @param address - String IP address: ie "66.10.27.100"
      * @return int
      */
-    public static int inetAddressToInt(String address) {
+    public static final int inetAddressToInt(String address) {
         int byteAccum = 0;
         int intAccum = 0;
         boolean nextByte = true;
@@ -84,7 +84,7 @@ public class InetUtil {
      * @param address - unique integer representation of IP address
      * @return String representation of IP address
      */
-    public static String intToInetAddressString(int address) {
+    public static final String intToInetAddressString(int address) {
         int[] inetBytes = intToInetAddress(address);
         String[] inetBytesString = {"0", "0", "0", "0"};
 

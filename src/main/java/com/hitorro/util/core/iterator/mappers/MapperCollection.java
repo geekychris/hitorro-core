@@ -28,20 +28,20 @@ import com.hitorro.util.core.iterator.Mapper;
  * at the expense of loosing the type contract verification provided by the generics E, F
  */
 public class MapperCollection<I, O> extends BaseMapper<I, O> {
-    protected BaseMapper maps[];
+    protected BaseMapper[] maps;
 
-    public MapperCollection(BaseMapper maps[]) {
+    public MapperCollection(BaseMapper[] maps) {
         this.maps = maps;
     }
 
-    private MapperCollection(MapperCollection mc) {
+    private MapperCollection(MapperCollection<?, ?> mc) {
         maps = new BaseMapper[mc.maps.length];
         for (int i = 0; i < mc.maps.length; i++) {
             maps[i] = mc.maps[i].getCopy();
         }
     }
 
-    public MapperCollection(BaseMapper left, BaseMapper right) {
+    public MapperCollection(BaseMapper<?, ?> left, BaseMapper<?, ?> right) {
         this.maps = new BaseMapper[2];
         maps[0] = left;
         maps[1] = right;
@@ -60,6 +60,7 @@ public class MapperCollection<I, O> extends BaseMapper<I, O> {
         return new MapperCollection(this);
     }
 
+    @SuppressWarnings("unchecked")
     public O apply(final I e) {
         Object t = e;
         for (Mapper mapper : maps) {
@@ -68,13 +69,14 @@ public class MapperCollection<I, O> extends BaseMapper<I, O> {
         return (O) t;
     }
 
+    @SuppressWarnings("unchecked")
     public <E> MapperCollection<I, E> combine(BaseMapper<O, E> r) {
-        BaseMapper arr[];
+        BaseMapper[] arr;
         if (r instanceof DummyBaseMapper) {
             return (MapperCollection<I, E>) this;
         }
         if (r instanceof MapperCollection) {
-            MapperCollection right = (MapperCollection) r;
+            MapperCollection<?, ?> right = (MapperCollection<?, ?>) r;
             arr = new BaseMapper[maps.length + right.maps.length];
             fill(arr, maps, 0);
             fill(arr, right.maps, maps.length);
@@ -87,7 +89,7 @@ public class MapperCollection<I, O> extends BaseMapper<I, O> {
 
     }
 
-    private void fill(Mapper target[], Mapper src[], int offset) {
+    private void fill(Mapper[] target, Mapper[] src, int offset) {
         for (int i = 0; i < src.length; i++) {
             target[offset + i] = src[i];
         }

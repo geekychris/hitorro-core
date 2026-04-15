@@ -21,11 +21,10 @@
  */
 package com.hitorro.util.urlparser;
 
-import junit.framework.TestCase;
-
 /**
+ * Computes edit distance between two URLs based on their path structure.
  */
-public class UrlEditDistance extends TestCase {
+public class UrlEditDistance {
     private UrlCursor curA = new UrlCursor();
     private UrlCursor curB = new UrlCursor();
 

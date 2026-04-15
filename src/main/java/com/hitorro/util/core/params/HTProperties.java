@@ -207,7 +207,7 @@ public final class HTProperties implements Map<String, String> {
         return result;
     }
 
-    public static String resolveVariable(String value, boolean recurse, Map<String, String> map) {
+    public static final String resolveVariable(String value, boolean recurse, Map<String, String> map) {
         return resolveVariable(value, recurse, null, map);
     }
 

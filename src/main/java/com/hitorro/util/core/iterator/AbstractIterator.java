@@ -34,10 +34,7 @@ import com.hitorro.util.io.StoreException;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
-import java.util.function.Function;
-import java.util.function.Predicate;
+import java.util.function.*;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -110,15 +107,15 @@ public abstract class AbstractIterator<E> implements ChainingIteratorIntf<E>, It
     }
 
     public <OUT> AbstractIterator<OUT> fillIterator(int batchSize, FillBufferHandler<E, OUT> transformer) {
-        return new FillBufferIterator(this, batchSize, transformer);
+        return new FillBufferIterator<>(this, batchSize, transformer);
     }
 
     public AbstractIterator<E> count(AtomicLong longV) {
-        return new CountingIterator(this, longV, 0);
+        return new CountingIterator<>(this, longV, 0);
     }
 
     public AbstractIterator<E> count(AtomicLong longV, long reportEvery) {
-        return new CountingIterator(this, longV, reportEvery);
+        return new CountingIterator<>(this, longV, reportEvery);
     }
 
     /**
@@ -128,7 +125,7 @@ public abstract class AbstractIterator<E> implements ChainingIteratorIntf<E>, It
      * @return
      */
     public AbstractIterator<E> sort(Comparator<E> comp) {
-        return new SortIterator(this, comp);
+        return new SortIterator<>(this, comp);
     }
 
     /**
@@ -137,7 +134,7 @@ public abstract class AbstractIterator<E> implements ChainingIteratorIntf<E>, It
      * @return
      */
     public <F> AbstractIterator<GenericKeyValue<E, F>> combine(AbstractIterator<F> other) {
-        return new TupleIterator(this, other);
+        return new TupleIterator<>(this, other);
     }
 
 
@@ -153,15 +150,15 @@ public abstract class AbstractIterator<E> implements ChainingIteratorIntf<E>, It
      * @return
      */
     public <OUT> AbstractIterator<OUT> map(Function<E, OUT> mapper) {
-        return new MappingIterator(this, mapper);
+        return new MappingIterator<>(this, mapper);
     }
 
     public AbstractIterator<E> skipNTakeM(long skip, long take, Predicate<E> excludeInTake, boolean expungeRemainder) {
-        return new SkipNTakeM(this, skip, take, excludeInTake, expungeRemainder);
+        return new SkipNTakeM<>(this, skip, take, excludeInTake, expungeRemainder);
     }
 
     public AbstractIterator<E> skipNTakeM(long skip, long take, boolean expungeRemainder) {
-        return new SkipNTakeM(this, skip, take, null, expungeRemainder);
+        return new SkipNTakeM<>(this, skip, take, null, expungeRemainder);
     }
 
     /**
@@ -172,7 +169,7 @@ public abstract class AbstractIterator<E> implements ChainingIteratorIntf<E>, It
      * @return
      */
     public <O> AbstractIterator<O> mapRemoveNull(Mapper<E, O> mapper) {
-        return new NullRemovingIterator(new MappingIterator<E, O>(this, mapper));
+        return new NullRemovingIterator<>(new MappingIterator<>(this, mapper));
     }
 
     public <OUT> AbstractIterator<OUT> mapParallel(Function<E, OUT> mapper) {
@@ -182,11 +179,11 @@ public abstract class AbstractIterator<E> implements ChainingIteratorIntf<E>, It
 
 
     public <OUT> AbstractIterator<OUT> mapParallel(Function<E, OUT> mapper, int inputQueueSize, int outputQueueSize) {
-        return new ParIterator(this, mapper, Env.getCPUCores(), inputQueueSize, outputQueueSize, this.getClass().getName());
+        return new ParIterator<>(this, mapper, Env.getCPUCores(), inputQueueSize, outputQueueSize, this.getClass().getName());
     }
 
     public <OUT> AbstractIterator<OUT> mapParallel(Function<E, OUT> mapper, int threads, int inputQueueSize, int outputQueueSize, String name) {
-        return new ParIterator(this, mapper, threads, inputQueueSize, outputQueueSize, name);
+        return new ParIterator<>(this, mapper, threads, inputQueueSize, outputQueueSize, name);
     }
 
     public <OUT> AbstractIterator<OUT> timeLimitingIterator(long timeLimitInMillis) {
@@ -457,7 +454,7 @@ public abstract class AbstractIterator<E> implements ChainingIteratorIntf<E>, It
         if (merger == null || comparator == null) {
             return this;
         }
-        LikeRowMergingIterator<E> outIter = new LikeRowMergingIterator(this, comparator, merger);
+        LikeRowMergingIterator<E> outIter = new LikeRowMergingIterator<>(this, comparator, merger);
         return outIter;
     }
 
@@ -483,6 +480,62 @@ public abstract class AbstractIterator<E> implements ChainingIteratorIntf<E>, It
         return new NestingIterator(this, mapper, handler);
     }
 
+
+    /**
+     * Collect all remaining items into a new ArrayList.
+     */
+    public List<E> toList() {
+        List<E> list = new ArrayList<>();
+        addAll(list);
+        return list;
+    }
+
+    /**
+     * Perform an action on each element as it passes through, without transforming it.
+     */
+    public AbstractIterator<E> peek(Consumer<E> action) {
+        return map(e -> { action.accept(e); return e; });
+    }
+
+    /**
+     * Map each element to an iterator and flatten the results. Alias for {@link #nest(Mapper)}
+     * using standard Stream API naming.
+     */
+    public <O> AbstractIterator<O> flatMap(Function<E, AbstractIterator<O>> mapper) {
+        return nest((Mapper<E, AbstractIterator<O>>) mapper::apply);
+    }
+
+    /**
+     * Take elements while the predicate holds true. Stops permanently when predicate first returns false.
+     */
+    public AbstractIterator<E> takeWhile(Predicate<E> predicate) {
+        return new TakeWhileIterator<>(this, predicate);
+    }
+
+    /**
+     * Skip elements while the predicate holds true, then pass through all remaining elements.
+     */
+    public AbstractIterator<E> dropWhile(Predicate<E> predicate) {
+        return new DropWhileIterator<>(this, predicate);
+    }
+
+    /**
+     * Remove duplicate elements, keeping the first occurrence. Uses a HashSet internally.
+     */
+    public AbstractIterator<E> distinct() {
+        Set<E> seen = new HashSet<>();
+        return filter(seen::add);
+    }
+
+    /**
+     * Terminal operation: consume all remaining items, applying the action to each.
+     */
+    @Override
+    public void forEach(Consumer<? super E> action) {
+        while (hasNext()) {
+            action.accept(next());
+        }
+    }
 
     /**
      * @deprecated Use {@link #toStream()} which properly closes the iterator when the stream closes.

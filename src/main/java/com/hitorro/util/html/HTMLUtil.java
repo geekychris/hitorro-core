@@ -41,9 +41,9 @@ public class HTMLUtil {
      * <p/>
      * This function is public so it can be unit tested. :(
      */
-    public static String getHTMLStripped(String htmlString) {
+    public static final String getHTMLStripped(String htmlString) {
         int numChars = 1000;
-        htmlString = getStrpAfterHTML(htmlString, numChars);
+        htmlString = getStripBeforeHTML(htmlString, numChars);
         htmlString = getStripAfterHTML(htmlString, numChars);
         return htmlString;
     }
@@ -55,7 +55,7 @@ public class HTMLUtil {
      * @param numChars   Don't search more than numChars when looking for <html>
      * @return String containing the new html
      */
-    public static final String getStrpAfterHTML(String htmlString, int numChars) {
+    public static final String getStripBeforeHTML(String htmlString, int numChars) {
         if (htmlString != null) {
             String startTag = "<html";
             if (htmlString.length() > startTag.length()) {

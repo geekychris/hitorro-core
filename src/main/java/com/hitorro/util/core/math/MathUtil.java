@@ -34,7 +34,7 @@ public class MathUtil {
         return arr2;
     }
 
-    public static final double getEuclideanLength(double arr[]) {
+    public static double getEuclideanLength(double arr[]) {
         double d = 0.0;
         double t;
         for (int i = 0; i < arr.length; i++) {
@@ -67,7 +67,7 @@ public class MathUtil {
      * @param mu    - mean
      * @param x     - parameter to be
      */
-    public static final double probabilityDensity(double theta, double mu, double x) {
+    public static double probabilityDensity(double theta, double mu, double x) {
         double delta = x - mu;
         double right = (delta * delta) / (2 * theta * theta);
 
@@ -87,7 +87,7 @@ public class MathUtil {
      * @param args
      * @return
      */
-    public static final double entropy(double... args) {
+    public static double entropy(double... args) {
         double result = 0.0;
         double tot = 0;
         for (double a : args) {
@@ -107,7 +107,7 @@ public class MathUtil {
      * @param branches
      * @return average information.
      */
-    public static final double averageInformation(double branches[][]) {
+    public static double averageInformation(double branches[][]) {
         double totalInstances = 0;
         for (double branch[] : branches) {
             for (double b : branch) {
@@ -136,7 +136,7 @@ public class MathUtil {
      * @param base
      * @return LOGbase(number)
      */
-    public static final double log(double number, double base) {
+    public static double log(double number, double base) {
         return Math.log10(number) / Math.log10(base);
     }
 
@@ -146,7 +146,7 @@ public class MathUtil {
      * @param number
      * @return
      */
-    public static final double log2(double number) {
+    public static double log2(double number) {
         return Math.log10(number) / s_log2;
     }
 }

@@ -28,7 +28,7 @@ import com.hitorro.util.core.iterator.mappers.BaseMapper;
 public class TLDDictionarySingleton extends BaseMapper<Object, TLDDictionary> {
     public static final String Eventname = "TLDDictionarySingleton";
 
-    public static final SingletonCache<TLDDictionary> me = new SingletonCache(Eventname, new TLDDictionarySingleton());
+    public static SingletonCache<TLDDictionary> me = new SingletonCache(Eventname, new TLDDictionarySingleton());
 
     public TLDDictionarySingleton() {
     }

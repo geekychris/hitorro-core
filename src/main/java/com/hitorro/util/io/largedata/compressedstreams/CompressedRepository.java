@@ -50,7 +50,7 @@ public class CompressedRepository {
         m_bufferLength = m_buffer.length;
     }
 
-    public static final CompressedRepository getCompressedRepository(File file) throws IOException {
+    public static CompressedRepository getCompressedRepository(File file) throws IOException {
         CompressedRepository repo =
                 new CompressedRepository(ArrayUtil.loadByteArrayFromFile(file));
 

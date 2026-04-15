@@ -159,7 +159,7 @@ public class FileFile extends BaseFile<FileFile, FileFileSystem> implements Comp
         if (files == null) {
             return null;
         }
-        List<BaseFile> afs = new ArrayList();
+        List<BaseFile> afs = new ArrayList<>();
         for (int i = 0; i < files.length; i++) {
             BaseFile afTemp = new FileFile(ffs, Fmt.S("%s/%s", path, files[i].getName()));
             if (filter.test(afTemp)) {
@@ -189,6 +189,10 @@ public class FileFile extends BaseFile<FileFile, FileFileSystem> implements Comp
             replaceWithMe.replace(this);
         }
         return true;
+    }
+
+    public java.nio.file.Path toPath() {
+        return completeFile.toPath();
     }
 
     public File getLocalFileIfPossible() {

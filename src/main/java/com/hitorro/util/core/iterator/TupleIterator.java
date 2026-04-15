@@ -38,7 +38,7 @@ public class TupleIterator<A, B> extends AbstractIterator<GenericKeyValue<A, B>>
     @Override
     public boolean hasNext() {
         boolean res = iterA.hasNext();
-        return res | iterB.hasNext();
+        return res || iterB.hasNext();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class TupleIterator<A, B> extends AbstractIterator<GenericKeyValue<A, B>>
         A a = iterA.next();
         B b = iterB.next();
 
-        return new GenericKeyValue(a, b);
+        return new GenericKeyValue<>(a, b);
     }
 
     @Override

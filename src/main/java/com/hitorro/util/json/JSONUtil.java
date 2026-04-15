@@ -37,7 +37,7 @@ public class JSONUtil {
         return node == null || node.isNull() || ((node.isArray() || node.isObject()) && node.size() == 0);
     }
 
-    public static final ArrayNode toJsonStringArray(List list) {
+    public static ArrayNode toJsonStringArray(List list) {
         ArrayNode arr = JsonNodeFactory.instance.arrayNode();
         for (Object r : list) {
             arr.add(r.toString());
@@ -75,7 +75,7 @@ public class JSONUtil {
         return list;
     }
 
-    public static final JsonNode addCallstack(Throwable t) {
+    public static JsonNode addCallstack(Throwable t) {
         StackTraceElement[] elements = t.getStackTrace();
         ArrayNode node = JsonNodeFactory.instance.arrayNode();
 
@@ -98,7 +98,7 @@ public class JSONUtil {
      *
      * @param t the target exception.
      */
-    public static final JsonNode addCallstackChain(Throwable t) {
+    public static JsonNode addCallstackChain(Throwable t) {
         ObjectNode on = null;
         ObjectNode root = null;
         Throwable cause;
@@ -143,7 +143,7 @@ public class JSONUtil {
     }
 
 
-    public static String getString(JsonNode n) {
+    public static final String getString(JsonNode n) {
         if (n == null) {
             return null;
         }
@@ -193,7 +193,7 @@ public class JSONUtil {
         return n.doubleValue();
     }
 
-    public static long getLong(JsonNode n, long defaultVal) {
+    public static final long getLong(JsonNode n, long defaultVal) {
         if (n == null) {
             return defaultVal;
         }

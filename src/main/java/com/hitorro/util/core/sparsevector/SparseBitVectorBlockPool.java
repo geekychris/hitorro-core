@@ -36,7 +36,7 @@ public class SparseBitVectorBlockPool {
     private static SparseBitVectorBlockPoolNode[] nodeChains = new SparseBitVectorBlockPoolNode[32];
     private static Object lock = new Object();
 
-    public static final SparseBitVector getBitVector(int blockSizeToPower, int initialArraySize) {
+    public static SparseBitVector getBitVector(int blockSizeToPower, int initialArraySize) {
         SparseBitVector sbv = new SparseBitVector(blockSizeToPower, initialArraySize);
         return sbv;
     }

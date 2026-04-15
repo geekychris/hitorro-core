@@ -34,7 +34,7 @@ import java.io.IOException;
  * frequency.
  */
 public class StringSetBaseFileStateSink extends HashCountingBaseFileStateSink<String> {
-    public static final BasefileProperty BaseFileKey = new BasefileProperty("outfile", "outputfile in the format of a basefile");
+    public static BasefileProperty BaseFileKey = new BasefileProperty("outfile", "outputfile in the format of a basefile");
     public static BooleanProperty WriteCount = new BooleanProperty("writecount", "write the frequency count", false);
     private boolean writeCounts = false;
 

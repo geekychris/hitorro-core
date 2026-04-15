@@ -40,7 +40,7 @@ import java.util.List;
  * must support end of block notification
  */
 public class DirectoryContainer {
-    public static final FileComparator FileNameComparator = new FileComparator();
+    public static FileComparator FileNameComparator = new FileComparator();
 
     private List<DirRow> files = new ArrayList();
     private int current = -1;

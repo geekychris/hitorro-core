@@ -30,7 +30,7 @@ import com.hitorro.util.json.iterators.JSONIterFromJSONList;
 
 
 public class JSONIterIterMapper extends BaseMapper<JSONElement, AbstractIterator<JSONElement>> {
-    public static final JSONIterIterMapper jsonIterIterMapper = new JSONIterIterMapper();
+    public static JSONIterIterMapper jsonIterIterMapper = new JSONIterIterMapper();
 
     @Override
     public AbstractIterator<JSONElement> apply(final JSONElement e) {

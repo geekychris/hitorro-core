@@ -60,7 +60,7 @@ public class ClassUtil {
      * @param requiredSuper if non-null, a class or interface that the class needs to be a subclass of
      * @return the created instance, or null if there was any error
      */
-    public static final Object getInstanceSwallowError(String clazz, Class requiredSuper) {
+    public static Object getInstanceSwallowError(String clazz, Class requiredSuper) {
         Class c = getClassForName(clazz, requiredSuper);
         if (c == null) {
             return null;
@@ -78,11 +78,11 @@ public class ClassUtil {
         return loader.getResource(name);
     }
 
-    public static String getClassNameAsRelativeFile(Class c) {
+    public static final String getClassNameAsRelativeFile(Class c) {
         return c.getCanonicalName().replace(".", "/") + ".class";
     }
 
-    public static final Object getInstanceSwallowError(Class theClass, Class requiredSuper) {
+    public static Object getInstanceSwallowError(Class theClass, Class requiredSuper) {
         return getInstanceSwallowError(theClass, requiredSuper, false);
     }
 
@@ -93,7 +93,7 @@ public class ClassUtil {
      * @param requiredSuper if non-null, a class or interface that the class needs to be a subclass of
      * @return the created instance, or null if there was any error
      */
-    public static final Object getInstanceSwallowError(Class theClass, Class requiredSuper, boolean logOutput) {
+    public static Object getInstanceSwallowError(Class theClass, Class requiredSuper, boolean logOutput) {
         try {
             if (requiredSuper != null) {
                 // make sure that this class is the right type
@@ -124,7 +124,7 @@ public class ClassUtil {
      * @param clazz
      * @return
      */
-    public static final Object getInstanceSwallowError(String clazz) {
+    public static Object getInstanceSwallowError(String clazz) {
         return getInstanceSwallowError(clazz, null);
     }
 
@@ -136,7 +136,7 @@ public class ClassUtil {
      * @param args  Arguments to the method.  If null, we are looking for a no-arg method.
      * @return the method, or null if it can't be found or accessed
      */
-    public static final Method getDeclaredMethodSwallowError(Class clazz, String name, Class[] args) {
+    public static Method getDeclaredMethodSwallowError(Class clazz, String name, Class[] args) {
         Method result = null;
         try {
             result = clazz.getDeclaredMethod(name, args);
@@ -148,7 +148,7 @@ public class ClassUtil {
         return result;
     }
 
-    public static final Class getClassForName(String classname, Class requiredSuper) {
+    public static Class getClassForName(String classname, Class requiredSuper) {
         return getClassForName(classname, requiredSuper, false);
     }
 
@@ -159,7 +159,7 @@ public class ClassUtil {
      * @param requiredSuper if non-null, a class or interface that the class needs to be a subclass of
      * @return the Class object if all is well, null otherwise
      */
-    public static final Class getClassForName(String classname, Class requiredSuper, boolean logError) {
+    public static Class getClassForName(String classname, Class requiredSuper, boolean logError) {
         if (classname == null) {
             return null;
         }
@@ -212,7 +212,7 @@ public class ClassUtil {
      * @param cSuper The superclass we're checking for, or interface we want cTest to implement
      * @return returns true if cTest is a subclass of cSuper
      */
-    public static final boolean isSubClass(Class cTest, Class cSuper) {
+    public static boolean isSubClass(Class cTest, Class cSuper) {
         if (cSuper == null || cTest == null) {
             return false;
         }
@@ -231,7 +231,7 @@ public class ClassUtil {
     }
 
 
-    public static final List<Class> getClassesNeeded(Class c) {
+    public static List<Class> getClassesNeeded(Class c) {
         Class[] declared = c.getDeclaredClasses();
         Class[] classes = c.getClasses();
         Package p = c.getPackage();
@@ -245,12 +245,12 @@ public class ClassUtil {
      * @param c
      * @return
      */
-    public static final boolean isAbstract(Class c) {
+    public static boolean isAbstract(Class c) {
         int i = c.getModifiers();
         return Modifier.isAbstract(i);
     }
 
-    public static final byte[] getSerializedObject(Object object)
+    public static byte[] getSerializedObject(Object object)
             throws IOException {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         ObjectOutputStream oStream = new ObjectOutputStream(stream);
@@ -261,7 +261,7 @@ public class ClassUtil {
         return stream.toByteArray();
     }
 
-    public static final Object getDeserializedObject(byte[] array)
+    public static Object getDeserializedObject(byte[] array)
             throws IOException, ClassNotFoundException {
         ByteArrayInputStream stream = new ByteArrayInputStream(array);
 
@@ -280,7 +280,7 @@ public class ClassUtil {
      * @throws java.io.IOException
      * @throws ClassNotFoundException
      */
-    public static final Object getObjectFromInputStream(InputStream is)
+    public static Object getObjectFromInputStream(InputStream is)
             throws IOException, ClassNotFoundException {
         try {
             ObjectInputStream ois = new ObjectInputStream(is);

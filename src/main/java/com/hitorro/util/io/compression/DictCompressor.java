@@ -37,7 +37,7 @@ import java.util.zip.*;
 
 
 public class DictCompressor implements Compressor {
-    public static final FileProperty DictPath = new FileProperty("compression.dictionary.dir", "", "${HT_DATA}/compression_dictionaries");
+    public static FileProperty DictPath = new FileProperty("compression.dictionary.dir", "", "${HT_DATA}/compression_dictionaries");
     private int version;
     private DictVersion thisVersion;
     private TIntObjectHashMap<DictVersion> dictVersion = new TIntObjectHashMap<>();

@@ -45,10 +45,10 @@ import java.util.TreeMap;
  * from the object itself and do things like field defaulting.
  */
 public class HTJSONIterator extends AbstractIterator<com.hitorro.util.json.JSONElement> {
-    public static final com.hitorro.util.json.JSONMap EmptyMap = new com.hitorro.util.json.JSONMap(Collections.emptyMap());
-    public static final com.hitorro.util.json.JSONList EmptyList = new com.hitorro.util.json.JSONList(Collections.emptyList());
+    public static com.hitorro.util.json.JSONMap EmptyMap = new com.hitorro.util.json.JSONMap(Collections.emptyMap());
+    public static com.hitorro.util.json.JSONList EmptyList = new com.hitorro.util.json.JSONList(Collections.emptyList());
     private final static JsonFactory factory = new JsonFactory();
-    public static String HTTypeKey = "ht_type";
+    public static final String HTTypeKey = "ht_type";
     private JsonParser parser = null;
     private com.hitorro.util.json.JSONElement domlet;
 

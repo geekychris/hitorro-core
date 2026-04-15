@@ -19,40 +19,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.hitorro.util.io;
+package com.hitorro.util.core.iterator.sinks;
 
-import com.hitorro.util.io.largedata.compressedstreams.CInputStream;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 
 /**
- * Copyright (c) HiTorro 2003-2008, Inc.
- * <p/>
- * User: chris Date: May 11, 2004 Time: 10:52:22 AM
- * <p/>
- * Description:
+ * A sink that counts the number of items added.
  */
-public class WordReader {
+public class CountingSink<E> implements Sink<E> {
+    private long count;
 
-    private int BUFFER_SIZE = 1024;
-    private int bytesRead;
-    private boolean moreBytesToRead = true;
-    private CInputStream m_stream;
-    private char[] m_buff = new char[BUFFER_SIZE];
-
-    public WordReader(CInputStream is) {
-        m_stream = is;
+    @Override
+    public boolean init(JsonNode node) {
+        return true;
     }
 
-    private boolean fillBuffer()
-            throws IOException {
-        if (moreBytesToRead == false) {
-            return false;
-        }
-        //bytesRead = m_stream.readChars(m_buff, 0, BUFFER_SIZE);
-        if (bytesRead > 0) {
-            return true;
-        }
-        return false;
+    @Override
+    public boolean start() {
+        count = 0;
+        return true;
+    }
+
+    @Override
+    public boolean add(E o) {
+        count++;
+        return true;
+    }
+
+    @Override
+    public boolean stop() {
+        return true;
+    }
+
+    @Override
+    public void close() {
+    }
+
+    public long getCount() {
+        return count;
     }
 }

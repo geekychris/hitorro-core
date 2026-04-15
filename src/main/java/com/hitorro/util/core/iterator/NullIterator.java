@@ -25,7 +25,7 @@ import java.io.IOException;
 
 
 public class NullIterator<T> extends AbstractIterator<T> {
-    public static final NullIterator me = new NullIterator();
+    public static NullIterator me = new NullIterator();
 
 
     @Override

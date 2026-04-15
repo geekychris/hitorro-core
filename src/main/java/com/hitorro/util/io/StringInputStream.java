@@ -117,7 +117,7 @@ public class StringInputStream extends InputStream
      *
      * @return the new String converted from a byte array.
      */
-    public static String convertBytesToString(byte[] bytes) {
+    public static final String convertBytesToString(byte[] bytes) {
         return new String(convertBytesToChars(bytes));
     }
 
@@ -253,7 +253,7 @@ public class StringInputStream extends InputStream
      * @return The new String with replacement having occurred.
      */
 
-    public static String replace(String Text, String Old, String New) {
+    public static final String replace(String Text, String Old, String New) {
         if (Old.length() == 0) {
             return Text;
         }

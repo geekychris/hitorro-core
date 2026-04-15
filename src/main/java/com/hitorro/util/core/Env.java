@@ -116,7 +116,7 @@ enum RedirectEnum {
  * @author chris
  */
 public class Env {
-    public static final StringProperty ServerType = new StringProperty("servertype", "type of server it has one", null);
+    public static StringProperty ServerType = new StringProperty("servertype", "type of server it has one", null);
     public static final String HT_HOME = "ht_home";
     public static final String HT_BIN = "ht_bin";
     public static final String HT_DATA = "ht_data";
@@ -130,12 +130,12 @@ public class Env {
     public static final String SCRIPT_PLAT_DIR = "script_plat_dir";
     // on unix this is /usr/bin
     public static final String OS_BIN_DIR = "os_bin_dir";
-    public static final BooleanProperty DebugMode = new BooleanProperty("jni.debugbuildlocation", "If debug mode we look first in the original build path", false);
+    public static BooleanProperty DebugMode = new BooleanProperty("jni.debugbuildlocation", "If debug mode we look first in the original build path", false);
     //Identifier of the server, this server should have a unique id over the complete network, it should be made up of the
     //servertype and node number
-    public static final StringProperty ServerId = new StringProperty("serverid", "Id of the server instance including server type", "<<UndefinedServerId>>");
+    public static StringProperty ServerId = new StringProperty("serverid", "Id of the server instance including server type", "<<UndefinedServerId>>");
     public static final String PRIVATE = "private";
-    public static final IntegerProperty HttpPort = new IntegerProperty("defaulthttp.port", "number for http port", 8072);
+    public static IntegerProperty HttpPort = new IntegerProperty("defaulthttp.port", "number for http port", 8072);
     /**
      * Set the following in the environment to overide where Binary and home are located....this is to seperate out
      * configuration of a system vs the binary distribution directories.
@@ -177,7 +177,7 @@ public class Env {
      * @param value
      * @return
      */
-    public static long getNextPower2Value(long start, long value) {
+    public static final long getNextPower2Value(long start, long value) {
         while (start < value) {
             start = start * 2;
         }
@@ -189,7 +189,7 @@ public class Env {
      *
      * @param props
      */
-    public static final void addMachineInfoToProps(HTProperties props) {
+    public static void addMachineInfoToProps(HTProperties props) {
         props.put("date", new Date().toString());
         props.put("host_name", Env.getHostName());
 
@@ -212,15 +212,15 @@ public class Env {
         return new File(Env.getHome(), Fmt.S("%s-saved.json", Env.NodeIdentity.apply(propsSoFar)));
     }
 
-    public static final BaseFile getBaseFile(File file) {
+    public static BaseFile getBaseFile(File file) {
         return FileFileSystem.Root.getFile(file.getAbsolutePath());
     }
 
-    public static int getHTTPPort() {
+    public static final int getHTTPPort() {
         return HttpPort.apply();
     }
 
-    public static final boolean loadLib(String lib, String pathIn) {
+    public static boolean loadLib(String lib, String pathIn) {
         try {
             // loadLibrary seems to require no path (must be in LD_LIBRARY_PATH
             //System.loadLibrary("/ht/repos/platform/src/ht/jni/hitorroJNI");
@@ -242,7 +242,7 @@ public class Env {
     public static final String getSystemLanguage() {
         return "en_us";
     }
-    public static String getUniqueId() {
+    public static final String getUniqueId() {
         long time = System.currentTimeMillis();
         String name = Env.getServerId();
         return Fmt.S("%s.%s", Long.toString(time), name);
@@ -259,11 +259,11 @@ public class Env {
         return new File(Env.getBin(), "config").getAbsolutePath();
     }
 
-    public static final BaseFile getBinConfigBaseFile() {
+    public static BaseFile getBinConfigBaseFile() {
         return getBinBaseFileSystem().getFile("config");
     }
 
-    public static final BaseFile getHomeConfigBaseFile() {
+    public static BaseFile getHomeConfigBaseFile() {
         return getHomeBaseFileSystem().getFile("config");
     }
 
@@ -275,7 +275,7 @@ public class Env {
         return Fmt.S("%s/build/native/%s.%s", Env.getBin(), lib, Platform.getPlatform().getSharedObjectExtension());
     }
 
-    public static final boolean isUnixVariant() {
+    public static boolean isUnixVariant() {
         return Platform.getPlatform().isUnixVariant();
     }
 
@@ -294,7 +294,7 @@ public class Env {
      * @param reason
      * @param exitCode
      */
-    public static final void exitSystem(String reason, int exitCode) {
+    public static void exitSystem(String reason, int exitCode) {
         String s = Fmt.S("%s with exit code %s", reason, exitCode);
         if (exitCode < 0) {
             Console.eprintln(s);
@@ -304,7 +304,7 @@ public class Env {
         System.exit(exitCode);
     }
 
-    public static final File getArchiveLogDir() {
+    public static File getArchiveLogDir() {
         return Logger.s_archiveDir;
     }
 
@@ -338,7 +338,7 @@ public class Env {
      *
      * @return
      */
-    public static final Integer getGlobalId() {
+    public static Integer getGlobalId() {
         if (s_globalId == null) {
             s_globalId = GlobalId.apply();
         }
@@ -356,31 +356,31 @@ public class Env {
      *
      * @return
      */
-    public static String getMachineKey() {
+    public static final String getMachineKey() {
         if (machineKey == null) {
             String tmp = Fmt.S("%s-%s-%s", Env.getHostIP(), Env.getServerId(), Env.getGlobalId());
             machineKey = tmp;
         }
         return machineKey;
     }
-    public static final Integer getNodeId() {
+    public static Integer getNodeId() {
         if (s_nodeId == null) {
             s_nodeId = NodeId.apply();
         }
         return s_nodeId;
     }
-    public static final File getLogDir() {
+    public static File getLogDir() {
         return new File(getHome(), "logs");
     }
 
-    public static final File getCurrentLogDir() {
+    public static File getCurrentLogDir() {
         return new File(getLogDir(), "current");
     }
 
-    public static final File getTestLogDir() {
+    public static File getTestLogDir() {
         return new File(getLogDir(), "tests");
     }
-    public static final File getOpenResourceDir() {
+    public static File getOpenResourceDir() {
         if (s_openResourceDir == null) {
             s_openResourceDir = new File(getHome(), "openresource");
             FileUtil.ensureDirectoryExists(s_openResourceDir);
@@ -392,7 +392,7 @@ public class Env {
         return new File(getResource(), "solr-webapp");
     }
 
-    public static final File getBin() {
+    public static File getBin() {
         // supposedly getenv is depre
         String bin = System.getProperty(HiTorroBin);
         if (StringUtil.nullOrEmptyString(bin)) {
@@ -417,15 +417,15 @@ public class Env {
         return getBinBaseFileSystem().getFile("");
     }
 
-    public static final File getData() {
+    public static File getData() {
         return new File(getBin(), "data");
     }
 
-    public static final File getResource() {
+    public static File getResource() {
         return new File(getBin(), "resources");
     }
 
-    public static final BaseFile getDataBaseFile() {
+    public static BaseFile getDataBaseFile() {
         return getBinBaseFileSystem().getFile("data");
     }
 
@@ -438,11 +438,11 @@ public class Env {
      *
      * @return
      */
-    public static final File getTempDirectory() {
+    public static File getTempDirectory() {
         return new File(System.getProperty("java.io.tmpdir"));
     }
 
-    public static final File getDTDDirectory() {
+    public static File getDTDDirectory() {
         return new File(getBin(), "/data/dtds");
     }
 
@@ -460,7 +460,7 @@ public class Env {
      *
      * @return
      */
-    public static final File getHome() {
+    public static File getHome() {
         String bin = System.getProperty("HT_HOME");
         if (StringUtil.nullOrEmptyString(bin)) {
             bin = System.getenv(HiTorroHome);
@@ -484,7 +484,7 @@ public class Env {
         return getHomeBaseFileSystem().getFile("");
     }
 
-    public static final File determineBINFromClasspath() {
+    public static File determineBINFromClasspath() {
         URL u = ClassLoader.getSystemResource("config.txt");
         if (u == null) {
             return null;
@@ -589,7 +589,7 @@ public class Env {
      * @param seconds
      * @return true if waited, false if interrupted.
      */
-    public static final boolean sleepNSeconds(int seconds) {
+    public static boolean sleepNSeconds(int seconds) {
         try {
             Thread.sleep(seconds * Constants.MillisInSecond);
             return true;
@@ -605,7 +605,7 @@ public class Env {
      * @param lock
      * @return
      */
-    public static final boolean sleepNSeconds(int seconds, Object lock) {
+    public static boolean sleepNSeconds(int seconds, Object lock) {
         synchronized (lock) {
             try {
                 lock.wait(seconds * Constants.MillisInSecond);
@@ -622,7 +622,7 @@ public class Env {
      * @param millis
      * @return true if waited, false if interrupted.
      */
-    public static final boolean sleepMillis(long millis) {
+    public static boolean sleepMillis(long millis) {
         try {
             Thread.sleep(millis);
             return true;
@@ -649,7 +649,7 @@ public class Env {
             return buf.toString();
         }
     }
-    public static final File getPlatformScriptDirectory() {
+    public static File getPlatformScriptDirectory() {
         if (s_scriptDir == null) {
             s_scriptDir = new File(HTProperties.getProperties().get(SCRIPT_PLAT_DIR));
         }
@@ -668,7 +668,7 @@ public class Env {
      *
      * @return
      */
-    public static final Map<String, String> getSystemArgs() {
+    public static Map<String, String> getSystemArgs() {
         Map<String, String> map = new TreeMap<String, String>();
         map.put(HT_HOME, Env.getHome().getAbsolutePath());
         map.put(HT_BIN, Env.getBin().getAbsolutePath());
@@ -687,7 +687,7 @@ public class Env {
         return map;
     }
 
-    public static final void addVMPropsToMap(ObjectNode map) {
+    public static void addVMPropsToMap(ObjectNode map) {
         map.put("os.VmVersion", getJavaVmVersion());
         map.put("os.RuntimeVersion", getJavaRuntimeVersion());
         map.put("os.OsArchitecture", getOsArch());

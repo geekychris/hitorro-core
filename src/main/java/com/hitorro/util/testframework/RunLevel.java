@@ -41,7 +41,7 @@ public enum RunLevel {
         return s_byShortName.get(name.toLowerCase());
     }
 
-    public static int size() {
+    public static final int size() {
         return s_byShortName.size();
     }
 

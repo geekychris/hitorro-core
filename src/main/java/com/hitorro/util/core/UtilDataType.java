@@ -108,7 +108,7 @@ public enum UtilDataType {
         return s_byShortName.keySet();
     }
 
-    public static int size() {
+    public static final int size() {
         return s_byShortName.size();
     }
 

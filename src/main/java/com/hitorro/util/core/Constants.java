@@ -64,7 +64,7 @@ public class Constants {
 
     public static final int ascii_A = 65;
 
-    public static final char[] ascii_alpaha = {};
+    public static char[] ascii_alpaha = {};
 
     public static final int ascii_b = 98;
 
@@ -104,7 +104,7 @@ public class Constants {
     public static final int ascii_M = 77;
     public static final int ascii_n = 110;
     public static final int ascii_N = 78;
-    public static final char[] ascii_numeric = {ascii_0, ascii_1, ascii_2, ascii_3, ascii_4, ascii_5, ascii_6, ascii_7, ascii_8, ascii_9};
+    public static char[] ascii_numeric = {ascii_0, ascii_1, ascii_2, ascii_3, ascii_4, ascii_5, ascii_6, ascii_7, ascii_8, ascii_9};
     public static final int ascii_o = 111;
     public static final int ascii_O = 79;
     public static final int ascii_p = 112;
@@ -165,8 +165,8 @@ public class Constants {
     private static final int LongsToPreCompute = 100;
     private static final int doubleToPrecompute = 1000;
     public static char[] NULL_CHAR_ARRAY = {'\u0000'};
-    public static String NULL_ENDING_STRING = new String(NULL_CHAR_ARRAY, 0, 1);
-    public static String SPACE = " ";
+    public static final String NULL_ENDING_STRING = new String(NULL_CHAR_ARRAY, 0, 1);
+    public static final String SPACE = " ";
     public static ListValue[] s_stateListValues;
     private static Integer[] s_integerFlyweight = calculateIntFlyweight();
     private static Long[] s_longFlyweight = calculateLongFlyweight();
@@ -200,7 +200,7 @@ public class Constants {
         return Fmt.S("%s:%s:%s", seconds / (Constants.SecondsInHour), (seconds / (Constants.SecondsInMinute)) % 60, seconds % 60);
     }
 
-    public static final boolean getBool(String b) {
+    public static boolean getBool(String b) {
         if (StringUtil.nullOrEmptyString(b)) {
             return false;
         }
@@ -235,7 +235,7 @@ public class Constants {
      *
      * @return Boolean.TRUE if starts with 1|t|T|y|Y otherwise Boolean.FALSE.
      */
-    public static final Boolean getBoolean(String b) {
+    public static Boolean getBoolean(String b) {
         return Boolean.valueOf(getBool(b));
     }
 
@@ -294,7 +294,7 @@ public class Constants {
         return Fmt.S("%sGB", bytes / GBytes);
     }
 
-    public static final Integer getInteger(int i) {
+    public static Integer getInteger(int i) {
         if (i < IntegersToPreCompute && i >= 0) {
             return s_integerFlyweight[i];
         }
@@ -305,7 +305,7 @@ public class Constants {
      * Optimize use of Longs to avoid newing up unecessary Integers if we are using the common numbers (0-99)
      */
 
-    public static final Long getLong(long l) {
+    public static Long getLong(long l) {
         if (l < LongsToPreCompute && l >= 0) {
             return s_longFlyweight[(int) l];
         }
@@ -324,7 +324,7 @@ public class Constants {
         return (MillisInDay * days) + (MillisInHour * hours) + (MillisInMinute * minutes) + (MillisInSecond * seconds);
     }
 
-    public static final boolean isNumber(String s) {
+    public static boolean isNumber(String s) {
         int size = s.length();
         for (int i = 0; i < size; i++) {
             if (!Character.isDigit(s.charAt(i))) {
@@ -340,7 +340,7 @@ public class Constants {
      * @param sval The string to be parsed.
      * @return the integer value of the string, or 0 if it can't be parsed
      */
-    public static int safeParseInt(String sval) {
+    public static final int safeParseInt(String sval) {
         int result = 0;
         try {
             result = Integer.parseInt(sval);

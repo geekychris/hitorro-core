@@ -25,7 +25,7 @@ import com.hitorro.util.log.Logger;
 
 
 public class HTAssert {
-    public static final void assertThat(boolean flag, String msg) {
+    public static void assertThat(boolean flag, String msg) {
         if (flag == false) {
             Throwable t = new Throwable();
             Log.util.error(Logger.generateMessageWithCallstack(msg, t));

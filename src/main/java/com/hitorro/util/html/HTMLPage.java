@@ -30,15 +30,15 @@ import com.hitorro.util.core.string.StringUtil;
 import com.hitorro.util.html.constraint.LinkConstraint;
 import com.hitorro.util.html.constraint.TypeLinkConstraint;
 import com.hitorro.util.html.contentsniffers.ContentSniffers;
-import org.apache.tools.ant.filters.StringInputStream;
 import org.apache.xerces.parsers.DOMParser;
 import org.w3c.dom.Document;
-import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
@@ -50,7 +50,7 @@ import java.util.*;
 public class HTMLPage {
     public static final String XPingBack = "x-pingback";
     public static final String ContentType = "content-type";
-    public static final LinkConstraint PingBackConstraint = new TypeLinkConstraint(Link.LinkType.PingBack);
+    public static LinkConstraint PingBackConstraint = new TypeLinkConstraint(Link.LinkType.PingBack);
     private String m_url;
     private String destinationUrl;
     private String pageSource;
@@ -182,7 +182,7 @@ public class HTMLPage {
         try {
             // parser.setEntityResolver(new R());
             //parser.setFeature("http://xml.org/sax/features/validation", false);
-            InputStream is = new StringInputStream(pageSource);
+            InputStream is = new ByteArrayInputStream(pageSource.getBytes(StandardCharsets.UTF_8));
             InputSource source = new InputSource();
             source.setByteStream(is);
             parser.parse(source);
@@ -326,12 +326,5 @@ public class HTMLPage {
 
     public enum Exception {
         None, IOException, HttpException, Timeout
-    }
-}
-
-class R implements EntityResolver {
-
-    public InputSource resolveEntity(String string, String string1) {
-        return null;
     }
 }

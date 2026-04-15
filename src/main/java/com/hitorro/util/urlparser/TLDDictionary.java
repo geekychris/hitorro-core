@@ -33,8 +33,8 @@ import com.hitorro.util.json.keys.BooleanProperty;
 
 
 public class TLDDictionary {
-    public static final BasefileProperty TLDFileKey = new BasefileProperty("tlddictionary.filename", "filename of tld dictionary", "file://${ht_data}/cctld/cctld.txt");
-    public static final BooleanProperty LogMissing = new BooleanProperty("tlddictionary.logmissing", "", false);
+    public static BasefileProperty TLDFileKey = new BasefileProperty("tlddictionary.filename", "filename of tld dictionary", "file://${ht_data}/cctld/cctld.txt");
+    public static BooleanProperty LogMissing = new BooleanProperty("tlddictionary.logmissing", "", false);
     public boolean logMissing = LogMissing.apply();
     private TLongObjectHashMap<TLDEntry> tldMap = new TLongObjectHashMap<TLDEntry>();
 

@@ -83,7 +83,7 @@ public abstract class HTMLTreeWalker<C> {
                     //XXX TODO Anti short circuit mechanism...cant see much having a depth of 100 or more!!!
                     return;
                 }
-                visitChild(doc, (Element) child, container, sourceUrl, depth++);
+                visitChild(doc, (Element) child, container, sourceUrl, depth + 1);
             }
 
             child = child.getNextSibling();

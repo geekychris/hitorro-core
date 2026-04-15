@@ -42,7 +42,7 @@ public class CompressedStreamUtil {
      * buffer.
      * @throws IOException
      */
-    public static final CInputStream getInputStream(File file, boolean ramBased)
+    public static CInputStream getInputStream(File file, boolean ramBased)
             throws IOException {
         if (ramBased) {
             return getInputStreamRAM(file);
@@ -51,7 +51,7 @@ public class CompressedStreamUtil {
         }
     }
 
-    public static final CInputStream getInputStreamFromByteArray(byte buff[]) {
+    public static CInputStream getInputStreamFromByteArray(byte buff[]) {
         RAMInputStream is = new RAMInputStream(null);
         is.setBuffer(buff);
         return is;
@@ -64,7 +64,7 @@ public class CompressedStreamUtil {
      * @return
      * @throws IOException
      */
-    public static final CInputStream getInputStreamRAM(File file)
+    public static CInputStream getInputStreamRAM(File file)
             throws IOException {
         byte buffer[] = FileUtil.getFileAsByteArray(file);
         RAMInputStream is = new RAMInputStream(null);
@@ -80,7 +80,7 @@ public class CompressedStreamUtil {
      * @return
      * @throws IOException
      */
-    public static final CInputStream getInputStreamDisk(File file)
+    public static CInputStream getInputStreamDisk(File file)
             throws IOException {
         FSInputStream is = new FSInputStream(file);
         return is;

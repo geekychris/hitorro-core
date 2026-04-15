@@ -40,7 +40,7 @@ import java.util.List;
  */
 public class ArrayUtil {
 
-    public static final ArrayList<String> emptyStringArrayList = new ArrayList();
+    public static ArrayList<String> emptyStringArrayList = new ArrayList();
 
     public static <K> K[] ensureCapacity(Class c, int l, int oldPartsLength, K oldParts[]) {
         if (oldParts.length < l) {
@@ -61,7 +61,7 @@ public class ArrayUtil {
      * @param a2
      * @return
      */
-    public static int compareArrays(Object a1[], Object a2[]) {
+    public static final int compareArrays(Object a1[], Object a2[]) {
         int depth = Math.min(a1.length, a2.length);
         for (int i = 0; i < depth; i++) {
             if (!a1[i].equals(a2[i])) {
@@ -102,14 +102,14 @@ public class ArrayUtil {
         return false;
     }
 
-    public static int sizeOfArrayIgnoringNull(Object arr[]) {
+    public static final int sizeOfArrayIgnoringNull(Object arr[]) {
         if (arr == null) {
             return 0;
         }
         return arr.length;
     }
 
-    public static int copy(Object target[], int startPos, Object src[]) {
+    public static final int copy(Object target[], int startPos, Object src[]) {
         if (src == null) {
             return 0;
         }
@@ -119,19 +119,19 @@ public class ArrayUtil {
         return src.length;
     }
 
-    public static final boolean notNullAndHasNElements(Object ar[], int count) {
+    public static boolean notNullAndHasNElements(Object ar[], int count) {
         if (ar == null) {
             return false;
         }
         return ar.length == count;
     }
 
-    public static final long[] getLongArrayFromSeperatedString(String s, String seperator) {
+    public static long[] getLongArrayFromSeperatedString(String s, String seperator) {
         String parts[] = StringUtil.tokenizeFromSingleChar(s, seperator);
         return getLongArrayFromStringArray(parts);
     }
 
-    public static final long[] getLongArrayFromStringArray(String ar[]) {
+    public static long[] getLongArrayFromStringArray(String ar[]) {
         long res[] = new long[ar.length];
         for (int i = 0; i < res.length; i++) {
             res[i] = StringUtil.getLongNumberFromText(ar[i]);
@@ -139,7 +139,7 @@ public class ArrayUtil {
         return res;
     }
 
-    public static final int[] getIntArrayFromStringArray(String ar[]) {
+    public static int[] getIntArrayFromStringArray(String ar[]) {
         int res[] = new int[ar.length];
         for (int i = 0; i < res.length; i++) {
             res[i] = StringUtil.getIntNumberFromText(ar[i]);
@@ -159,7 +159,7 @@ public class ArrayUtil {
      * @deprecated Use {@code Arrays.asList(array).contains(scanMe)}
      */
     @Deprecated
-    public static final boolean contains(Object array[], Object scanMe) {
+    public static boolean contains(Object array[], Object scanMe) {
         if (scanMe == null) {
             return false;
         }
@@ -179,7 +179,7 @@ public class ArrayUtil {
      * @param value
      * @return
      */
-    public static final boolean containsInLongArray(long array[], long value) {
+    public static boolean containsInLongArray(long array[], long value) {
         return getFirstIndexInLongArray(array, value) != -1;
     }
 
@@ -190,7 +190,7 @@ public class ArrayUtil {
      * @param value
      * @return
      */
-    public static final boolean containsInIntArray(int array[], int value) {
+    public static boolean containsInIntArray(int array[], int value) {
         return getFirstIndexInIntArray(array, value) != -1;
     }
 
@@ -204,7 +204,7 @@ public class ArrayUtil {
      * @param mask
      * @return
      */
-    public static final boolean copyArrayUsingBitmask(int source[],
+    public static boolean copyArrayUsingBitmask(int source[],
                                                       int result[], boolean mask[]) {
         if (source.length != mask.length) {
             // mask is not the same as source...that is bad
@@ -233,7 +233,7 @@ public class ArrayUtil {
      * @param mask
      * @return
      */
-    public static final boolean copyArrayUsingBitmask(Object source[],
+    public static boolean copyArrayUsingBitmask(Object source[],
                                                       Object result[], boolean mask[]) {
         if (source.length != mask.length) {
             // mask is not the same as source...that is bad
@@ -253,7 +253,7 @@ public class ArrayUtil {
         return true;
     }
 
-    public static final byte[] copyByteArray(byte[] source, byte[] dest, int size) {
+    public static byte[] copyByteArray(byte[] source, byte[] dest, int size) {
         for (int i = 0; i < size; i++) {
             dest[i] = source[i];
         }
@@ -267,7 +267,7 @@ public class ArrayUtil {
         Further we remove any non alpha numeric characters and lower case everything.
     */
 
-    public static int copyByteArrayToCharNormalizing(byte[] array, char[] result) {
+    public static final int copyByteArrayToCharNormalizing(byte[] array, char[] result) {
         int j = 0;
         for (int i = 0; i < array.length; i++) {
             char c = (char) array[i];
@@ -278,21 +278,21 @@ public class ArrayUtil {
         return j;
     }
 
-    public static final char[] copyCharArray(char[] source, char[] dest, int size) {
+    public static char[] copyCharArray(char[] source, char[] dest, int size) {
         for (int i = 0; i < size; i++) {
             dest[i] = source[i];
         }
         return dest;
     }
 
-    public static final int[] copyIntegerArray(int[] source, int[] dest, int size) {
+    public static int[] copyIntegerArray(int[] source, int[] dest, int size) {
         for (int i = 0; i < size; i++) {
             dest[i] = source[i];
         }
         return dest;
     }
 
-    public static final long[] copyLongArray(long[] source, long[] dest, int size) {
+    public static long[] copyLongArray(long[] source, long[] dest, int size) {
         for (int i = 0; i < size; i++) {
             dest[i] = source[i];
         }
@@ -388,7 +388,7 @@ public class ArrayUtil {
      * @param list to convertToPdf into an int array
      * @return int array containing int values.
      */
-    public static final int[] getIntArrayFromIntegerList(List list) {
+    public static int[] getIntArrayFromIntegerList(List list) {
         int size = list.size();
         int result[] = new int[size];
         for (int i = 0; i < size; i++) {
@@ -404,7 +404,7 @@ public class ArrayUtil {
      * @param list to convertToPdf into an int array
      * @return int array containing int values.
      */
-    public static final List getIntegerListFromIntArray(int[] list) {
+    public static List getIntegerListFromIntArray(int[] list) {
         int size = list.length;
         List<Integer> result = new ArrayList<Integer>();
         for (int i = 0; i < size; i++) {
@@ -423,7 +423,7 @@ public class ArrayUtil {
      * @deprecated Use {@code list.toArray(new String[0])} or {@code list.toArray(String[]::new)}
      */
     @Deprecated
-    public static final String[] getStringArrayFromStringList(List list) {
+    public static String[] getStringArrayFromStringList(List list) {
         int size = list.size();
         String result[] = new String[size];
 
@@ -443,7 +443,7 @@ public class ArrayUtil {
      * @param child  the 2nd listFiles
      * @return true iff 2nd listFiles is covered by 1st listFiles
      */
-    public static final boolean listContains(int[] parent, int[] child) {
+    public static boolean listContains(int[] parent, int[] child) {
         if (parent.length < child.length) {
             return false;
         } else {
@@ -463,7 +463,7 @@ public class ArrayUtil {
         }
     }
 
-    public static final byte[] loadByteArrayFromFile(File file) throws IOException {
+    public static byte[] loadByteArrayFromFile(File file) throws IOException {
         byte[] b = new byte[(int) file.length()];
         DataInputStream dis = FileUtil.getDataInputStreamForFile(file);
         int i = 0;
@@ -474,7 +474,7 @@ public class ArrayUtil {
         return b;
     }
 
-    public static final int[] loadIntArrayFromFile(File file) throws IOException {
+    public static int[] loadIntArrayFromFile(File file) throws IOException {
         int[] l = new int[(int) file.length() / 4];
         DataInputStream dis = FileUtil.getDataInputStreamForFile(file);
         int i = 0;
@@ -485,7 +485,7 @@ public class ArrayUtil {
         return l;
     }
 
-    public static final long[] loadLongArrayFromFile(File file) throws IOException {
+    public static long[] loadLongArrayFromFile(File file) throws IOException {
         long[] l = new long[(int) file.length() / 8];
         DataInputStream dis = FileUtil.getDataInputStreamForFile(file);
         int i = 0;
@@ -503,7 +503,7 @@ public class ArrayUtil {
      * @param ar2
      * @return the array that contains elements from both arrays. Element order is preserved.
      */
-    public static final <T> T[] mergeArrays(Class type, T ar1[], T ar2[]) {
+    public static <T> T[] mergeArrays(Class type, T ar1[], T ar2[]) {
 
         T ar[] = (T[]) Array.newInstance(type, ar1.length + ar2.length);
         int idx = 0;
@@ -523,7 +523,7 @@ public class ArrayUtil {
      * @param ar2
      * @return the array that contains elements from both arrays. Element order is preserved.
      */
-    public static final int[] mergeArrays(int ar1[], int ar2[]) {
+    public static int[] mergeArrays(int ar1[], int ar2[]) {
         int ar[] = new int[ar1.length + ar2.length];
         int idx = 0;
         for (int i = 0; i < ar1.length; ++i) {
@@ -541,7 +541,7 @@ public class ArrayUtil {
      * @param array
      * @return true if null or empty
      */
-    public static final boolean nullOrEmpty(Object[] array) {
+    public static boolean nullOrEmpty(Object[] array) {
         return array == null || array.length <= 0;
     }
 
@@ -567,7 +567,7 @@ public class ArrayUtil {
      * @param elts  the 2nd listFiles
      * @return resorted 2nd listFiles
      */
-    public static final int[] resort(int[] order, int[] elts) {
+    public static int[] resort(int[] order, int[] elts) {
         int[] newlist = new int[elts.length];
         int idx = 0;
         for (int oelt : order) {
@@ -612,7 +612,7 @@ public class ArrayUtil {
      */
     @Deprecated
     @SuppressWarnings("unchecked")
-    public static final List<Object> toList(Object ar[]) {
+    public static List<Object> toList(Object ar[]) {
         ArrayList list = new ArrayList();
         for (Object o : ar) {
             list.add(o);
@@ -626,7 +626,7 @@ public class ArrayUtil {
      * @param list
      * @return list of longs
      */
-    public static final long[] toLong(Object list[]) {
+    public static long[] toLong(Object list[]) {
         long[] result = new long[list.length];
         for (int i = 0; i < list.length; i++) {
             String s = list[i].toString();
@@ -639,7 +639,7 @@ public class ArrayUtil {
         return result;
     }
 
-    public static String printIntArray(int arr[][], int pack, boolean desc) {
+    public static final String printIntArray(int arr[][], int pack, boolean desc) {
         StringBuilder sb = new StringBuilder();
         printIntArray(sb, arr, pack, desc);
         return sb.toString();

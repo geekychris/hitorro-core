@@ -32,7 +32,7 @@ import java.util.List;
  * Dump elements to a listFiles for recovery later.
  */
 public class SinkList<E> implements Sink<E> {
-    private List<E> list = new ArrayList();
+    private List<E> list = new ArrayList<>();
 
     @Override
     public boolean init(JsonNode node) {

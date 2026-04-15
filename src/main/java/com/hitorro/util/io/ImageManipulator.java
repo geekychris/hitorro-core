@@ -41,7 +41,7 @@ public class ImageManipulator {
     private int imageHeight;
     private BufferedImage imageBuffer;
 
-    public static final boolean convert(String inputPath, String outputPath, String targetFormat, int maxwidth, int maxHeight) throws IOException {
+    public static boolean convert(String inputPath, String outputPath, String targetFormat, int maxwidth, int maxHeight) throws IOException {
         ImageManipulator man = new ImageManipulator();
         BaseFile in = FileFileSystem.Root.getFile(inputPath);
         if (in.exists()) {

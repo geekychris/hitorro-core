@@ -35,7 +35,7 @@ public abstract class BaseSessionFactory<S extends BaseSession> {
         factory = factoryIn;
     }
 
-    public static final void closeSession(BaseSession closeMe) {
+    public static void closeSession(BaseSession closeMe) {
         factory.close(closeMe);
     }
 

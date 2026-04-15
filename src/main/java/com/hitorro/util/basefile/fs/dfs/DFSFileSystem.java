@@ -40,10 +40,10 @@ import java.net.URISyntaxException;
  * User: chris
  */
 public class DFSFileSystem extends BaseFileSystem<DFSFile, DFSFileSystem> {
-    public static final StringProperty HDFSNameServerUri = new StringProperty("filesystem.ns.uri", "uri for filesystem name server", "hdfs://localhost:9000/");
+    public static StringProperty HDFSNameServerUri = new StringProperty("filesystem.ns.uri", "uri for filesystem name server", "hdfs://localhost:9000/");
 
-    public static final StringProperty DFSUserName = new StringProperty("filesystem.username", "", "bob");
-    public static final StringProperty DFSGroupName = new StringProperty("filesystem.groupname", "", "chris");
+    public static StringProperty DFSUserName = new StringProperty("filesystem.username", "", "bob");
+    public static StringProperty DFSGroupName = new StringProperty("filesystem.groupname", "", "chris");
 
 
     protected String rootPath;

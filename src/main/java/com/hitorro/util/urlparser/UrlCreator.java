@@ -23,6 +23,8 @@ package com.hitorro.util.urlparser;
 
 import com.hitorro.util.core.KeyValue;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,9 +51,9 @@ public class UrlCreator {
                 if (flag == true) {
                     m_buffer.append("&");
                 }
-                m_buffer.append(kv.getKey());
+                m_buffer.append(URLEncoder.encode(kv.getKey(), StandardCharsets.UTF_8));
                 m_buffer.append("=");
-                m_buffer.append(kv.getValue());
+                m_buffer.append(URLEncoder.encode(kv.getValue(), StandardCharsets.UTF_8));
                 flag = true;
             }
             fullUrl = m_buffer.toString();

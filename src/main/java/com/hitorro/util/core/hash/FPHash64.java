@@ -24,6 +24,7 @@ package com.hitorro.util.core.hash;
 import com.hitorro.util.core.Log;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * <p/>
@@ -86,7 +87,7 @@ public class FPHash64 {
             231, 215, 226, 130, 225, 234, 241, 239,
             59, 230, 247, 24, 249, 242, 222, 253
     };
-    private static final long Polynomial64[] = {((0L << 32) | (0L & 0xffffffffL)),
+    private static final long[] Polynomial64 = {((0L)),
             ((152935311L << 32) | (36728807L & 0xffffffffL)),
             ((305870622L << 32) | (73457614L & 0xffffffffL)),
             ((455519377L << 32) | (105951273L & 0xffffffffL)),
@@ -343,7 +344,7 @@ public class FPHash64 {
             ((236383498L << 32) | (64992581L & 0xffffffffL)),
             ((118191749L << 32) | (32496290L & 0xffffffffL))
     };
-    private static final long Polynomial72[] = {((0L << 32) | (0L & 0xffffffffL)),
+    private static final long[] Polynomial72 = {((0L)),
             ((335293334L << 32) | (-1961202135L & 0xffffffffL)),
             ((344628781L << 32) | (468213049L & 0xffffffffL)),
             ((125220283L << 32) | (-1863175408L & 0xffffffffL)),
@@ -600,7 +601,7 @@ public class FPHash64 {
             ((192085150L << 32) | (146271818L & 0xffffffffL)),
             ((412014344L << 32) | (-2085781405L & 0xffffffffL))
     };
-    private static final long Polynomial80[] = {((0L << 32) | (0L & 0xffffffffL)),
+    private static final long[] Polynomial80 = {((0L)),
             ((125726524L << 32) | (-1753253426L & 0xffffffffL)),
             ((251453049L << 32) | (788460444L & 0xffffffffL)),
             ((159560005L << 32) | (-1182692782L & 0xffffffffL)),
@@ -857,7 +858,7 @@ public class FPHash64 {
             ((439227482L << 32) | (-1743260598L & 0xffffffffL)),
             ((491813734L << 32) | (258510212L & 0xffffffffL))
     };
-    private static final long Polynomial88[] = {((0L << 32) | (0L & 0xffffffffL)),
+    private static final long[] Polynomial88 = {((0L)),
             ((346020725L << 32) | (964379295L & 0xffffffffL)),
             ((441286634L << 32) | (2133460053L & 0xffffffffL)),
             ((248685727L << 32) | (1179731658L & 0xffffffffL)),
@@ -1114,16 +1115,14 @@ public class FPHash64 {
             ((440354994L << 32) | (1552372816L & 0xffffffffL)),
             ((245404615L << 32) | (1711019727L & 0xffffffffL))
     };
-    public static long EmptyFingerprint = PolynomialOne;
+    public static final long EmptyFingerprint = PolynomialOne;
 
     /**
      * Take the first n parts of a string array and hash them.
      *
-     * @param parts
-     * @param depth
      * @return hashcde
      */
-    public static long hash(String parts[], int depth) {
+    public static final long hash(String[] parts, int depth) {
         long hash = FPHash64.getFP(parts[0]);
         for (int i = 1; i < depth; i++) {
             hash = FPHash64.combineFingerPrints(hash, FPHash64.getFP(parts[i]));
@@ -1142,8 +1141,8 @@ public class FPHash64 {
      */
     public static final long combineFingerPrints(long fp1, long fp2) {
         // create an array of bytes with fingerprints in little-endian format
-        byte buf16[] = new byte[16];
-        int buf8[] = new int[8];
+        byte[] buf16 = new byte[16];
+        int[] buf8 = new int[8];
         return combineFingerPrints(fp1, fp2, buf16, buf8);
     }
 
@@ -1159,12 +1158,12 @@ public class FPHash64 {
      * @return The combined fingerprint
      */
 
-    public static final long combineFingerPrints(long fp1, long fp2, byte buf16[], int buf8[]) {
+    public static final long combineFingerPrints(long fp1, long fp2, byte[] buf16, int[] buf8) {
         // create an array of bytes with fingerprints in little-endian format
         polyToBytes(fp1, buf16, 0);
         polyToBytes(fp2, buf16, 8);
 
-        long poly1 = polynomialComputeModule(PolynomialOne, buf16, 0, 16);
+        long poly1 = polynomialComputeModule(buf16, 0, 16);
 
         int p0 = (int) (poly1 & 0xffffffffL);
         int p1 = (int) ((poly1 >>> 32) & 0xffffffffL);
@@ -1182,20 +1181,19 @@ public class FPHash64 {
         return result;
     }
 
-    /**
-     * Compare a fingerprint with some bytes
-     *
-     * @param fp    - the fingerprint to compare
-     * @param bytes - the bytes to compare against
-     * @return true if they are equal
-     */
-    public static boolean compareFingerprint(long fp, int bytes[]) {
-        // Assume the bytes are in little-endian order.
-        int t0 = bytes[0] | (bytes[1] << 8) | (bytes[2] << 16) | (bytes[3] << 24);
-        int t1 = bytes[4] | (bytes[5] << 8) | (bytes[6] << 16) | (bytes[7] << 24);
-        long fp1 = (((long) t1) << 32) | (((long) t0) & 0xffffffffL);
-        return fp == fp1;
-    }
+	private static void polyToBytes(long t, byte[] b, int f) {
+		// Generate the bytes in little-endian order.
+		int p0 = (int) (t & 0xffffffffL);
+		int p1 = (int) ((t >>> 32) & 0xffffffffL);
+		b[f] = (byte) extractWord(p0, 0, 8);
+		b[f + 1] = (byte) extractWord(p0, 8, 8);
+		b[f + 2] = (byte) extractWord(p0, 16, 8);
+		b[f + 3] = (byte) extractWord(p0, 24, 8);
+		b[f + 4] = (byte) extractWord(p1, 0, 8);
+		b[f + 5] = (byte) extractWord(p1, 8, 8);
+		b[f + 6] = (byte) extractWord(p1, 16, 8);
+		b[f + 7] = (byte) extractWord(p1, 24, 8);
+	}
 
     /**
      * Check if the two given fingerprints are equal
@@ -1209,11 +1207,11 @@ public class FPHash64 {
     }
 
 
-    private static final int extractWord(int x, int i, int n) {
+    private static int extractWord(int x, int i, int n) {
         return ((x >>> i) & ~(-1 << n));
     }
 
-    public static final char[] getChars(String s) {
+    public static char[] getChars(String s) {
         int length = s.length();
         char c[] = new char[length];
         int srcBegin = 0;
@@ -1231,21 +1229,7 @@ public class FPHash64 {
      */
 
     public static final long getFingerprint(byte[] text) {
-        return polynomialComputeModule(PolynomialOne, text, 0, text.length);
-    }
-
-    /**
-     * Return a 64 bit (Java long) hash/fingerprint/message-digest of the given text using Andrei Broder's Modula-3
-     * fingerprint algorithm
-     *
-     * @param text  The bytes that need to be hashed
-     * @param begin The index into Text where to begin hashing
-     * @param len   The length of the bytes to be hashed (starting from begin)
-     * @return the 64bit message digest as a java primitive (long)
-     */
-    public static final long getFingerprint(byte[] text, int begin, int len) {
-        long result = polynomialComputeModule(PolynomialOne, text, begin, len);
-        return result;
+        return polynomialComputeModule(text, 0, text.length);
     }
 
     /**
@@ -1258,10 +1242,6 @@ public class FPHash64 {
 
     public static final long getFingerprint(char[] text) {
         return polynomialComputeModuleCharNew(PolynomialOne, text, 0, text.length);
-    }
-
-    public static final long getFingerprint(char[] text, int start, int length) {
-        return polynomialComputeModuleCharNew(PolynomialOne, text, start, length);
     }
 
     public static final long getFingerprint(char[] text, int length) {
@@ -1281,33 +1261,23 @@ public class FPHash64 {
             return 0;
         }
 
-        try {
-            return getFingerprint(text.getBytes("UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            Log.util.error("Error %s %e", e, e);
-            return 0;
-        }
-    }
+		return getFingerprint(text.getBytes(StandardCharsets.UTF_8));
+	}
 
     public static final long getFP(String... text) {
         if (text == null) {
             return 0;
         }
 
-        try {
-            long hash = 0;
-            for (String t : text) {
-                if (t == null) {
-                    continue;
-                }
-                hash = combineFingerPrints(hash, getFingerprint(t.getBytes("UTF-8")));
-            }
-            return hash;
-        } catch (UnsupportedEncodingException e) {
-            Log.util.error("Error %s %e", e, e);
-            return 0;
-        }
-    }
+		long hash = 0;
+		for (String t : text) {
+			if (t == null) {
+				continue;
+			}
+			hash = combineFingerPrints(hash, getFingerprint(t.getBytes(StandardCharsets.UTF_8)));
+		}
+		return hash;
+	}
 
     /**
      * Alternative function that does not utf-8 encode, uses chars instead
@@ -1323,39 +1293,8 @@ public class FPHash64 {
         return getFingerprint(getChars(text));
     }
 
-    /**
-     * Create a integer hash of the fingerprint
-     *
-     * @param fp - fingerprint
-     * @return an integer hash of fp
-     */
-    public static int hashFingerprint(long fp) {
-        return (int) ((fp & 0xffffffff) ^ ((fp >>> 32) & 0xffffffff));
-    }
-
-    public static void main(String args[]) {
-        String a1 = "abcd";
-        String a2 = "efgh";
-        String a3 = a1 + a2;
-        char[] a = getChars(a1);
-        char[] b = getChars(a2);
-        char[] c = getChars(a3);
-
-        long fp1 = FPHash64.getFP(a1);
-        long fp2 = FPHash64.getFP(a2);
-        long fp3 = FPHash64.getFP(a3);
-        long fpcomb = FPHash64.combineFingerPrints(fp1, fp2);
-
-        long fp1p = FPHash64.getFingerprint(a);
-        long fp2p = FPHash64.getFingerprint(b);
-        long fp3p = FPHash64.getFingerprint(c);
-        long fpcombprime = FPHash64.combineFingerPrints(fp1p, fp2p);
-
-
-    }
-
     //	create a poly from bytes that are in little-endian form
-    private static final long poly_from_bytes(int[] b) {
+    private static long poly_from_bytes(int[] b) {
         // Assume the bytes are in little-endian order.
         int t0 = b[0] | b[1] << 8 | b[2] << 16 | b[3] << 24;
         int t1 = b[4] | b[5] << 8 | b[6] << 16 | b[7] << 24;
@@ -1364,11 +1303,11 @@ public class FPHash64 {
 
     // create a little-endian representation of the
     // bytes constituting T in B (starting at F).
-    private static final void poly_to_bytes(long t, int[] b, int f) {
+    private static void poly_to_bytes(long t, int[] b, int f) {
         // Generate the bytes in little-endian order.
         int p0 = (int) (t & 0xffffffffL);
         int p1 = (int) ((t >>> 32) & 0xffffffffL);
-        b[f + 0] = extractWord(p0, 0, 8);
+        b[f] = extractWord(p0, 0, 8);
         b[f + 1] = extractWord(p0, 8, 8);
         b[f + 2] = extractWord(p0, 16, 8);
         b[f + 3] = extractWord(p0, 24, 8);
@@ -1385,17 +1324,17 @@ public class FPHash64 {
      * This is where everything happens. Heavily optimized for JIT-ted run-time performance and thus code modularity is
      * sacrificed.
      *
-     * @return : the fingerprint as a long
-     * @init : initial hash polynomial
-     * @addr : the byte array to be hashed
-     * @begin: beginning location
-     * @len :  length of string in bytes
+     * return: the fingerprint as a long
+     * init: initial hash polynomial
+     * addr: the byte array to be hashed
+     * begin: beginning location
+     * len: length of string in bytes
      */
-    private static final long polynomialComputeModule(long init, byte[] addr, int begin, int len) {
-        int j = 0, k = 0;
-        long result = init;
+    private static long polynomialComputeModule(byte[] addr, int begin, int len) {
+        int j, k = 0;
+        long result = FPHash64.PolynomialOne;
         int a0 = 0, a1 = 0, a2 = 0, a3 = 0;
-        int b0 = 0, b1 = 0, b2 = 0, b3 = 0;
+        int b0, b1, b2, b3;
         int shift8 = ~(-1 << 8);
 
         if (len >= 4) {
@@ -1404,8 +1343,8 @@ public class FPHash64 {
             int len1 = k;
             int l = begin;
             // get the two words
-            int p0 = (int) (result & 0xffffffff);
-            int p1 = (int) ((result >>> 32) & 0xffffffff);
+            int p0 = (int) (result);
+            int p1 = (int) ((result >>> 32));
 
             while (len1 > 0) {
                 // Split the low-order bytes to little-endian form.
@@ -1419,13 +1358,13 @@ public class FPHash64 {
                 long t3 = Polynomial72[a2];
                 long t4 = Polynomial64[a3];
 
-                p0 = p1 ^ (int) ((t1 & 0xffffffff) ^ (t2 & 0xffffffff) ^ (t3 & 0xffffffff) ^ (t4 & 0xffffffff));
+                p0 = p1 ^ (int) ((t1) ^ (t2 & 0xffffffffL) ^ (t3) ^ (t4 & 0xffffffffL));
                 int ad1 = addr[l] & 0xff;
                 int ad2 = addr[++l] & 0xff;
                 int ad3 = addr[++l] & 0xff;
                 int ad4 = addr[++l] & 0xff;
                 int ip = ad1 | ad2 << 8 | ad3 << 16 | ad4 << 24;
-                p1 = ip ^ (int) (((t1 >>> 32) & 0xffffffff) ^ ((t2 >>> 32) & 0xffffffff) ^ ((t3 >>> 32) & 0xffffffff) ^ ((t4 >>> 32) & 0xffffffff));
+                p1 = ip ^ (int) (((t1 >>> 32)) ^ ((t2 >>> 32)) ^ ((t3 >>> 32)) ^ ((t4 >>> 32)));
                 len1 -= 4;
                 ++l;
             }
@@ -1437,10 +1376,10 @@ public class FPHash64 {
         if (len > 0) {
             int n_bits = 8 * len;
             int x_bits = 32 - n_bits;
-            int t0 = (int) (result & 0xffffffff);
+            int t0 = (int) (result);
             int t0_x = t0 << x_bits;
             int t0_n = t0 >>> n_bits;
-            int t1 = (int) ((result >>> 32) & 0xffffffff);
+            int t1 = (int) ((result >>> 32));
             int t1_x = t1 << x_bits;
             int t1_n = t1 >>> n_bits;
 
@@ -1451,17 +1390,17 @@ public class FPHash64 {
                     a0 = (t1_n & shift8);
                     a1 = ((t1_n >>> 8) & shift8);
                     a2 = ((t1_n >>> 16) & shift8);
-                    a3 = addr[k + 0] & 0xff;
+                    a3 = addr[k] & 0xff;
                     break;
                 case 2:
                     a0 = (t1_n & shift8);
                     a1 = ((t1_n >>> 8) & shift8);
-                    a2 = addr[k + 0] & 0xff;
+                    a2 = addr[k] & 0xff;
                     a3 = addr[k + 1] & 0xff;
                     break;
                 case 3:
                     a0 = (t1_n & shift8);
-                    a1 = addr[k + 0] & 0xff;
+                    a1 = addr[k] & 0xff;
                     a2 = addr[k + 1] & 0xff;
                     a3 = addr[k + 2] & 0xff;
                     break;
@@ -1470,8 +1409,8 @@ public class FPHash64 {
             }
 
             int len_x = 4;
-            int p0 = (int) (result1 & 0xffffffff);
-            int p1 = (int) ((result1 >>> 32) & 0xffffffff);
+            int p0 = (int) (result1);
+            int p1 = (int) ((result1 >>> 32));
             int l = 0;
 
             while (len_x > 0) {
@@ -1485,9 +1424,9 @@ public class FPHash64 {
                 long ty2 = Polynomial72[b2];
                 long ty3 = Polynomial64[b3];
                 // Compute the new result.
-                p0 = p1 ^ (int) ((ty0 & 0xffffffff) ^ (ty1 & 0xffffffff) ^ (ty2 & 0xffffffff) ^ (ty3 & 0xffffffff));
+                p0 = p1 ^ (int) ((ty0 & 0xffffffffL) ^ (ty1 & 0xffffffffL) ^ (ty2) ^ (ty3));
                 int ip = a0 | (a1 << 8) | (a2 << 16) | (a3 << 24);
-                p1 = ip ^ (int) (((ty0 >>> 32) & 0xffffffff) ^ ((ty1 >>> 32) & 0xffffffff) ^ ((ty2 >>> 32) & 0xffffffff) ^ ((ty3 >>> 32) & 0xffffffff));
+                p1 = ip ^ (int) (((ty0 >>> 32)) ^ ((ty1 >>> 32)) ^ ((ty2 >>> 32)) ^ ((ty3 >>> 32)));
                 len_x -= 4;
                 l += 4;
             }
@@ -1497,7 +1436,7 @@ public class FPHash64 {
         return result;
     }
 
-    private static final long polynomialComputeModuleCharNew(long init, char[] addr, int begin, int len) {
+    private static long polynomialComputeModuleCharNew(long init, char[] addr, int begin, int len) {
         int j = 0, k = 0;
         long result = init;
         int a0 = 0, a1 = 0, a2 = 0, a3 = 0;
@@ -1510,8 +1449,8 @@ public class FPHash64 {
             int len1 = k;
             int l = begin;
             // get the two words
-            int p0 = (int) (result & 0xffffffff);
-            int p1 = (int) ((result >>> 32) & 0xffffffff);
+            int p0 = (int) (result & 0xffffffffL);
+            int p1 = (int) ((result >>> 32) & 0xffffffffL);
 
             while (len1 > 0) {
                 // Split the low-order bytes to little-endian form.
@@ -1525,13 +1464,13 @@ public class FPHash64 {
                 long t3 = Polynomial72[a2];
                 long t4 = Polynomial64[a3];
 
-                p0 = p1 ^ (int) ((t1 & 0xffffffff) ^ (t2 & 0xffffffff) ^ (t3 & 0xffffffff) ^ (t4 & 0xffffffff));
+                p0 = p1 ^ (int) ((t1 & 0xffffffffL) ^ (t2 & 0xffffffffL) ^ (t3) ^ (t4 & 0xffffffffL));
                 int ad1 = addr[l] & 0xffff;
                 int ad2 = addr[++l] & 0xffff;
                 int ad3 = addr[++l] & 0xffff;
                 int ad4 = addr[++l] & 0xffff;
                 int ip = ad1 | ad2 << 8 | ad3 << 16 | ad4 << 24;
-                p1 = ip ^ (int) (((t1 >>> 32) & 0xffffffff) ^ ((t2 >>> 32) & 0xffffffff) ^ ((t3 >>> 32) & 0xffffffff) ^ ((t4 >>> 32) & 0xffffffff));
+                p1 = ip ^ (int) (((t1 >>> 32) & 0xffffffffL) ^ ((t2 >>> 32) & 0xffffffffL) ^ ((t3 >>> 32)) ^ ((t4 >>> 32)));
                 len1 -= 4;
                 ++l;
             }
@@ -1543,10 +1482,10 @@ public class FPHash64 {
         if (len > 0) {
             int n_bits = 8 * len;
             int x_bits = 32 - n_bits;
-            int t0 = (int) (result & 0xffffffff);
+            int t0 = (int) (result & 0xffffffffL);
             int t0_x = t0 << x_bits;
             int t0_n = t0 >>> n_bits;
-            int t1 = (int) ((result >>> 32) & 0xffffffff);
+            int t1 = (int) ((result >>> 32) & 0xffffffffL);
             int t1_x = t1 << x_bits;
             int t1_n = t1 >>> n_bits;
 
@@ -1557,17 +1496,17 @@ public class FPHash64 {
                     a0 = (t1_n & shift8);
                     a1 = ((t1_n >>> 8) & shift8);
                     a2 = ((t1_n >>> 16) & shift8);
-                    a3 = addr[k + 0] & 0xffff;
+                    a3 = addr[k] & 0xffff;
                     break;
                 case 2:
                     a0 = (t1_n & shift8);
                     a1 = ((t1_n >>> 8) & shift8);
-                    a2 = addr[k + 0] & 0xffff;
+                    a2 = addr[k] & 0xffff;
                     a3 = addr[k + 1] & 0xffff;
                     break;
                 case 3:
                     a0 = (t1_n & shift8);
-                    a1 = addr[k + 0] & 0xffff;
+                    a1 = addr[k] & 0xffff;
                     a2 = addr[k + 1] & 0xffff;
                     a3 = addr[k + 2] & 0xffff;
                     break;
@@ -1576,8 +1515,8 @@ public class FPHash64 {
             }
 
             int len_x = 4;
-            int p0 = (int) (result1 & 0xffffffff);
-            int p1 = (int) ((result1 >>> 32) & 0xffffffff);
+            int p0 = (int) (result1 & 0xffffffffL);
+            int p1 = (int) ((result1 >>> 32));
             int l = 0;
 
             while (len_x > 0) {
@@ -1591,9 +1530,9 @@ public class FPHash64 {
                 long ty2 = Polynomial72[b2];
                 long ty3 = Polynomial64[b3];
                 // Compute the new result.
-                p0 = p1 ^ (int) ((ty0 & 0xffffffff) ^ (ty1 & 0xffffffff) ^ (ty2 & 0xffffffff) ^ (ty3 & 0xffffffff));
+                p0 = p1 ^ (int) ((ty0 & 0xffffffffL) ^ (ty1) ^ (ty2 & 0xffffffffL) ^ (ty3 & 0xffffffffL));
                 int ip = a0 | (a1 << 8) | (a2 << 16) | (a3 << 24);
-                p1 = ip ^ (int) (((ty0 >>> 32) & 0xffffffff) ^ ((ty1 >>> 32) & 0xffffffff) ^ ((ty2 >>> 32) & 0xffffffff) ^ ((ty3 >>> 32) & 0xffffffff));
+                p1 = ip ^ (int) (((ty0 >>> 32)) ^ ((ty1 >>> 32)) ^ ((ty2 >>> 32)) ^ ((ty3 >>> 32)));
                 len_x -= 4;
                 l += 4;
             }
@@ -1601,139 +1540,5 @@ public class FPHash64 {
         }
 
         return result;
-    }
-
-    /**
-     * This procedure assumes that the LEN bytes beginning at address ADDR define a polynomial, A(x) of getDegree 8 *
-     * LEN.  The procedure returns (INIT * x ^ (8 * LEN) + A(x)) % PolyBasis.P.
-     * <p/>
-     * This is where everything happens. Heavily optimized for JIT-ted run-time performance and thus code modularity is
-     * sacrificed.
-     *
-     * @return : the fingerprint as a long
-     * @init : initial hash polynomial
-     * @addr : the byte array to be hashed
-     * @begin: beginning location
-     * @len :  length of string in bytes
-     */
-    private static final long polynomialComputeModuleCharOLDFUCKED(long init, char[] addr, int begin, int len) {
-        int j = 0, k = 0;
-        long result = init;
-        int a0 = 0, a1 = 0, a2 = 0, a3 = 0;
-        int b0 = 0, b1 = 0, b2 = 0, b3 = 0;
-        int shift8 = ~(-1 << 8);
-
-        if (len >= 2) {
-            j = len % 2;
-            k = len - j;
-            int len1 = k;
-            int l = begin;
-            // get the two words
-            int p0 = (int) (result & 0xffffffff);
-            int p1 = (int) ((result >>> 32) & 0xffffffff);
-
-            while (len1 > 0) {
-                // Split the low-order bytes to little-endian form.
-                a0 = p0 & shift8;
-                a1 = (p0 >>> 8) & shift8;
-                a2 = (p0 >>> 16) & shift8;
-                a3 = (p0 >>> 24) & shift8;
-                long t1 = Polynomial88[a0];
-                long t2 = Polynomial80[a1];
-                long t3 = Polynomial72[a2];
-                long t4 = Polynomial64[a3];
-
-                p0 = p1 ^ (int) ((t1 & 0xffffffff) ^ (t2 & 0xffffffff) ^ (t3 & 0xffffffff) ^ (t4 & 0xffffffff));
-                // upper and lower part of the char
-                char a = addr[l++];
-                char b = addr[l++];
-                int ad1 = a & 0xff;
-                int ad2 = a & 0xff00;
-                int ad3 = b & 0xff;
-                int ad4 = b & 0xff00;
-                int ip = ad1 | ad2 | ad3 << 16 | ad4 << 16;
-                p1 = ip ^ (int) (((t1 >>> 32) & 0xffffffff) ^ ((t2 >>> 32) & 0xffffffff) ^ ((t3 >>> 32) & 0xffffffff) ^ ((t4 >>> 32) & 0xffffffff));
-                len1 -= 4;
-                ++l;
-            }
-
-            result = (((long) p1) << 32) | (((long) p0) & 0xffffffffL);
-            len = j;
-        }
-
-        if (len > 0) {
-            int n_bits = 16 * len;
-            int x_bits = 32 - n_bits;
-            int t0 = (int) (result & 0xffffffff);
-            int t0_x = t0 << x_bits;
-            int t0_n = t0 >>> n_bits;
-            int t1 = (int) ((result >>> 32) & 0xffffffff);
-            int t1_x = t1 << x_bits;
-            int t1_n = t1 >>> n_bits;
-
-            long result1 = (((long) (t0_n ^ t1_x)) << 32) | (((long) t0_x) & 0xffffffffL);
-
-            switch (len) {
-                case 1:
-                    a0 = (t1_n & shift8);
-                    a1 = ((t1_n >>> 8) & shift8);
-                    a2 = ((t1_n >>> 16) & shift8);
-                    char a = addr[k];
-                    a2 = a & 0xff;
-                    a3 = a & 0xff00;
-                    break;
-                case 2:
-                    // wrong
-                    break;
-                case 3:
-                    //wrong
-                    break;
-                default:
-                    break;
-            }
-
-            int len_x = 4;
-            int p0 = (int) (result1 & 0xffffffff);
-            int p1 = (int) ((result1 >>> 32) & 0xffffffff);
-            int l = 0;
-
-            while (len_x > 0) {
-                // Split the low-order bytes to little-endian form.
-                b0 = p0 & shift8;
-                b1 = (p0 >>> 8) & shift8;
-                b2 = (p0 >>> 16) & shift8;
-                b3 = (p0 >>> 24) & shift8;
-                long ty0 = Polynomial88[b0];
-                long ty1 = Polynomial80[b1];
-                long ty2 = Polynomial72[b2];
-                long ty3 = Polynomial64[b3];
-                // Compute the new result.
-                p0 = p1 ^ (int) ((ty0 & 0xffffffff) ^ (ty1 & 0xffffffff) ^ (ty2 & 0xffffffff) ^ (ty3 & 0xffffffff));
-                int ip = a0 | (a1 << 8) | (a2 << 16) | (a3 << 24);
-                p1 = ip ^ (int) (((ty0 >>> 32) & 0xffffffff) ^ ((ty1 >>> 32) & 0xffffffff) ^ ((ty2 >>> 32) & 0xffffffff) ^ ((ty3 >>> 32) & 0xffffffff));
-                len_x -= 4;
-                l += 4;
-            }
-            result = (((long) p1) << 32) | (((long) p0) & 0xffffffffL);
-        }
-
-        return result;
-    }
-
-
-    // create a little-endian representation of the
-    // bytes constituting T in B (starting at F).
-    private static final void polyToBytes(long t, byte[] b, int f) {
-        // Generate the bytes in little-endian order.
-        int p0 = (int) (t & 0xffffffffL);
-        int p1 = (int) ((t >>> 32) & 0xffffffffL);
-        b[f + 0] = (byte) extractWord(p0, 0, 8);
-        b[f + 1] = (byte) extractWord(p0, 8, 8);
-        b[f + 2] = (byte) extractWord(p0, 16, 8);
-        b[f + 3] = (byte) extractWord(p0, 24, 8);
-        b[f + 4] = (byte) extractWord(p1, 0, 8);
-        b[f + 5] = (byte) extractWord(p1, 8, 8);
-        b[f + 6] = (byte) extractWord(p1, 16, 8);
-        b[f + 7] = (byte) extractWord(p1, 24, 8);
     }
 }

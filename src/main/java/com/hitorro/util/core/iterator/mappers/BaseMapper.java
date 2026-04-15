@@ -53,12 +53,12 @@ public abstract class BaseMapper<I, O> implements Mapper<I, O> {
         return "description not defined";
     }
 
+    @SuppressWarnings("unchecked")
     public <E> BaseMapper<I, E> combine(BaseMapper<O, E> mapper) {
         if (mapper instanceof DummyBaseMapper) {
-            //XXX Hack to see if I can work around a generics flaw I dont understand where HTSerializable cant seem to be use as a ? extends HTSerializable
             return (BaseMapper<I, E>) this;
         }
-        return new MapperCollection(this, mapper);
+        return new MapperCollection<>(this, mapper);
     }
 
 
