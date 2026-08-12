@@ -25,7 +25,7 @@ import com.hitorro.util.core.Audit.AuditStatus;
 
 public interface Auditable {
     String _userName = Constants.EmptyString;
-    String _ipAddress = Env.getHostIP();
+    String _ipAddress = EnvCore.getHostIP();
 
 
     void audit(String topic, String userName, AuditStatus status, String message, Object... args);

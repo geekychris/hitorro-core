@@ -22,15 +22,16 @@
 package com.hitorro.util.core.classes;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.hitorro.util.core.ArrayUtil;
-import com.hitorro.util.core.iterator.Mapper;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.json.JsonInitable;
+import java.util.function.Function;
+import com.hitorro.util.core.ArrayUtilCore;
+import com.hitorro.util.core.string.StringUtilCore;
 import com.hitorro.util.json.keys.PropertyKeyValidationException;
 import com.hitorro.util.json.keys.StringProperty;
 
 import java.lang.reflect.Field;
 
-public class JsonNodeClassMapper<T> implements Mapper<JsonNode, T> {
+public class JsonNodeClassMapper<T> implements Function<JsonNode, T>, JsonInitable {
     public static StringProperty classKey = new StringProperty("class", "", null);
 
     private Class requiredSuper;
@@ -56,8 +57,8 @@ public class JsonNodeClassMapper<T> implements Mapper<JsonNode, T> {
     public T getValidated(String sValue, Class requiredSuper, String key) {
         // Resolve symbolic names to FQN class names via the implementation registry
         sValue = ImplementationRegistry.getMe().resolve(sValue);
-        String parts[] = StringUtil.tokenizeFromSingleChar(sValue, "#");
-        if (ArrayUtil.nullOrEmpty(parts)) {
+        String parts[] = StringUtilCore.tokenizeFromSingleChar(sValue, "#");
+        if (ArrayUtilCore.nullOrEmpty(parts)) {
             if (defaultClass != null) {
                 return (T) ClassUtil.getInstanceSwallowError(defaultClass, requiredSuper);
             } else {

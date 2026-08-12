@@ -21,9 +21,8 @@
  */
 package com.hitorro.util.typesystem;
 
-import com.hitorro.util.core.opers.HTPredicate;
-
 import java.util.List;
+import java.util.function.Predicate;
 
 public interface TypeIntf extends TypeBaseIntf {
     TypeFieldIntf[] getTypeFields();
@@ -46,5 +45,5 @@ public interface TypeIntf extends TypeBaseIntf {
 
     String getSoftGuid(HTSerializable pt);
 
-    List<TypeFieldIntf> getTypeFieldsByConstraint(HTPredicate<TypeFieldIntf> constraint);
+    List<TypeFieldIntf> getTypeFieldsByConstraint(Predicate<TypeFieldIntf> constraint);
 }

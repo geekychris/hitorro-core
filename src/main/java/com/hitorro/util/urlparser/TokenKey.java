@@ -21,8 +21,7 @@
  */
 package com.hitorro.util.urlparser;
 
-import com.hitorro.util.core.string.Fmt;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 /**
  * <p/>
@@ -35,12 +34,12 @@ public class TokenKey {
 
     public TokenKey(String t, int id) {
         tld = t;
-        hash = StringUtil.hashStringCaseFree(tld);
+        hash = StringUtilCore.hashStringCaseFree(tld);
         this.id = id;
     }
 
     public String toString() {
-        return Fmt.S("%s: %s", tld, hash);
+        return String.format("%s: %s", tld, hash);
     }
 
     public int getId() {

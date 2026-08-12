@@ -21,8 +21,7 @@
  */
 package com.hitorro.util.core;
 
-import com.hitorro.util.core.string.Fmt;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 import java.text.ParseException;
 
@@ -193,15 +192,15 @@ public class Constants {
 
     public static final String getMillisToPrettyForm(long millis) {
         int seconds = (int) (millis / 1000);
-        return Fmt.S("%s:%s:%s", seconds / (Constants.SecondsInHour), (seconds / (Constants.SecondsInMinute)) % 60, seconds % 60);
+        return String.format("%s:%s:%s", seconds / (Constants.SecondsInHour), (seconds / (Constants.SecondsInMinute)) % 60, seconds % 60);
     }
 
     public static final String getSecondsToPrettyForm(int seconds) {
-        return Fmt.S("%s:%s:%s", seconds / (Constants.SecondsInHour), (seconds / (Constants.SecondsInMinute)) % 60, seconds % 60);
+        return String.format("%s:%s:%s", seconds / (Constants.SecondsInHour), (seconds / (Constants.SecondsInMinute)) % 60, seconds % 60);
     }
 
     public static boolean getBool(String b) {
-        if (StringUtil.nullOrEmptyString(b)) {
+        if (StringUtilCore.nullOrEmptyString(b)) {
             return false;
         }
         char c = b.charAt(0);
@@ -250,7 +249,7 @@ public class Constants {
      */
     public static final long getBytesFromString(String parseMe)
             throws ParseException {
-        if (!StringUtil.nullOrEmptyString(parseMe)) {
+        if (!StringUtilCore.nullOrEmptyString(parseMe)) {
             parseMe = parseMe.toLowerCase();
             char c = parseMe.charAt(parseMe.length() - 1);
             if (Character.isDigit(c)) {
@@ -266,7 +265,7 @@ public class Constants {
                 case 'g':
                     return valInt * GBytes;
                 default:
-                    throw new ParseException(Fmt.S(
+                    throw new ParseException(String.format(
                             "Unable to parse %s unknown control code %s", parseMe,
                             c), -1);
 
@@ -283,15 +282,15 @@ public class Constants {
      */
     public static final String getBytesNeatForm(long bytes) {
         if (bytes < KBytes) {
-            return Fmt.S("%sB", bytes);
+            return String.format("%sB", bytes);
         }
         if (bytes < MBytes) {
-            return Fmt.S("%sKB", bytes / KBytes);
+            return String.format("%sKB", bytes / KBytes);
         }
         if (bytes < GBytes) {
-            return Fmt.S("%sMB", bytes / MBytes);
+            return String.format("%sMB", bytes / MBytes);
         }
-        return Fmt.S("%sGB", bytes / GBytes);
+        return String.format("%sGB", bytes / GBytes);
     }
 
     public static Integer getInteger(int i) {

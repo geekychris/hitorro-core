@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.core.classes;
 
-import com.hitorro.util.core.ArrayUtil;
+import com.hitorro.util.core.ArrayUtilCore;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -41,7 +41,7 @@ public class MemberVarAnnotations extends BaseAnnotation {
 
     public static void addToListIfHasAnnotation(Field f, List<MemberVarAnnotations> list) {
         Annotation anos[] = f.getAnnotations();
-        if (!ArrayUtil.nullOrEmpty(anos)) {
+        if (!ArrayUtilCore.nullOrEmpty(anos)) {
             list.add(new MemberVarAnnotations(f, anos));
         }
     }

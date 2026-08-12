@@ -61,7 +61,7 @@ public class CharArrayWrapper implements PooledStorageElement {
     }
 
     public void pasivate() {
-        ArrayUtil.nullOutCharArray(array);
+        ArrayUtilCore.nullOutCharArray(array);
         // return to free storage here!
     }
 

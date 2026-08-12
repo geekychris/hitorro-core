@@ -22,8 +22,7 @@
 
 package com.hitorro.util.core;
 
-import com.hitorro.util.core.string.Fmt;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -261,7 +260,7 @@ public class UTCDateUtil {
         int dm = cal.get(Calendar.DAY_OF_MONTH);
         int ymdInt = (y * 100) + m;
         ymdInt = (ymdInt * 100) + dm;
-        return Fmt.S("%s%s%s%s%s", y, seperator, m, seperator, dm);
+        return String.format("%s%s%s%s%s", y, seperator, m, seperator, dm);
     }
 
 
@@ -516,14 +515,14 @@ public class UTCDateUtil {
         int min = (seconds / 60) % 60;
         int hrs = seconds / (60 * 60);
 
-        StringUtil.prependPadToLength(sec, '0', 2, secStr);
-        StringUtil.prependPadToLength(min, '0', 2, minStr);
-        StringUtil.prependPadToLength(hrs, '0', 2, hrsStr);
+        StringUtilCore.prependPadToLength(sec, '0', 2, secStr);
+        StringUtilCore.prependPadToLength(min, '0', 2, minStr);
+        StringUtilCore.prependPadToLength(hrs, '0', 2, hrsStr);
 
         if (alwaysAddHours || hrs > 0) {
-            time = Fmt.S("%s:%s:%s", hrsStr, minStr, secStr);
+            time = String.format("%s:%s:%s", hrsStr, minStr, secStr);
         } else {
-            time = Fmt.S("%s:%s", minStr, secStr);
+            time = String.format("%s:%s", minStr, secStr);
         }
 
         return time;
@@ -536,7 +535,7 @@ public class UTCDateUtil {
      * @return an <code>int</code> representing the seconds as an integer.
      */
     public static final int secondsStringToInt(String time) {
-        String timeTokens[] = StringUtil.tokenizeFromSingleChar(time, ":", true);
+        String timeTokens[] = StringUtilCore.tokenizeFromSingleChar(time, ":", true);
         int tokenCnt = timeTokens.length;
         int tokenCntMax = 3;
         int seconds = 0;

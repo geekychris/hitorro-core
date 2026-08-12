@@ -21,11 +21,11 @@
  */
 package com.hitorro.util.core.params.propreaders;
 
-import com.hitorro.util.core.Console;
+import com.hitorro.util.core.ConsoleCore;
 import com.hitorro.util.core.params.HTProperties;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 import com.hitorro.util.io.FileChangeSet;
-import com.hitorro.util.io.FileUtil;
+import com.hitorro.util.io.FileUtilCore;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -49,12 +49,12 @@ public class LoadPropsPropertyReader implements PropertiesReader {
 
     public void getProperties(HTProperties props, Map<String, String> cmdLineArgs) {
         String loadProp = cmdLineArgs.get(LoadProps);
-        String loadProps[] = StringUtil.tokenizeFromSingleChar(loadProp, ",");
+        String loadProps[] = StringUtilCore.tokenizeFromSingleChar(loadProp, ",");
         List<File> files = new ArrayList();
         for (String prop : loadProps) {
-            if (!StringUtil.nullOrEmptyOrBlankString(prop)) {
+            if (!StringUtilCore.nullOrEmptyOrBlankString(prop)) {
                 File loadPropsFile = new File(prop);
-                if (FileUtil.notNullAndExists(loadPropsFile)) {
+                if (FileUtilCore.notNullAndExists(loadPropsFile)) {
                     if (loadPropsFile.isDirectory()) {
                         files.addAll(PropReaderUtil.getProps(cmdLineArgs, props, loadPropsFile));
                     } else {
@@ -62,7 +62,7 @@ public class LoadPropsPropertyReader implements PropertiesReader {
                         props.readFile(loadPropsFile, true);
                     }
                 } else {
-                    Console.eprintln("Property file %s does not exist, cannot initialize", prop);
+                    ConsoleCore.eprintln("Property file %s does not exist, cannot initialize", prop);
                     System.exit(-1);
                 }
             }

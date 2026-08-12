@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.core;
 
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 import java.util.HashMap;
 
@@ -271,7 +271,7 @@ public enum JavaObjectOrderEnum {
     public static String[] getNames(JavaObjectOrderEnum barrel[]) {
         String arr[] = new String[barrel.length];
         for (int i = 0; i < barrel.length; i++) {
-            arr[i] = StringUtil.strcat("%s_%s", barrel[i].getName(), "_", i);
+            arr[i] = StringUtilCore.strcat("%s_%s", barrel[i].getName(), "_", i);
         }
         return arr;
     }

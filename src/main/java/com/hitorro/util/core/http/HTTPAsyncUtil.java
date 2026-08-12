@@ -21,7 +21,6 @@
  */
 package com.hitorro.util.core.http;
 
-import com.hitorro.util.core.Console;
 import org.apache.hc.client5.http.async.methods.SimpleHttpRequest;
 import org.apache.hc.client5.http.async.methods.SimpleHttpResponse;
 import org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient;
@@ -104,7 +103,7 @@ public class HTTPAsyncUtil {
 
         for (Future f : results) {
             Object o = f.get();
-            Console.println();
+            System.out.println();
         }
         System.out.println("Shutting down");
         client.close(CloseMode.GRACEFUL);

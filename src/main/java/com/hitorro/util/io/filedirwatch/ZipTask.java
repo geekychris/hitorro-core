@@ -21,8 +21,7 @@
  */
 package com.hitorro.util.io.filedirwatch;
 
-import com.hitorro.util.core.string.Fmt;
-import com.hitorro.util.io.FileUtil;
+import com.hitorro.util.io.FileUtilCore;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,8 +37,8 @@ public class ZipTask implements DirWatcherTask {
     }
 
     public boolean execute(File f) throws IOException {
-        File zip = new File(Fmt.S("%s.gz", f.getAbsoluteFile()));
-        FileUtil.gzipFile(f, zip, false);
+        File zip = new File(String.format("%s.gz", f.getAbsoluteFile()));
+        FileUtilCore.gzipFile(f, zip, false);
         if (deleteAfter) {
             f.delete();
         }

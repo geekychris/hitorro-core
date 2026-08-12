@@ -22,13 +22,13 @@
 package com.hitorro.util.json.keys.mappers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.hitorro.util.core.iterator.Mapper;
+import com.hitorro.util.json.JsonInitable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class JsonNArrayToListT<T> implements Mapper<JsonNode, List<T>> {
+public class JsonNArrayToListT<T> implements Function<JsonNode, List<T>>, JsonInitable {
     private Function<JsonNode, T> mapper;
 
     public JsonNArrayToListT(Function<JsonNode, T> mapper) {

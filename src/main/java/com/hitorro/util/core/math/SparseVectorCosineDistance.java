@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.core.math;
 
-import com.hitorro.util.core.Console;
+import com.hitorro.util.core.ConsoleCore;
 
 /**
  * .
@@ -37,7 +37,7 @@ public class SparseVectorCosineDistance extends SparseVectorVisitor {
 
     public void process(final double leftD, final double rightD) {
         if (leftD == 0.0 || rightD == 0.0) {
-            Console.println();
+            ConsoleCore.println();
         }
         m_result += leftD * rightD;
     }

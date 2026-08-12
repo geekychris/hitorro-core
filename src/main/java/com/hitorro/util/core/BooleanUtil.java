@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.core;
 
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 /**
  * @author chris
@@ -51,7 +51,7 @@ public class BooleanUtil {
      * @return
      */
     public static boolean getBoolean(String bIn) {
-        if (StringUtil.nullOrEmptyString(bIn)) {
+        if (StringUtilCore.nullOrEmptyString(bIn)) {
             return false;
         }
         char c = bIn.charAt(0);
@@ -73,7 +73,7 @@ public class BooleanUtil {
      * @return true if the string is a valid Boolean representation
      */
     public static boolean isBoolean(String bIn) {
-        if (StringUtil.nullOrEmptyOrBlankString(bIn)) {
+        if (StringUtilCore.nullOrEmptyOrBlankString(bIn)) {
             return false;
         }
 

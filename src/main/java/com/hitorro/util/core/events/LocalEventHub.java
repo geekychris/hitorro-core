@@ -23,8 +23,8 @@ package com.hitorro.util.core.events;
 
 import com.hitorro.util.core.GenericKeyValue;
 import com.hitorro.util.core.Log;
-import com.hitorro.util.core.thread.EnhancedThreadFactory;
-import com.hitorro.util.core.thread.EnhancedThreadGroup;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicLong;
 
 import java.util.*;
 import java.util.concurrent.ExecutorService;
@@ -45,7 +45,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class LocalEventHub implements EventListener {
     public static final String Name = "LocalEventHubAsyncNotifiier";
-    public static EnhancedThreadGroup s_tg = new EnhancedThreadGroup(Name);
+    public static ThreadGroup s_tg = new ThreadGroup(Name);
     private static final LocalEventHub s_localHub = new LocalEventHub();
     private ExecutorService m_executors;
     private final HashMap<String, WeakReferenceList<EventListener>> type = new HashMap<>();
@@ -259,9 +259,13 @@ public class LocalEventHub implements EventListener {
     }
 
     private void initThreadPool() {
-        m_executors = Executors.newCachedThreadPool(
-                new EnhancedThreadFactory("EventListenerThreadPool",
-                        "EventThread(%s)", true));
+        final AtomicLong counter = new AtomicLong();
+        ThreadFactory tf = r -> {
+            Thread t = new Thread(s_tg, r, "EventThread(" + counter.incrementAndGet() + ")");
+            t.setDaemon(true);
+            return t;
+        };
+        m_executors = Executors.newCachedThreadPool(tf);
     }
 }
 

@@ -21,15 +21,14 @@
  */
 package com.hitorro.util.core.params;
 
-import com.hitorro.util.core.Console;
-import com.hitorro.util.core.Env;
+import com.hitorro.util.core.ConsoleCore;
+import com.hitorro.util.core.EnvCore;
 import com.hitorro.util.core.Log;
 import com.hitorro.util.core.hash.FPHash64;
-import com.hitorro.util.core.map.MapUtil;
-import com.hitorro.util.core.string.Fmt;
-import com.hitorro.util.core.string.StringUtil;
-import com.hitorro.util.io.FileUtil;
-import com.hitorro.util.io.filefilters.FilenameExtensionFilter;
+import com.hitorro.util.core.map.MapUtilCore;
+import com.hitorro.util.core.string.FmtCore;
+import com.hitorro.util.core.string.StringUtilCore;
+import com.hitorro.util.io.FileUtilCore;
 import com.hitorro.util.io.filefilters.OrCollection;
 import com.hitorro.util.json.keys.PropertyException;
 import org.xml.sax.SAXException;
@@ -249,7 +248,7 @@ public final class HTProperties implements Map<String, String> {
 
 
                 if (recurse) {
-                    if (StringUtil.nullOrEmptyString(substValue)) {
+                    if (StringUtilCore.nullOrEmptyString(substValue)) {
 
                     } else {
                         if (substValue.indexOf(VariableStart) != -1) {
@@ -362,11 +361,15 @@ public final class HTProperties implements Map<String, String> {
     }
 
     public void dumpProperties() {
-        Console.println(Env.getPrettyPrintedProperties(this.properties));
+        StringBuilder ppBuff = new StringBuilder("Process java properties: \n");
+        for (String k : this.properties.keySet()) {
+            ppBuff.append(k).append(" = ").append(this.properties.get(k)).append('\n');
+        }
+        ConsoleCore.println(ppBuff.toString());
     }
 
     public List<String> getChildKeys(String prefix) {
-        return MapUtil.getChildKeys(prefix, properties);
+        return MapUtilCore.getChildKeys(prefix, properties);
     }
 
     public TreeMap<String, String> getMap() {
@@ -390,11 +393,11 @@ public final class HTProperties implements Map<String, String> {
     }
 
     public TreeMap<String, String> getSubMap(String prefix) {
-        return MapUtil.getSubMap(properties, prefix);
+        return MapUtilCore.getSubMap(properties, prefix);
     }
 
     public TreeMap<String, String> getSubMap(String root, String key) {
-        return getSubMap(Fmt.S("%s.%s", root, key));
+        return getSubMap(FmtCore.S("%s.%s", root, key));
     }
 
     public List<KeyMap> getSubMaps(String root) {
@@ -410,7 +413,7 @@ public final class HTProperties implements Map<String, String> {
     }
 
     public Properties getSubProperties(String prefix) {
-        return MapUtil.getPropertySubProperties(properties, prefix);
+        return MapUtilCore.getPropertySubProperties(properties, prefix);
     }
 
     /**
@@ -424,10 +427,10 @@ public final class HTProperties implements Map<String, String> {
         // create a new HTProperties for this directory layer
         // no collisions are allowed in properties within the layer
         HTProperties dirLayer = new HTProperties();
-        FilenameFilter filter = new FilenameExtensionFilter("properties", true);
-        FilenameFilter xmlfilter = new FilenameExtensionFilter(XmlPropertyKey, true);
+        FilenameFilter filter = (d, n) -> n.toLowerCase().endsWith(".properties");
+        FilenameFilter xmlfilter = (d, n) -> n.toLowerCase().endsWith("." + XmlPropertyKey.toLowerCase());
         OrCollection or = new OrCollection(filter, xmlfilter);
-        List<File> propertyFiles = FileUtil.findFilteredFiles(or, dirFile, false);
+        List<File> propertyFiles = FileUtilCore.findFilteredFiles(or, dirFile, false);
 
         for (File pfile : propertyFiles) {
             dirLayer.readFile(pfile, false);
@@ -453,7 +456,7 @@ public final class HTProperties implements Map<String, String> {
         ReadPropsFromXMLHandler handler = new ReadPropsFromXMLHandler();
         handler.map = map;
         try {
-            parseSax(FileUtil.getBufferedFileInputStream(fileLocation), handler);
+            parseSax(FileUtilCore.getBufferedFileInputStream(fileLocation), handler);
             return true;
         } catch (IOException e) {
             Log.util.error("Unable to read property file %s %s %e", fileLocation, e, e);
@@ -494,13 +497,13 @@ public final class HTProperties implements Map<String, String> {
         try {
             // read properties from the file
             TreeMap<String, String> newProps = new TreeMap<String, String>();
-            String ext = FileUtil.getFileExtension(fileLocation);
+            String ext = FileUtilCore.getFileExtension(fileLocation);
             if (ext.equals(XmlPropertyKey)) {
                 if (!readFileFromXML(fileLocation, newProps)) {
                     Log.util.fatal("Unable to load property file %s", fileLocation);
                 }
             } else {
-                in = FileUtil.getBufferedFileInputStream(fileLocation);
+                in = FileUtilCore.getBufferedFileInputStream(fileLocation);
                 load(in, newProps);
                 in.close();
             }
@@ -577,7 +580,7 @@ public final class HTProperties implements Map<String, String> {
                         Log.util.error("%s %e", e, e);
                     }
                 }
-                throw new PropertyException(Fmt.S("Collision on property %s reading file %s ", key, file));
+                throw new PropertyException(FmtCore.S("Collision on property %s reading file %s ", key, file));
             }
         }
 

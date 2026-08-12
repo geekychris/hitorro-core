@@ -21,8 +21,8 @@
  */
 package com.hitorro.util.io.filefilters;
 
-import com.hitorro.util.core.string.StringUtil;
-import com.hitorro.util.io.FileUtil;
+import com.hitorro.util.core.string.StringUtilCore;
+import com.hitorro.util.io.FileUtilCore;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -54,8 +54,8 @@ public class FileNameContainsFilenameFilter implements FilenameFilter {
     }
 
     public boolean accept(File dir, String name) {
-        String ext = FileUtil.getFileExtension(name);
-        if (StringUtil.nullOrEmptyOrBlankString(ext)) {
+        String ext = FileUtilCore.getFileExtension(name);
+        if (StringUtilCore.nullOrEmptyOrBlankString(ext)) {
             // not an interesting extension.
             return false;
         }

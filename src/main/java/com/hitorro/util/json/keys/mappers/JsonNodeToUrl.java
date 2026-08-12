@@ -22,14 +22,15 @@
 package com.hitorro.util.json.keys.mappers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.hitorro.util.core.iterator.Mapper;
 import com.hitorro.util.core.params.PropertiesUtil;
+import java.util.function.Function;
+import com.hitorro.util.json.JsonInitable;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 
-public class JsonNodeToUrl implements Mapper<JsonNode, URL> {
+public class JsonNodeToUrl implements Function<JsonNode, URL>, JsonInitable {
     public static JsonNodeToUrl instance = new JsonNodeToUrl();
 
     public URL apply(JsonNode jsonNodes) {

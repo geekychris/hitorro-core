@@ -22,8 +22,7 @@
 package com.hitorro.util.core;
 
 import com.hitorro.util.core.date.DateRange;
-import com.hitorro.util.core.string.Fmt;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 import java.text.ParseException;
 
@@ -35,7 +34,7 @@ public class ShardKey {
 
     public ShardKey(String fullName) throws ParseException {
         this.fullName = fullName;
-        String parts[] = StringUtil.tokenizeFromSingleChar(fullName, "-");
+        String parts[] = StringUtilCore.tokenizeFromSingleChar(fullName, "-");
         if (parts.length >= 2) {
             dateRange = new DateRange(parts[0], parts[1]);
             if (parts.length > 2) {
@@ -56,7 +55,7 @@ public class ShardKey {
     }
 
     private void finalizeShardKey() {
-        fullName = Fmt.S("%s-%s", dateRange.getDateRangeString(), subSegment);
+        fullName = String.format("%s-%s", dateRange.getDateRangeString(), subSegment);
     }
 
     public String getSubSegment() {

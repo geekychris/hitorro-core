@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.io.filedirwatch;
 
-import com.hitorro.util.core.Env;
+import com.hitorro.util.core.EnvCore;
 import com.hitorro.util.core.Log;
 
 /**
@@ -30,7 +30,7 @@ import com.hitorro.util.core.Log;
 public class DirWatcherUtil {
     public static DirectoryWatch getWatcherFromParams() {
         DirectoryWatch delete = null;
-        if (Env.getArchiveLogDir() == null) {
+        if (EnvCore.getArchiveLogDir() == null) {
             Log.util.error("Unable to get the archive directory for this server");
             return null;
         }
@@ -41,7 +41,7 @@ public class DirWatcherUtil {
             } else {
                 ext = "log";
             }
-            delete = new DirectoryWatch(Env.getArchiveLogDir(), ext,
+            delete = new DirectoryWatch(EnvCore.getArchiveLogDir(), ext,
                     DirWatcherParams.DeleteMaxFiles.apply(),
                     DirWatcherParams.DeleteMaxFileSize.apply(),
                     new DeleteTask(),
@@ -49,7 +49,7 @@ public class DirWatcherUtil {
                     false);
         }
         if (DirWatcherParams.ZipEnabled.apply()) {
-            return new DirectoryWatch(Env.getArchiveLogDir(), "log",
+            return new DirectoryWatch(EnvCore.getArchiveLogDir(), "log",
                     DirWatcherParams.MaxZippedFiles.apply(),
                     DirWatcherParams.MaxGZSize.apply(),
                     new ZipTask(true),

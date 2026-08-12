@@ -24,7 +24,7 @@ package com.hitorro.util.core.opers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.hitorro.util.core.HTAssert;
 import com.hitorro.util.core.Log;
-import com.hitorro.util.core.string.Fmt;
+import com.hitorro.util.core.string.FmtCore;
 import com.hitorro.util.io.StoreException;
 import com.hitorro.util.typesystem.HTObjectInputStream;
 import com.hitorro.util.typesystem.HTObjectOutputStream;
@@ -63,7 +63,7 @@ public class LogicalNotOperator<E> implements HTPredicate<E>, HTSerializable {
     }
 
     public String toString() {
-        return Fmt.S("NOT(%s)", m_constraint.toString());
+        return FmtCore.S("NOT(%s)", m_constraint.toString());
     }
 
     public boolean test(E field) {

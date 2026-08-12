@@ -21,8 +21,7 @@
  */
 package com.hitorro.util.core.http;
 
-import com.hitorro.util.core.string.Fmt;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -61,7 +60,7 @@ public class HTTPClientCore {
     }
 
     protected static NameValuePair createNameValuePair(String name, Collection<String> items) {
-        String v = StringUtil.mergeWithJoinToken(items, ",");
+        String v = StringUtilCore.mergeWithJoinToken(items, ",");
         return new BasicNameValuePair(name, v);
     }
 
@@ -80,14 +79,14 @@ public class HTTPClientCore {
         HttpResponse httpResponse = getClient().execute(method);
         int statusCode = httpResponse.getStatusLine().getStatusCode();
         if (statusCode != HttpStatus.SC_OK) {
-            String s = Fmt.S("Http error %s %s url: %s credential:%s|%s", statusCode, httpResponse.getStatusLine().getReasonPhrase(), url, username, password);
+            String s = String.format("Http error %s %s url: %s credential:%s|%s", statusCode, httpResponse.getStatusLine().getReasonPhrase(), url, username, password);
             throw new HttpException(s);
         }
         return httpResponse.getEntity().getContent();
     }
 
     protected void setupCreds(final String baseUrl) throws MalformedURLException {
-        if (!StringUtil.nullOrEmptyString(password)) {
+        if (!StringUtilCore.nullOrEmptyString(password)) {
             authScope = createAuthScope(baseUrl);
             CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
             credentialsProvider.setCredentials(AuthScope.ANY,

@@ -21,8 +21,8 @@
  */
 package com.hitorro.util.core.events.cache;
 
-import com.hitorro.util.core.iterator.Mapper;
-import com.hitorro.util.core.string.Fmt;
+import com.hitorro.util.core.string.FmtCore;
+import java.util.function.Function;
 import org.apache.poi.ss.formula.functions.T;
 
 import java.util.List;
@@ -34,10 +34,10 @@ public class SingletonCache<E> extends Cache<Object, E> {
     private E m_value;
     private boolean m_demandBasedCacheing = true;
 
-    private Mapper<Object, E> mapper;
+    private Function<Object, E> mapper;
     private T objectDefaultValue;
 
-    public SingletonCache(String eventName, Mapper<Object, E> mapper) {
+    public SingletonCache(String eventName, Function<Object, E> mapper) {
         this(true, false, eventName, mapper, null);
     }
 
@@ -53,7 +53,7 @@ public class SingletonCache<E> extends Cache<Object, E> {
      */
     public SingletonCache(boolean demandBasedCacheing,
                           boolean asyncFetch,
-                          String eventName, Mapper<Object, E> mapper,
+                          String eventName, Function<Object, E> mapper,
                           T objectDefaultValue) {
         super(0, eventName);
         m_demandBasedCacheing = demandBasedCacheing;
@@ -64,7 +64,7 @@ public class SingletonCache<E> extends Cache<Object, E> {
 
 
     public String getDescription() {
-        return Fmt.S("SingletonCache for %s using apply %s", eventName(), mapper.getClass().getName());
+        return FmtCore.S("SingletonCache for %s using apply %s", eventName(), mapper.getClass().getName());
     }
 
     @Override

@@ -21,7 +21,6 @@
  */
 package com.hitorro.util.core;
 
-import com.hitorro.util.core.string.Fmt;
 
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
@@ -40,12 +39,12 @@ public class JMXUtil {
      * @param name
      */
     public static void registerForJMX(Object managedObject, String realm, String type, String name) {
-        String m = Fmt.S("%s:type=%s,name=%s", realm, type, name);
+        String m = String.format("%s:type=%s,name=%s", realm, type, name);
         registerForJMX(managedObject, m);
     }
 
     public static JMXServiceURL getJMXUrl(String host, int port) throws MalformedURLException {
-        String serviceUrl = Fmt.S(FMTString, host, port);
+        String serviceUrl = String.format(FMTString, host, port);
         return new JMXServiceURL(serviceUrl);
     }
 

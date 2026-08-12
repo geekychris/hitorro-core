@@ -36,10 +36,10 @@ import java.util.List;
  */
 public abstract class LogicalOperatorCollection<T> implements HTPredicate<T>, HTSerializable {
     public static final int SerializationVersion = 1;
-    protected HTPredicate<? super T> m_constraints[];
-    protected List<HTPredicate<? super T>> temp = new ArrayList();
+    protected java.util.function.Predicate<? super T> m_constraints[];
+    protected List<java.util.function.Predicate<? super T>> temp = new ArrayList();
 
-    public LogicalOperatorCollection(HTPredicate<? super T>... constraints) {
+    public LogicalOperatorCollection(java.util.function.Predicate<? super T>... constraints) {
         m_constraints = constraints;
     }
 
@@ -47,30 +47,30 @@ public abstract class LogicalOperatorCollection<T> implements HTPredicate<T>, HT
         return true;
     }
 
-    public void add(Collection<HTPredicate<? super T>> col) {
-        for (HTPredicate<? super T> filt : col) {
+    public void add(Collection<java.util.function.Predicate<? super T>> col) {
+        for (java.util.function.Predicate<? super T> filt : col) {
             add(filt);
         }
         finalizeFilter();
     }
 
-    public void add(HTPredicate<? super T> e) {
+    public void add(java.util.function.Predicate<? super T> e) {
         temp.add(e);
     }
 
-    public void addIfNotNull(HTPredicate<? super T> e) {
+    public void addIfNotNull(java.util.function.Predicate<? super T> e) {
         if (e != null) {
             add(e);
         }
     }
 
     public void finalizeFilter() {
-        m_constraints = temp.toArray(new HTPredicate[temp.size()]);
+        m_constraints = temp.toArray(new java.util.function.Predicate[temp.size()]);
     }
 
     public void initForPass() {
-        for (HTPredicate oper : m_constraints) {
-            oper.initForPass();
+        for (java.util.function.Predicate oper : m_constraints) {
+            if (oper instanceof HTPredicate) ((HTPredicate) oper).initForPass();
         }
     }
 
@@ -88,7 +88,7 @@ public abstract class LogicalOperatorCollection<T> implements HTPredicate<T>, HT
             case 1:
                 // hack because I cant cast....I am sure there is a better way.
                 HTSerializable[] temp = os.readArrayOfHTSerializable();
-                m_constraints = new HTPredicate[temp.length];
+                m_constraints = new java.util.function.Predicate[temp.length];
                 for (int i = 0; i < temp.length; i++) {
                     m_constraints[i] = (HTPredicate) temp[i];
                 }

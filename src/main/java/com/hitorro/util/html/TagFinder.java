@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.html;
 
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 import java.text.ParseException;
 import java.util.Map;
@@ -104,7 +104,7 @@ public class TagFinder {
 
         while (true) {
             if (getNextAttribute()) {
-                if (StringUtil.subStringEqualsIgnoreCase(m_buffer, attrNameStart, attrNameLength, attr)) {
+                if (StringUtilCore.subStringEqualsIgnoreCase(m_buffer, attrNameStart, attrNameLength, attr)) {
                     return true;
                 }
             } else {
@@ -401,7 +401,7 @@ public class TagFinder {
 
     public boolean isTagEqualIgnoreCase(String tag) {
         int start = m_open + 1;
-        return StringUtil.subStringEqualsIgnoreCase(m_buffer, start, m_entityNameLength, tag);
+        return StringUtilCore.subStringEqualsIgnoreCase(m_buffer, start, m_entityNameLength, tag);
     }
 
     /**

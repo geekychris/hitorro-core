@@ -33,6 +33,7 @@ import java.io.StringWriter;
  * The full-featured Logger in hitorro-util extends this class's contract.
  */
 public class Logger {
+    public static final String ExitEvent = "ExitEvent";
     public static File s_archiveDir = null;
 
     private final org.apache.log4j.Logger delegate;

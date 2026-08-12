@@ -22,8 +22,7 @@
 package com.hitorro.util.core.map;
 
 import com.hitorro.util.core.GenericKeyValue;
-import com.hitorro.util.core.iterator.AbstractIterator;
-import com.hitorro.util.core.iterator.CollectionIterator;
+import java.util.Iterator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,8 +47,8 @@ public class HashHashMap<L1TYPE extends Object, L2TYPE extends Object, PAYLOAD e
     private HashHashMap() {
     }
 
-    public AbstractIterator<GenericKeyValue<L1TYPE, L2TYPE>> getNodesIterator() {
-        return new CollectionIterator(getNodesList());
+    public Iterator<GenericKeyValue<L1TYPE, L2TYPE>> getNodesIterator() {
+        return getNodesList().iterator();
     }
 
     public List<GenericKeyValue<L1TYPE, L2TYPE>> getNodesList() {

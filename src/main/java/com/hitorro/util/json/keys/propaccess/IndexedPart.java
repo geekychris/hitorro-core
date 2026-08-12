@@ -22,7 +22,7 @@
 package com.hitorro.util.json.keys.propaccess;
 
 import com.hitorro.util.core.IntegerUtil;
-import com.hitorro.util.core.string.Fmt;
+import com.hitorro.util.core.string.FmtCore;
 
 public class IndexedPart extends Part {
     private String val;
@@ -91,8 +91,8 @@ public class IndexedPart extends Part {
 
     public String toString() {
         if (isNum) {
-            return Fmt.S("%s[%s]", name, index);
+            return FmtCore.S("%s[%s]", name, index);
         }
-        return Fmt.S("%s[%s]", name, val);
+        return FmtCore.S("%s[%s]", name, val);
     }
 }

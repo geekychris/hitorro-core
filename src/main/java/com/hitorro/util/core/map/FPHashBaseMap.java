@@ -25,7 +25,7 @@ package com.hitorro.util.core.map;
 import com.fasterxml.jackson.databind.JsonNode;
 import gnu.trove.map.hash.TLongLongHashMap;
 import com.hitorro.util.core.GenericKeyValue;
-import com.hitorro.util.core.iterator.mappers.BaseMapper;
+import java.util.function.Function;
 import com.hitorro.util.core.longword.WordBits;
 import com.hitorro.util.core.longword.opers.LongOperator;
 
@@ -36,10 +36,10 @@ public class FPHashBaseMap implements FPHashBaseMapInterface {
     public static final int defaultInitialSize = 1000000;
     protected TLongLongHashMap map;
     protected WordBits bits;
-    protected BaseMapper<String, Long> keyMapping;
+    protected Function<String, Long> keyMapping;
     protected int layer;
 
-    public void init(int layer, WordBits bits, int initialSize, BaseMapper<String, Long> keyMapping, boolean lowerCase) {
+    public void init(int layer, WordBits bits, int initialSize, Function<String, Long> keyMapping, boolean lowerCase) {
         this.layer = layer;
         map = new TLongLongHashMap(initialSize);
         this.bits = bits;

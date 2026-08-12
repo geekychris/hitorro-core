@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.urlparser;
 
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 /**
  * of a single parameter that can be found in a uri processed by the UrlCursor.  This parameter is case free. parameters
@@ -34,7 +34,7 @@ public class UrlCursorParameter implements Comparable<UrlCursorParameter> {
 
     public UrlCursorParameter(String key) {
         token = key;
-        hash = StringUtil.hashStringCaseFree(key);
+        hash = StringUtilCore.hashStringCaseFree(key);
     }
 
     public String getValue() {

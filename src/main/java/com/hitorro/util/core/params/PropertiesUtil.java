@@ -26,12 +26,11 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.MissingNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.hitorro.util.core.Console;
+import com.hitorro.util.core.ConsoleCore;
 import com.hitorro.util.core.Constants;
 import com.hitorro.util.core.Log;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 import com.hitorro.util.json.keys.PropertyParts;
-import com.hitorro.util.json.keys.StringProperty;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -56,7 +55,7 @@ public class PropertiesUtil {
         return resolveJsonVariable(value, true, null, node);
     }
 
-    private static String getString(final JsonNode topArgs, final JsonNode args, final String variable, final StringProperty prop) {
+    private static String getString(final JsonNode topArgs, final JsonNode args, final String variable) {
         // Look up the variable in topArgs first, then args
         JsonNode valueNode = null;
         if (topArgs != null) {
@@ -73,7 +72,7 @@ public class PropertiesUtil {
 
     public static final String getProperty(Properties props, String field, String defaultValue) {
         String t = getProperty(props, field);
-        if (StringUtil.nullOrEmptyString(t)) {
+        if (StringUtilCore.nullOrEmptyString(t)) {
             return defaultValue;
         }
         return t;
@@ -81,7 +80,7 @@ public class PropertiesUtil {
 
     public static final int getPropertyAsInt(Properties props, String field, int defaultValue) {
         String t = getProperty(props, field);
-        if (StringUtil.nullOrEmptyString(t)) {
+        if (StringUtilCore.nullOrEmptyString(t)) {
             return defaultValue;
         }
         return Integer.parseInt(t);
@@ -89,7 +88,7 @@ public class PropertiesUtil {
 
     public static final long getPropertyAsLong(Properties props, String field, long defaultValue) {
         String t = getProperty(props, field);
-        if (StringUtil.nullOrEmptyString(t)) {
+        if (StringUtilCore.nullOrEmptyString(t)) {
             return defaultValue;
         }
         return Long.parseLong(t);
@@ -97,7 +96,7 @@ public class PropertiesUtil {
 
     public static boolean getPropertyAsBool(Properties props, String field, boolean defaultValue) {
         String t = getProperty(props, field);
-        if (StringUtil.nullOrEmptyString(t)) {
+        if (StringUtilCore.nullOrEmptyString(t)) {
             return defaultValue;
         }
         return Constants.getBool(t);
@@ -105,7 +104,7 @@ public class PropertiesUtil {
 
     public static Boolean getPropertyAsBoolean(Properties props, String field, Boolean defaultValue) {
         String t = getProperty(props, field);
-        if (StringUtil.nullOrEmptyString(t)) {
+        if (StringUtilCore.nullOrEmptyString(t)) {
             return defaultValue;
         }
         return Constants.getBoolean(t);
@@ -113,7 +112,7 @@ public class PropertiesUtil {
 
     public static Integer getPropertyAsInteger(Properties props, String field, Integer defaultValue) {
         String t = getProperty(props, field);
-        if (StringUtil.nullOrEmptyString(t)) {
+        if (StringUtilCore.nullOrEmptyString(t)) {
             return defaultValue;
         }
         return Constants.getInteger(Integer.parseInt(t));
@@ -275,7 +274,7 @@ public class PropertiesUtil {
                     an = (ArrayNode) prev.get(arrayName);
                 }
             } catch (ClassCastException cce) {
-                Console.println();
+                ConsoleCore.println();
             }
             if (an == null) {
                 an = JsonNodeFactory.instance.arrayNode();
@@ -301,7 +300,6 @@ public class PropertiesUtil {
 
     public static final String resolveJsonVariable(String value, boolean recurse, JsonNode topArgs, JsonNode args) {
         StringBuilder builder = new StringBuilder();
-        StringProperty prop = new StringProperty("", "", "");
         if (value == null) {
             Log.util.error("Not given a value to resolve");
             return null;
@@ -319,11 +317,11 @@ public class PropertiesUtil {
             } else {
                 String variable = value.substring(index + 2, endIndex).toLowerCase();
 
-                String substValue = getString(topArgs, args, variable, prop);
+                String substValue = getString(topArgs, args, variable);
 
 
                 if (recurse) {
-                    if (StringUtil.nullOrEmptyString(substValue)) {
+                    if (StringUtilCore.nullOrEmptyString(substValue)) {
 
                     } else {
                         if (substValue.indexOf(VariableStart) != -1) {

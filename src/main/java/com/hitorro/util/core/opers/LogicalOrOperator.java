@@ -34,11 +34,11 @@ public class LogicalOrOperator<T> extends LogicalOperatorCollection<T> {
 
     }
 
-    public LogicalOrOperator(HTPredicate<? super T> p1, HTPredicate<? super T> p2) {
+    public LogicalOrOperator(java.util.function.Predicate<? super T> p1, java.util.function.Predicate<? super T> p2) {
         super(p1, p2);
     }
 
-    public LogicalOrOperator(HTPredicate<? super T>... constraints) {
+    public LogicalOrOperator(java.util.function.Predicate<? super T>... constraints) {
         m_constraints = constraints;
     }
 
@@ -46,7 +46,7 @@ public class LogicalOrOperator<T> extends LogicalOperatorCollection<T> {
         StringBuilder builder = new StringBuilder();
         builder.append("OR(");
         boolean comma = false;
-        for (HTPredicate constraint : m_constraints) {
+        for (java.util.function.Predicate constraint : m_constraints) {
             if (comma == true) {
                 builder.append(",");
             } else {
@@ -60,7 +60,7 @@ public class LogicalOrOperator<T> extends LogicalOperatorCollection<T> {
     }
 
     public boolean test(T field) {
-        for (HTPredicate constraint : m_constraints) {
+        for (java.util.function.Predicate constraint : m_constraints) {
             if (constraint.test(field)) {
                 return true;
             }

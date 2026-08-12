@@ -21,9 +21,9 @@
  */
 package com.hitorro.util.core.classes;
 
-import com.hitorro.util.core.Env;
+import com.hitorro.util.core.EnvCore;
 import com.hitorro.util.core.Log;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 import java.io.*;
 import java.lang.annotation.Annotation;
@@ -48,7 +48,7 @@ public class ClassUtil {
         if (!s.endsWith(ClassExt)) {
             return null;
         }
-        s = StringUtil.replace(s, File.separator, ".");
+        s = StringUtilCore.replace(s, File.separator, ".");
         s = s.substring(0, s.length() - ClassExtLength);
         return s;
     }
@@ -306,10 +306,10 @@ public class ClassUtil {
         } else {
             list = dir.listFiles(filter);
         }
-        String sep = Env.getPathSeperator();
+        String sep = EnvCore.getPathSeperator();
         for (File f : list) {
             String fs = f.getCanonicalPath();
-            if (!StringUtil.nullOrEmptyOrBlankString(fs)) {
+            if (!StringUtilCore.nullOrEmptyOrBlankString(fs)) {
                 if (builder.length() > 0) {
                     builder.append(sep);
                 }

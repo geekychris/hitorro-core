@@ -22,8 +22,7 @@
 package com.hitorro.util.core.date;
 
 import com.hitorro.util.core.UTCDateUtil;
-import com.hitorro.util.core.string.Fmt;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -75,7 +74,7 @@ public class DateRange {
     }
 
     public DateRange(String dateString) throws ParseException {
-        String parts[] = StringUtil.tokenizeFromSingleChar(dateString, "-");
+        String parts[] = StringUtilCore.tokenizeFromSingleChar(dateString, "-");
         if (parts.length >= 2) {
             init(parts[0], parts[1]);
         }
@@ -132,7 +131,7 @@ public class DateRange {
 
 
     public String getDateRangeString() {
-        return Fmt.S("%s-%s", res.getFormatted(start), res.getFormatted(end));
+        return String.format("%s-%s", res.getFormatted(start), res.getFormatted(end));
     }
 
     public DateResolution getResolution() {

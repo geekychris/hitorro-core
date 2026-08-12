@@ -30,7 +30,7 @@ import java.util.Map;
  */
 
 public class LockBox {
-    private Map m_locks = MapUtil.map();
+    private Map m_locks = MapUtilCore.map();
 
     public synchronized Object getLock(Object test) {
         Object result = m_locks.get(test);

@@ -21,8 +21,7 @@
  */
 package com.hitorro.util.core.error;
 
-import com.hitorro.util.core.ArrayUtil;
-import com.hitorro.util.core.string.Fmt;
+import com.hitorro.util.core.ArrayUtilCore;
 
 import java.util.List;
 
@@ -39,12 +38,12 @@ public class ErrorCode {
     public ErrorCode(ErrorSeverity sev, int code, String msg, Object... args) {
         this.severity = sev;
         this.code = code;
-        if (ArrayUtil.nullOrEmpty(args)) {
+        if (ArrayUtilCore.nullOrEmpty(args)) {
             this.args = new Object[0];
             errorMessage = msg;
         } else {
             this.args = args;
-            errorMessage = Fmt.Sargs(msg, args);
+            errorMessage = String.format(msg, args);
         }
     }
 
@@ -98,7 +97,7 @@ public class ErrorCode {
     }
 
     public String toString() {
-        return Fmt.Sargs(errorMessage, args);
+        return String.format(errorMessage, args);
     }
 
     public Object getArguments() {

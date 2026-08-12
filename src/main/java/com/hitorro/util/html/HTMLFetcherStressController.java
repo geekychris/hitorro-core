@@ -21,8 +21,8 @@
  */
 package com.hitorro.util.html;
 
-import com.hitorro.util.core.Env;
-import com.hitorro.util.io.FileUtil;
+import com.hitorro.util.core.EnvCore;
+import com.hitorro.util.io.FileUtilCore;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -47,7 +47,7 @@ public class HTMLFetcherStressController {
 
     public void setInputFile(String file) throws FileNotFoundException {
         m_inputFile = new File(file);
-        Iterator<String> iter = FileUtil.getLineReaderIteratorFromFile(m_inputFile);
+        Iterator<String> iter = FileUtilCore.getLineReaderIteratorFromFile(m_inputFile);
         m_urls.clear();
         while (iter.hasNext()) {
             m_urls.add(iter.next());
@@ -87,7 +87,7 @@ public class HTMLFetcherStressController {
             Thread t = new Thread(client);
             m_threads.add(t);
             t.start();
-            Env.sleepMillis(this.getPauseBetweenThreadStart());
+            EnvCore.sleepMillis(this.getPauseBetweenThreadStart());
         }
     }
 

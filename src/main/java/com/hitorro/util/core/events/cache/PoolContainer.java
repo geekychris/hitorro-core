@@ -24,8 +24,8 @@ package com.hitorro.util.core.events.cache;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.hitorro.util.core.string.Fmt;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.FmtCore;
+import com.hitorro.util.core.string.StringUtilCore;
 import com.hitorro.util.json.keys.BooleanProperty;
 
 import java.util.HashMap;
@@ -95,7 +95,7 @@ public class PoolContainer<K, V extends PooledObjectIntf> {
             long t = v.getTimeTaken();
             ObjectNode on = JsonNodeFactory.instance.objectNode();
             on.put("timeTaken", t);
-            on.set("stack", StringUtil.getCallstackAsJsonArray(v.t));
+            on.set("stack", StringUtilCore.getCallstackAsJsonArray(v.t));
             on.put("key", v.key.toString());
             on.put("threadName", v.threadName);
             an.add(on);
@@ -176,6 +176,6 @@ class Stats<V extends PooledObjectIntf> {
     }
 
     public String toString() {
-        return Fmt.S("%s %s %e", key, getTimeTaken(), t);
+        return FmtCore.S("%s %s %e", key, getTimeTaken(), t);
     }
 }

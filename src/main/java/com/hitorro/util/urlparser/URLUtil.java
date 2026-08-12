@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.urlparser;
 
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -60,14 +60,14 @@ public class URLUtil {
     }
 
     public static final String cleanupUrlAndCutToLength(String url, int length) {
-        return StringUtil.truncateToLength(cleanupUrl(url), length);
+        return StringUtilCore.truncateToLength(cleanupUrl(url), length);
     }
 
     /**
      * Validates whether a string looks like a valid URL with protocol and host.
      */
     public static boolean isValidUrl(String url) {
-        if (StringUtil.nullOrEmptyString(url)) {
+        if (StringUtilCore.nullOrEmptyString(url)) {
             return false;
         }
         try {
@@ -84,7 +84,7 @@ public class URLUtil {
      */
     public static Map<String, String> getQueryParameters(String url) {
         Map<String, String> params = new LinkedHashMap<>();
-        if (StringUtil.nullOrEmptyString(url)) {
+        if (StringUtilCore.nullOrEmptyString(url)) {
             return params;
         }
         int qIndex = url.indexOf('?');
@@ -117,7 +117,7 @@ public class URLUtil {
      * Extract the host portion of a URL.
      */
     public static final String getHost(String url) {
-        if (StringUtil.nullOrEmptyString(url)) {
+        if (StringUtilCore.nullOrEmptyString(url)) {
             return null;
         }
         try {
@@ -131,7 +131,7 @@ public class URLUtil {
      * Extract the path portion of a URL.
      */
     public static final String getPath(String url) {
-        if (StringUtil.nullOrEmptyString(url)) {
+        if (StringUtilCore.nullOrEmptyString(url)) {
             return null;
         }
         try {

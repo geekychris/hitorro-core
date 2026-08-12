@@ -23,7 +23,7 @@ package com.hitorro.util.html.constraint;
 
 import gnu.trove.map.hash.TLongIntHashMap;
 import com.hitorro.util.core.hash.FPHash64;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 import com.hitorro.util.html.Link;
 import com.hitorro.util.urlparser.URLUtil;
 import org.w3c.dom.Document;
@@ -44,7 +44,7 @@ public class UrlFromSite implements LinkConstraint {
 
     public boolean match(String url, Link.LinkType type, String title, String typeString, Document doc, Node elem, URL source) {
         String site = URLUtil.getSiteFromURL(url);
-        if (StringUtil.nullOrEmptyString(site)) {
+        if (StringUtilCore.nullOrEmptyString(site)) {
             return false;
         }
         long fp = FPHash64.getFP(site.toLowerCase());

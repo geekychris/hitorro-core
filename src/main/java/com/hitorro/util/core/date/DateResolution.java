@@ -24,7 +24,7 @@ package com.hitorro.util.core.date;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.hitorro.util.core.Constants;
 import com.hitorro.util.core.UTCDateUtil;
-import com.hitorro.util.core.iterator.Mapper;
+import java.util.function.Function;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -140,7 +140,7 @@ public enum DateResolution {
 
 }
 
-class Json2DateMapper implements Mapper<JsonNode, Date> {
+class Json2DateMapper implements Function<JsonNode, Date> {
     private DateResolution dr;
 
     Json2DateMapper(DateResolution dr) {

@@ -24,7 +24,6 @@ package com.hitorro.util.core;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.hitorro.util.core.string.Fmt;
 import com.hitorro.util.json.keys.propaccess.PropaccessError;
 
 import java.text.ParseException;
@@ -199,7 +198,7 @@ public class CommandArgs {
                 buff.setLength(0);
                 buff.append(c);
             } else {
-                throw new ParseException(Fmt.S("Found key with no matching value at end of buffer %s",
+                throw new ParseException(String.format("Found key with no matching value at end of buffer %s",
                         buff.toString()), 0);
             }
         }
@@ -212,7 +211,7 @@ public class CommandArgs {
                 }
                 buff.setLength(0);
             } else {
-                throw new ParseException(Fmt.S("properties terminated while within quote: %s", param), param.length());
+                throw new ParseException(String.format("properties terminated while within quote: %s", param), param.length());
             }
         }
 

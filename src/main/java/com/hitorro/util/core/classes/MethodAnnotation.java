@@ -21,9 +21,9 @@
  */
 package com.hitorro.util.core.classes;
 
-import com.hitorro.util.core.ArrayUtil;
-import com.hitorro.util.core.Console;
-import com.hitorro.util.core.opers.HTPredicate;
+import com.hitorro.util.core.ArrayUtilCore;
+import com.hitorro.util.core.ConsoleCore;
+import java.util.function.Predicate;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -45,7 +45,7 @@ public class MethodAnnotation extends BaseAnnotation {
         ClassAnoUtil.loadAnnotation(anno, m.getAnnotations(), constraint);
     }
 
-    public MethodAnnotation(Method m, HTPredicate<Class> annotationConstraint) {
+    public MethodAnnotation(Method m, Predicate<Class> annotationConstraint) {
         m_method = m;
         ClassAnoUtil.loadAnnotation(anno, m.getAnnotations(), annotationConstraint);
     }
@@ -55,12 +55,12 @@ public class MethodAnnotation extends BaseAnnotation {
     }
 
     /**
-     * HTPredicate out annotation
+     * Predicate out annotation
      *
      * @param oper
      * @return
      */
-    public Annotation[][] getAnnotationForParametersMatching(HTPredicate<Annotation> oper) {
+    public Annotation[][] getAnnotationForParametersMatching(Predicate<Annotation> oper) {
         Annotation params[][] = m_method.getParameterAnnotations();
         Annotation returnMe[][] = new Annotation[params.length][];
         for (int i = 0; i < params.length; i++) {
@@ -98,10 +98,10 @@ public class MethodAnnotation extends BaseAnnotation {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        Console.bprint(sb, "%s = %s(", getReturnType().getName(), m_method.getName());
+        ConsoleCore.bprint(sb, "%s = %s(", getReturnType().getName(), m_method.getName());
         Class cArr[] = getParameters();
 
-        if (!ArrayUtil.nullOrEmpty(cArr)) {
+        if (!ArrayUtilCore.nullOrEmpty(cArr)) {
             boolean flag = false;
             for (Class c : cArr) {
                 if (flag) {

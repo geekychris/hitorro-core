@@ -21,12 +21,12 @@
  */
 package com.hitorro.util.core.valuemap;
 
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 /**
  */
 public class NonValidatedFlatValueMap<E> extends FlatValueMap<E> {
     public boolean validate(String key) {
-        return !StringUtil.nullOrEmptyOrBlankString(key);
+        return !StringUtilCore.nullOrEmptyOrBlankString(key);
     }
 }

@@ -23,7 +23,7 @@ package com.hitorro.util.json.keys;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.hitorro.util.core.classes.ClassUtil;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 import com.hitorro.util.json.keys.propaccess.Propaccess;
 
 import java.lang.reflect.Field;
@@ -45,7 +45,7 @@ public class StaticVarProperty<T> extends BaseMappingProperty<T> {
      * Resolve a class#field or class reference to an object instance.
      */
     static Object getValidated(String sValue, Class requiredSuper, String key) {
-        String parts[] = StringUtil.tokenizeFromSingleChar(sValue, "#");
+        String parts[] = StringUtilCore.tokenizeFromSingleChar(sValue, "#");
         if (parts == null) {
             throw new PropertyKeyValidationException("Property is not classname#staticvariable", key, sValue);
         }

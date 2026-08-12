@@ -22,7 +22,7 @@
 package com.hitorro.util.core;
 
 import com.hitorro.util.core.classes.ClassUtil;
-import com.hitorro.util.core.string.Fmt;
+import com.hitorro.util.core.string.FmtCore;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -45,7 +45,7 @@ public enum Platform {
 
         public void getJavaClassPath(StringBuilder b, File jreRoot, FilenameFilter filter) throws IOException {
             ClassUtil.getExpandedClassPath(b, new File(jreRoot, "Home/lib"), filter);
-            b.append(Env.getPathSeperator());
+            b.append(EnvCore.getPathSeperator());
             ClassUtil.getExpandedClassPath(b, new File(jreRoot, "Classes"), filter);
         }
 
@@ -60,9 +60,9 @@ public enum Platform {
 
         protected String getSoftLinkCommand(File file, File linkFile) {
             if (lnCommand == null) {
-                lnCommand = new File(Env.getPlatformScriptDirectory(), "ln.exe").getAbsolutePath();
+                lnCommand = new File(EnvCore.getPlatformScriptDirectory(), "ln.exe").getAbsolutePath();
             }
-            return Fmt.S("fsutil hardlink create %s %s", linkFile.getAbsolutePath(), file.getAbsolutePath());
+            return FmtCore.S("fsutil hardlink create %s %s", linkFile.getAbsolutePath(), file.getAbsolutePath());
         }
 
         public boolean softLink(File file, File linkFile) throws IOException {
@@ -98,14 +98,14 @@ public enum Platform {
         this.soExtension = soExtension;
         this.binPath = binPath;
         this.extension = ext;
-        this.platDir = Fmt.S("${HT_BIN}/scripts/%s/", shortName);
+        this.platDir = FmtCore.S("${HT_BIN}/scripts/%s/", shortName);
         this.shortName = shortName;
         this.isUnixVariant = isUnixVar;
     }
 
     public static Platform getPlatform() {
         if (s_platform == null) {
-            String plat = Env.getOsName().toLowerCase();
+            String plat = EnvCore.getOsName().toLowerCase();
             if (plat.contains("mac")) {
                 s_platform = Platform.MacOSX;
             } else if (plat.contains("linux")) {
@@ -138,11 +138,11 @@ public enum Platform {
     }
 
     protected String getSoftLinkCommand(File file, File linkFile) {
-        return Fmt.S("/bin/ln -s %s %s", file.getAbsolutePath(), linkFile.getAbsolutePath());
+        return FmtCore.S("/bin/ln -s %s %s", file.getAbsolutePath(), linkFile.getAbsolutePath());
     }
 
     protected String getChmodCommand(String perms, String pattern) {
-        return Fmt.S("/bin/chmod %s %s", perms, pattern);
+        return FmtCore.S("/bin/chmod %s %s", perms, pattern);
     }
 
     public boolean softLink(File file, File linkFile) throws IOException {
@@ -186,9 +186,9 @@ public enum Platform {
     }
 
     public void addParamsToEnvironment(Map<String, String> map) {
-        map.put(Env.OS_BIN_DIR, binPath);
-        map.put(Env.EXEC_EXTENSION, extension);
-        map.put(Env.SCRIPT_PLAT_DIR, platDir);
+        map.put(EnvCore.OS_BIN_DIR, binPath);
+        map.put(EnvCore.EXEC_EXTENSION, extension);
+        map.put(EnvCore.SCRIPT_PLAT_DIR, platDir);
     }
 
     public String getSharedObjectExtension() {

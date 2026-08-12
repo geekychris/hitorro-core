@@ -22,12 +22,13 @@
 package com.hitorro.util.json.keys.mappers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.hitorro.util.core.iterator.Mapper;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
+import java.util.function.Function;
+import com.hitorro.util.json.JsonInitable;
 
 import java.util.List;
 
-public class StringListMapper implements Mapper<JsonNode, List<String>> {
+public class StringListMapper implements Function<JsonNode, List<String>>, JsonInitable {
     private String seperator;
 
     public StringListMapper(String seperator) {
@@ -37,9 +38,9 @@ public class StringListMapper implements Mapper<JsonNode, List<String>> {
     public List<String> apply(JsonNode jsonNodes) {
         String vals = jsonNodes.textValue();
         if (vals != null) {
-            String res[] = StringUtil.tokenizeFromSingleChar(vals, this.seperator, true);
+            String res[] = StringUtilCore.tokenizeFromSingleChar(vals, this.seperator, true);
             if (res != null) {
-                return StringUtil.toList(res);
+                return StringUtilCore.toList(res);
             }
         }
         return null;

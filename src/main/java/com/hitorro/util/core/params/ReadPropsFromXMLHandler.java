@@ -21,8 +21,7 @@
  */
 package com.hitorro.util.core.params;
 
-import com.hitorro.util.core.string.Fmt;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -55,7 +54,7 @@ public class ReadPropsFromXMLHandler extends DefaultHandler {
         for (int i = 0; i < attributes.getLength(); i++) {
             String n = attributes.getQName(i);
             String v = attributes.getValue(i);
-            String fullName = Fmt.S("%s.%s", child, n);
+            String fullName = String.format("%s.%s", child, n);
             map.put(fullName, v);
         }
 
@@ -78,7 +77,7 @@ public class ReadPropsFromXMLHandler extends DefaultHandler {
         if (builder.length() != 0) {
             String s = builder.toString().trim();
 
-            if (!StringUtil.nullOrEmptyString(s)) {
+            if (!StringUtilCore.nullOrEmptyString(s)) {
                 map.put(path.peek(), s);
 
             }
@@ -92,7 +91,7 @@ public class ReadPropsFromXMLHandler extends DefaultHandler {
             path.push(name);
             return name;
         }
-        String ret = Fmt.S("%s.%s", path.peek(), name);
+        String ret = String.format("%s.%s", path.peek(), name);
         path.push(ret);
         return ret;
     }

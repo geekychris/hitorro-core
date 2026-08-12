@@ -41,19 +41,14 @@ public interface Sink<T> extends AutoCloseable, JsonInitable, Consumer<T> {
      * Create a simple sink from a Consumer. Useful for quick lambda-based sinks.
      */
     static <T> Sink<T> of(Consumer<T> consumer) {
-        return new BaseSink<T>() {
-            @Override public boolean init(JsonNode map) { return true; }
-            @Override public boolean start() { return true; }
-            @Override public boolean add(T o) { consumer.accept(o); return true; }
-            @Override public boolean stop() { return true; }
-        };
+        return SinkFactoryHolder.factory().from(consumer);
     }
 
     /**
      * Create a sink that counts items added to it. Call getCount() after processing.
      */
     static <T> CountingSink<T> counting() {
-        return new CountingSink<>();
+        return SinkFactoryHolder.factory().counting();
     }
 
     boolean init(JsonNode node);
@@ -61,19 +56,19 @@ public interface Sink<T> extends AutoCloseable, JsonInitable, Consumer<T> {
     boolean start() throws IOException;
 
     default Sink<T> maxPerTransaction(long max) {
-        return new MaxItemsPerTransactionSink<>(this, max);
+        return SinkFactoryHolder.factory().maxPerTransaction(this, max);
     }
 
     default Sink<T> filter(Predicate<T> predicate) {
-        return new PredicatedSink<>(this, predicate);
+        return SinkFactoryHolder.factory().filter(this, predicate);
     }
 
     default <I> Sink<I> map(Function<I, T> function) {
-        return new MappingSink<>(this, function);
+        return SinkFactoryHolder.factory().map(this, function);
     }
 
     default Sink<T> tee(Sink<T> other) {
-        return new TeeSink<>(this, other);
+        return SinkFactoryHolder.factory().tee(this, other);
     }
 
     /**

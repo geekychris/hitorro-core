@@ -23,10 +23,11 @@ package com.hitorro.util.json.keys.mappers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.hitorro.util.core.EnumContext;
-import com.hitorro.util.core.iterator.Mapper;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
+import java.util.function.Function;
+import com.hitorro.util.json.JsonInitable;
 
-public class EnumPropertyMapper<E extends Enum> implements Mapper<JsonNode, E> {
+public class EnumPropertyMapper<E extends Enum> implements Function<JsonNode, E>, JsonInitable {
     public static JsonNodeToFile instance = new JsonNodeToFile();
 
     private EnumContext<E> ec;
@@ -40,7 +41,7 @@ public class EnumPropertyMapper<E extends Enum> implements Mapper<JsonNode, E> {
             return null;
         }
         String v = jsonNodes.asText();
-        if (StringUtil.nullOrEmptyString(v)) {
+        if (StringUtilCore.nullOrEmptyString(v)) {
             return null;
         }
         return ec.getByShortName(v);

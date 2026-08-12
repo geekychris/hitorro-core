@@ -22,7 +22,7 @@
 package com.hitorro.util.urlparser;
 
 import com.hitorro.util.core.Log;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 /**
  * URLCursor, except it keeps track of positions of the url and the first argument.
@@ -143,9 +143,9 @@ public class UrlMemoryCursor extends UrlCursor {
             if (m_type == Part.Argument) {
                 // never cache the hash of an argument (we are too lazy since we would have to whipe the whole arg listFiles
                 // in the scan phase we didnt go through it!
-                return StringUtil.hashStringCaseFree(this.m_url, tokenStart, this.keyPartLength);
+                return StringUtilCore.hashStringCaseFree(this.m_url, tokenStart, this.keyPartLength);
             } else {
-                h = StringUtil.hashStringCaseFree(this.m_url, tokenStart, tokenLength);
+                h = StringUtilCore.hashStringCaseFree(this.m_url, tokenStart, tokenLength);
                 hash[index] = h;
             }
         }
@@ -153,7 +153,7 @@ public class UrlMemoryCursor extends UrlCursor {
     }
 
     public boolean startsWith(String s) {
-        return StringUtil.startsWithIgnoreCase(m_url, tokenStart, s);
+        return StringUtilCore.startsWithIgnoreCase(m_url, tokenStart, s);
     }
 
     /**
@@ -164,11 +164,11 @@ public class UrlMemoryCursor extends UrlCursor {
      */
     public long getValueHash() {
         int start = tokenStart + keyPartLength + 1;
-        return StringUtil.hashStringCaseFree(this.m_url, start, tokenStart + tokenLength - start);
+        return StringUtilCore.hashStringCaseFree(this.m_url, start, tokenStart + tokenLength - start);
     }
 
     public long getKeyHash() {
-        return StringUtil.hashStringCaseFree(this.m_url, tokenStart, keyPartLength);
+        return StringUtilCore.hashStringCaseFree(this.m_url, tokenStart, keyPartLength);
     }
 
 

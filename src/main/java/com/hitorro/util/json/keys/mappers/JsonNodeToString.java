@@ -22,10 +22,11 @@
 package com.hitorro.util.json.keys.mappers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.hitorro.util.core.iterator.Mapper;
+import java.util.function.Function;
+import com.hitorro.util.json.JsonInitable;
 
 
-public class JsonNodeToString implements Mapper<JsonNode, String> {
+public class JsonNodeToString implements Function<JsonNode, String>, JsonInitable {
     public static JsonNodeToString instance = new JsonNodeToString();
 
     public String apply(JsonNode jsonNodes) {

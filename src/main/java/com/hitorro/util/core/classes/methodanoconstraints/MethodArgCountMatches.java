@@ -23,10 +23,10 @@ package com.hitorro.util.core.classes.methodanoconstraints;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.hitorro.util.core.classes.MethodAnnotation;
-import com.hitorro.util.core.opers.HTPredicate;
+import java.util.function.Predicate;
 
 
-public class MethodArgCountMatches implements HTPredicate<MethodAnnotation> {
+public class MethodArgCountMatches implements Predicate<MethodAnnotation> {
     private int count;
 
     public MethodArgCountMatches(int count) {
@@ -34,8 +34,7 @@ public class MethodArgCountMatches implements HTPredicate<MethodAnnotation> {
 
     }
 
-    @Override
-    public void initForPass() {
+        public void initForPass() {
     }
 
     @Override
@@ -43,8 +42,7 @@ public class MethodArgCountMatches implements HTPredicate<MethodAnnotation> {
         return ma.getParameters().length == count;
     }
 
-    @Override
-    public boolean initFromMap(final JsonNode map) {
+        public boolean initFromMap(final JsonNode map) {
         return false;
     }
 }

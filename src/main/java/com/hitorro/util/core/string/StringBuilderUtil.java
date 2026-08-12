@@ -33,15 +33,15 @@ public class StringBuilderUtil {
      * @param s
      */
     public static void appendIfNotNull(StringBuilder sb, String s) {
-        if (StringUtil.nullOrEmptyString(s)) {
+        if (StringUtilCore.nullOrEmptyString(s)) {
             return;
         }
         sb.append(s);
     }
 
     public static void appendIfNotNull(StringBuilder builder, String description, String value, String seperator) {
-        if (!StringUtil.nullOrEmptyOrBlankString(value)) {
-            if (builder.length() > 0 && !StringUtil.nullOrEmptyString(seperator)) {
+        if (!StringUtilCore.nullOrEmptyOrBlankString(value)) {
+            if (builder.length() > 0 && !StringUtilCore.nullOrEmptyString(seperator)) {
                 builder.append(seperator);
             }
             builder.append(description);

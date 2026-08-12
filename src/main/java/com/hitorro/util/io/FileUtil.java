@@ -22,19 +22,10 @@
 package com.hitorro.util.io;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.hitorro.util.core.Console;
 import com.hitorro.util.core.*;
-import com.hitorro.util.core.iterator.AbstractIterator;
-import com.hitorro.util.core.iterator.JSONIterator;
-import com.hitorro.util.core.iterator.LineReaderIterator;
-import com.hitorro.util.core.iterator.StreamTokenizerIterator;
-import com.hitorro.util.core.iterator.mappers.BaseMapper;
-import com.hitorro.util.core.string.Fmt;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 import com.hitorro.util.io.filefilters.IsDirectoryFilenameFilter;
 import com.hitorro.util.io.filefilters.StartsWithFilenameFilter;
-import com.hitorro.util.json.JSONElement;
-import com.hitorro.util.json.iterators.HTJSONIterator;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -65,133 +56,22 @@ public class FileUtil {
     private static final String[] BinaryDiffReasons =
             {"Files Match", "file a does not exist", "file b does not exist",
                     "file sizes differ", "byte level differences"};
-    /**
-     * ********************** Mappers ****************************
-     */
-    public static BaseMapper<File, InputStream> fsInputStream = new BaseMapper<File, InputStream>() {
-        public InputStream apply(File bf) {
-            InputStream is = null;
-            try {
-                is = FileUtil.getBufferedFileInputStream(bf);
-                if (bf.getName().endsWith("gz")) {
-                    is = new GZIPInputStream(is);
-                }
-            } catch (IOException e) {
-                com.hitorro.util.core.Log.filesystem.error("Unable to create stream for basefile %s %e", e, e);
-                return null;
-            }
-            return is;
-        }
-    };
-    public static BaseMapper<File, OutputStream> fsOutputStream = new BaseMapper<File, OutputStream>() {
-        public OutputStream apply(File bf) {
-            OutputStream os = null;
-            try {
-                os = FileUtil.getBufferedFileOutputStream(bf);
-                if (bf.getName().endsWith("gz")) {
-                    os = new GZIPOutputStream(os);
-                }
-            } catch (IOException e) {
-                com.hitorro.util.core.Log.filesystem.error("Unable to create stream for basefile %s %e", e, e);
-                return null;
-            }
-            return os;
-        }
-    };
-    public static BaseMapper<OutputStream, Writer> os2Utf8Writer = new BaseMapper<OutputStream, Writer>() {
-        public Writer apply(OutputStream os) {
-            return new BufferedWriter(new OutputStreamWriter(os));
-        }
-    };
-    public static BaseMapper<OutputStream, PrintWriter> os2Utf8PrintWriter = new BaseMapper<OutputStream, PrintWriter>() {
-        public PrintWriter apply(OutputStream os) {
-            return new PrintWriter(new OutputStreamWriter(os));
-        }
-    };
-    public static BaseMapper<OutputStream, PrintStream> os2Utf8PrintStream = new BaseMapper<OutputStream, PrintStream>() {
-        public PrintStream apply(OutputStream os) {
-            return new PrintStream(os);
-        }
-    };
-    public static BaseMapper<byte[], InputStream> byteArray2InputStream = new BaseMapper<byte[], InputStream>() {
-
-        @Override
-        public InputStream apply(final byte[] e) {
-            return new ByteArrayInputStream(e);
-        }
-    };
-    public static BaseMapper<File, Writer> file2Utf8Writer = fsOutputStream.combine(os2Utf8Writer);
-    public static BaseMapper<InputStream, Reader> is2reader = new BaseMapper<InputStream, Reader>() {
-        public Reader apply(InputStream is) {
-            try {
-                return new InputStreamReader(is, "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                com.hitorro.util.core.Log.filesystem.error("Unable to open file for reading %s %e", e, e);
-            }
-            return null;
-        }
-    };
-    public static BaseMapper<Reader, AbstractIterator<JsonNode>> readerJacksonJsonIter = new BaseMapper<Reader, AbstractIterator<JsonNode>>() {
-        public AbstractIterator<JsonNode> apply(Reader r) {
-            return new JSONIterator(r);
-        }
-    };
-    // readerJVSIter removed - use readerJacksonJsonIter instead for JsonNode iteration
-
-    /*
-
-        write mode
-          Create a private (copy-on-write) memory-mapped file.
-          Any write to this channel results in a private copy of the data.
-          Of course if this is a new file it will not do a copy on write.
-    */
-    public static BaseMapper<Reader, AbstractIterator<JSONElement>> readerJsonIter = new BaseMapper<Reader, AbstractIterator<JSONElement>>() {
-        public AbstractIterator<JSONElement> apply(Reader r) {
-            return new HTJSONIterator(r);
-        }
-    };
-
-    /*
-        This assumes that each character in the file is 1 byte in size.  However a char
-    */
-    public static BaseMapper<Reader, AbstractIterator<JSONElement>> readerJsonIterOfTwitter = new BaseMapper<Reader, AbstractIterator<JSONElement>>() {
-        public AbstractIterator<JSONElement> apply(Reader r) {
-            return new HTJSONIterator(r, "twitter_co");
-        }
-    };
-
-    /*
-        Copy a byte array to a char array (8 ->16 bits....we are assuming that the
-        byte array contains ascii characters.
-    */
-    /**
-     * File object to Reader
-     */
-    public static BaseMapper<File, Reader> fileReader = fsInputStream.combine(is2reader);
-    /**
-     * File to JSONElement iterator.
-     */
-    public static BaseMapper<File, AbstractIterator<JSONElement>> fsJsonIter = fileReader.combine(readerJsonIter);
-    public static BaseMapper<InputStream, AbstractIterator<JSONElement>> isJsonIter = is2reader.combine(readerJsonIter);
-    public static BaseMapper<Reader, AbstractIterator<String>> reader2stringiter = new BaseMapper<Reader, AbstractIterator<String>>() {
-        public AbstractIterator<String> apply(Reader reader) {
-            return new LineReaderIterator(reader);
-        }
-    };
-    public static BaseMapper<InputStream, AbstractIterator<JsonNode>> inputstream2JacksonjsonReader = FileUtil.is2reader.combine(readerJacksonJsonIter);
-    public static BaseMapper<File, AbstractIterator<JsonNode>> fsStaxJsonIter = fsInputStream.combine(inputstream2JacksonjsonReader);
-    // inputstream2JVSjsonReader removed - use inputstream2JacksonjsonReader instead for JsonNode iteration
+    // Iterator-integrated Mappers were relocated to
+    // com.hitorro.util.core.iterator.helpers.FileMappers so FileUtil has no
+    // compile-time dependency on the iterator framework. Callers previously doing
+    // FileUtilCore.fsInputStream / FileUtilCore.readerJacksonJsonIter / etc. now use
+    // FileMappers.<same-name>.
     private static int counter = 0;
     private static String s_lnCommand = null;
     private static long fCounter = 0;
 
     public static File getFormattedFile(File directory, String pattern, Object... args) {
-        return new File(directory, Fmt.Sargs(pattern, args));
+        return new File(directory, String.format(pattern, args));
     }
 
     public static boolean deleteAndRecreateDir(File dir) {
-        FileUtil.deleteDirectoryContent(dir, true);
-        FileUtil.ensureDirectoryExists(dir);
+        FileUtilCore.deleteDirectoryContent(dir, true);
+        FileUtilCore.ensureDirectoryExists(dir);
         return true;
     }
 
@@ -211,8 +91,9 @@ public class FileUtil {
         File f;
         do {
             long time = System.currentTimeMillis();
-            f = new File(Fmt.S("%s/%s-%s-%s.%s",
-                    com.hitorro.util.core.Env.getNodeId(), com.hitorro.util.core.Env.getTempDirectory().getAbsolutePath(),
+            f = new File(String.format("%s/%s-%s-%s.%s",
+                    System.getProperty("user.name", "node"),
+                    System.getProperty("java.io.tmpdir"),
                     Long.toString(time), getCounter(),
                     extension));
 
@@ -225,7 +106,7 @@ public class FileUtil {
         File f;
         do {
             long time = System.currentTimeMillis();
-            f = new File(Fmt.S("%s/%s-%s.%s",
+            f = new File(String.format("%s/%s-%s.%s",
                     directory.getAbsolutePath(),
                     Long.toString(time), getCounter(),
                     extension));
@@ -308,7 +189,7 @@ public class FileUtil {
         byte cbArray[] = new byte[remaining];
         bb.get(cbArray);
         com.hitorro.util.core.CharArrayWrapper wrapper = com.hitorro.util.core.CharArrayWrapper.getWrapper(cbArray.length);
-        int size = com.hitorro.util.core.ArrayUtil.copyByteArrayToCharNormalizing(cbArray, wrapper.getArray());
+        int size = com.hitorro.util.core.ArrayUtilCore.copyByteArrayToCharNormalizing(cbArray, wrapper.getArray());
 
         // set new size
         wrapper.setSize(size);
@@ -329,7 +210,7 @@ public class FileUtil {
      * @return if successfull.  False if file does not exist or it is not deletable.
      */
     public static boolean deleteIfNotNull(File file) {
-        if (FileUtil.nullOrNotExist(file)) {
+        if (FileUtilCore.nullOrNotExist(file)) {
             return false;
         }
         return file.delete();
@@ -345,10 +226,10 @@ public class FileUtil {
      */
     public static boolean writeStringListToFile(File file, List<String> list)
             throws FileNotFoundException {
-        OutputStream os = FileUtil.getBufferedFileOutputStream(file);
+        OutputStream os = FileUtilCore.getBufferedFileOutputStream(file);
         PrintStream ps = new PrintStream(os);
         for (String s : list) {
-            Console.println(ps, s);
+            ps.println(s);
         }
         ps.flush();
         ps.close();
@@ -365,9 +246,9 @@ public class FileUtil {
      */
     public static boolean writeStringToFile(File file, String msg)
             throws FileNotFoundException {
-        OutputStream os = FileUtil.getBufferedFileOutputStream(file);
+        OutputStream os = FileUtilCore.getBufferedFileOutputStream(file);
         PrintStream ps = new PrintStream(os);
-        Console.println(ps, msg);
+        ps.println(msg);
         ps.flush();
         ps.close();
         return true;
@@ -630,11 +511,11 @@ public class FileUtil {
         if (index != -1) {
             peer = peer.substring(0, index);
         }
-        return Fmt.S("%s.%s", peer, ext);
+        return String.format("%s.%s", peer, ext);
     }
 
     public static File getFilePeerWithExtension(File file, String extension) {
-        return new File(file.getParent(), Fmt.S("%s.%s", FileUtil.getFileNameSansExtension(file), extension));
+        return new File(file.getParent(), String.format("%s.%s", FileUtilCore.getFileNameSansExtension(file), extension));
     }
 
     /**
@@ -655,7 +536,7 @@ public class FileUtil {
         if (index != -1) {
             name = name.substring(0, index);
         }
-        return Fmt.S("%s.%s", name, extension);
+        return String.format("%s.%s", name, extension);
     }
 
     private static synchronized long fileCounter() {
@@ -671,7 +552,7 @@ public class FileUtil {
      */
     public static File getTempFileWithFromDirectoryExtension(
             File directory, String ext) {
-        return new File(Fmt.S("%s/%s-%s.%s", directory.getAbsolutePath(),
+        return new File(String.format("%s/%s-%s.%s", directory.getAbsolutePath(),
                 fileCounter(), System.currentTimeMillis(), ext));
     }
 
@@ -901,7 +782,7 @@ public class FileUtil {
      */
     public static Iterator<String> getLineReaderIteratorFromFile(
             File file) throws FileNotFoundException {
-        return new LineReaderIterator(getBufferedReaderFromFile(file));
+        return new BufferedReader(getBufferedReaderFromFile(file)).lines().iterator();
     }
 
     /**
@@ -915,7 +796,7 @@ public class FileUtil {
     public static Iterator<String> getLineReaderIteratorFromFile(
             File file, String encoding) throws FileNotFoundException,
             UnsupportedEncodingException {
-        return new LineReaderIterator(getBufferedReaderFromFile(file, encoding));
+        return new BufferedReader(getBufferedReaderFromFile(file, encoding)).lines().iterator();
     }
 
     /**
@@ -950,11 +831,11 @@ public class FileUtil {
             parseException = true;
         }
         String countString = buff.toString();
-        if (StringUtil.nullOrEmptyString(countString)) {
+        if (StringUtilCore.nullOrEmptyString(countString)) {
             parseException = true;
         }
         if (parseException) {
-            throw new NumberFormatException(StringUtil.strcat(
+            throw new NumberFormatException(StringUtilCore.strcat(
                     "Attempted to parse long from empty file ", logfile));
         }
         return Long.parseLong(countString);
@@ -1013,13 +894,14 @@ public class FileUtil {
      * @throws FileNotFoundException
      * @see StreamTokenizer
      */
-    public static Iterator<String> getIteratorFromFileStreamTokenizer(
-            File file) throws FileNotFoundException {
-        StreamTokenizer tok = getStringTokenizerFromFile(file);
-        if (tok == null) {
-            return null;
-        }
-        return new StreamTokenizerIterator(tok);
+    /**
+     * @deprecated moved to {@code com.hitorro.util.core.iterator.helpers.FileMappers#tokenizerIterator(File)}
+     * so FileUtil has no compile-time dep on the iterator framework.
+     */
+    @Deprecated
+    public static Iterator<String> getIteratorFromFileStreamTokenizer(File file) throws FileNotFoundException {
+        throw new UnsupportedOperationException(
+                "Moved to com.hitorro.util.core.iterator.helpers.FileMappers.tokenizerIterator(File)");
     }
 
     /**
@@ -1141,7 +1023,7 @@ public class FileUtil {
             throws IOException {
         String filePathname = outputFile.getAbsolutePath();
         if (!filePathname.endsWith(".gz")) {
-            filePathname = StringUtil.strcat(filePathname, ".gz");
+            filePathname = StringUtilCore.strcat(filePathname, ".gz");
             outputFile = new File(filePathname);
         }
         InputStream is = null;
@@ -1279,7 +1161,7 @@ public class FileUtil {
 
     public static boolean writeToFileUsingPrintWriter(File file, StringBuilder buffer, String encoding)
             throws IOException {
-        Writer writer = FileUtil.getBufferedPrintWriterFromFile(file, encoding);
+        Writer writer = FileUtilCore.getBufferedPrintWriterFromFile(file, encoding);
         writer.write(buffer.toString());
         writer.flush();
         writer.close();
@@ -1383,15 +1265,15 @@ public class FileUtil {
         if (!file.exists()) {
             return defaultVal;
         }
-        StringBuilder sb = FileUtil.readFromFile(file);
+        StringBuilder sb = FileUtilCore.readFromFile(file);
 
         String s = sb.toString();
         return Long.parseLong(s);
     }
 
     public static void writeLongStringValFromFile(File file, long l) {
-        FileUtil.ensureParentDirectories(file, true);
-        PrintWriter pw = FileUtil.getBufferedPrintWriterFromFile(file);
+        FileUtilCore.ensureParentDirectories(file, true);
+        PrintWriter pw = FileUtilCore.getBufferedPrintWriterFromFile(file);
         try {
             pw.write(Long.toString(l));
         } finally {
@@ -1446,7 +1328,7 @@ public class FileUtil {
      * @throws IOException
      */
     public static final String getBinaryDiffExplanation(File a, File b) throws IOException {
-        return FileUtil.BinaryDiffReasons[binaryFileDiff(a, b)];
+        return FileUtilCore.BinaryDiffReasons[binaryFileDiff(a, b)];
     }
 
     /**
@@ -1507,8 +1389,8 @@ public class FileUtil {
     public static final int lineFileDiffer(File aF,
                                            File bF,
                                            String encoding) throws IOException {
-        Iterator<String> a = FileUtil.getLineReaderIteratorFromFile(aF, encoding);
-        Iterator<String> b = FileUtil.getLineReaderIteratorFromFile(bF, encoding);
+        Iterator<String> a = FileUtilCore.getLineReaderIteratorFromFile(aF, encoding);
+        Iterator<String> b = FileUtilCore.getLineReaderIteratorFromFile(bF, encoding);
         if (a == null || b == null) {
             return 1;
         }
@@ -1670,7 +1552,7 @@ public class FileUtil {
                                                      String pattern, String extension) {
         Date ct = new Date(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HH-mm-SSSS");
-        String fileName = Fmt.S("%s-%s.%s", pattern, sdf.format(ct), extension);
+        String fileName = String.format("%s-%s.%s", pattern, sdf.format(ct), extension);
         return new File(directory, fileName);
     }
 
@@ -1740,7 +1622,7 @@ public class FileUtil {
      * @return
      */
     public static final long accrueFileCount(File dir, FilenameFilter filter) {
-        if (FileUtil.nullOrNotExist(dir) || !dir.isDirectory()) {
+        if (FileUtilCore.nullOrNotExist(dir) || !dir.isDirectory()) {
             return -1;
         }
         File files[] = dir.listFiles(filter);
@@ -1756,7 +1638,7 @@ public class FileUtil {
      */
     public static final long accrueFileSize(File dir, FilenameFilter filter) {
         long size = 0;
-        if (FileUtil.nullOrNotExist(dir) || !dir.isDirectory()) {
+        if (FileUtilCore.nullOrNotExist(dir) || !dir.isDirectory()) {
             return -1;
         }
 
@@ -1850,7 +1732,7 @@ public class FileUtil {
     /**
      * Returns the path of a file or directory relative to a directory, in native format.
      * <p/>
-     * from fmpp.sourceforge.net: fmpp.util.FileUtil.
+     * from fmpp.sourceforge.net: fmpp.util.FileUtilCore.
      *
      * @return The relative path. It never starts with separator char (/ on UN*X).
      * @throws IOException if the two paths has no common parent directory (such as <code>C:\foo.txt</code> and
@@ -1901,7 +1783,7 @@ public class FileUtil {
             }
 
             if (fromln == 0) {
-                throw new IOException(Fmt.S("%s%s%s%s", "Could not find common parent directory in these paths: ", ofrom, " and ", oto));
+                throw new IOException(String.format("%s%s%s%s", "Could not find common parent directory in these paths: ", ofrom, " and ", oto));
             }
         }
 

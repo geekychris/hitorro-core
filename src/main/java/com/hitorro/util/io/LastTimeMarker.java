@@ -22,7 +22,6 @@
 package com.hitorro.util.io;
 
 import com.hitorro.util.core.Log;
-import com.hitorro.util.core.string.Fmt;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +38,7 @@ public class LastTimeMarker {
 
     public LastTimeMarker(File dir, String name) {
 
-        lastIndexTimeFile = new File(dir, Fmt.S("%s.lasttimemarker", name));
+        lastIndexTimeFile = new File(dir, String.format("%s.lasttimemarker", name));
     }
 
     public long getLastIndexTimeMillis() {
@@ -58,7 +57,7 @@ public class LastTimeMarker {
 
     public boolean set() {
         try {
-            FileUtil.writeLongValToFile(lastIndexTimeFile, testDate.getTime());
+            FileUtilCore.writeLongValToFile(lastIndexTimeFile, testDate.getTime());
         } catch (IOException e) {
             Log.util.error("%s %e", e, e);
         }

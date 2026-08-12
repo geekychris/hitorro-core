@@ -23,19 +23,18 @@ package com.hitorro.util.core.classes.membervaranoconstraints;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.hitorro.util.core.classes.MemberVarAnnotations;
-import com.hitorro.util.core.opers.HTPredicate;
+import java.util.function.Predicate;
 
 
 
-public class MethodVarAnoMatches implements HTPredicate<MemberVarAnnotations> {
+public class MethodVarAnoMatches implements Predicate<MemberVarAnnotations> {
     private Class clazz;
 
     public MethodVarAnoMatches(Class clazz) {
         this.clazz = clazz;
     }
 
-    @Override
-    public void initForPass() {
+        public void initForPass() {
     }
 
     @Override
@@ -43,8 +42,7 @@ public class MethodVarAnoMatches implements HTPredicate<MemberVarAnnotations> {
         return ma.containsAnnotation(clazz);
     }
 
-    @Override
-    public boolean initFromMap(final JsonNode map) {
+        public boolean initFromMap(final JsonNode map) {
         return false;
     }
 }

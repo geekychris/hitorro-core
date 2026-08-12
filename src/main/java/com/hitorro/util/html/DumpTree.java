@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.html;
 
-import com.hitorro.util.core.Console;
+import com.hitorro.util.core.ConsoleCore;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -35,16 +35,16 @@ public class DumpTree extends HTMLTreeWalker<DumpTreeCollector> {
 
         NamedNodeMap map = child.getAttributes();
 
-        Console.bprintln(c.sb, "%s", name);
+        ConsoleCore.bprintln(c.sb, "%s", name);
         if (map != null) {
             int count = map.getLength();
 
             for (int i = 0; i < count; i++) {
                 Node n = map.item(i);
-                Console.bprint(c.sb, "%s, ", n.toString());
+                ConsoleCore.bprint(c.sb, "%s, ", n.toString());
 
             }
-            Console.bprintln(c.sb);
+            ConsoleCore.bprintln(c.sb);
         }
 
     }

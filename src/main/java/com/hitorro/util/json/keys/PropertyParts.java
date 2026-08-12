@@ -22,8 +22,8 @@
 package com.hitorro.util.json.keys;
 
 
-import com.hitorro.util.core.ArrayUtil;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.ArrayUtilCore;
+import com.hitorro.util.core.string.StringUtilCore;
 
 
 public class PropertyParts {
@@ -55,12 +55,12 @@ public class PropertyParts {
     }
 
     private void computeParts(String path) throws PropertyException {
-        if (!StringUtil.ensureBalance(path, '[', ']')) {
+        if (!StringUtilCore.ensureBalance(path, '[', ']')) {
             throw new PropertyException("Unbalanced ");
         }
-        int count = StringUtil.countInstances(path, '[');
+        int count = StringUtilCore.countInstances(path, '[');
         String p[] = path.split("\\.");
-        if (ArrayUtil.nullOrEmpty(p)) {
+        if (ArrayUtilCore.nullOrEmpty(p)) {
             p = new String[1];
             p[0] = path;
         }

@@ -21,7 +21,8 @@
  */
 package com.hitorro.util.core.events.cache;
 
-import com.hitorro.util.core.iterator.Mapper;
+import java.util.function.Function;
+
 
 /**
  * Pool of nxK pooled element.  Meaning for anything of type K we can have up to n elements pooled. The implementor must
@@ -37,12 +38,12 @@ import com.hitorro.util.core.iterator.Mapper;
  * of the pool ask for elements of type V and once used can return those elements.  When asking for an element and the
  * pool has reached n the caller will block until another caller returns an object to that pool
  */
-public class PooledObjectContainerMapper<K, V extends PooledObjectIntf> implements Mapper<K, PoolContainer<K, V>> {
+public class PooledObjectContainerMapper<K, V extends PooledObjectIntf> implements Function<K, PoolContainer<K, V>> {
     protected int maxElements;
     private int generation = 1;
-    private Mapper<K, V> mapper;
+    private Function<K, V> mapper;
 
-    public PooledObjectContainerMapper(int maxElements, Mapper<K, V> mapper) {
+    public PooledObjectContainerMapper(int maxElements, Function<K, V> mapper) {
         this.maxElements = maxElements;
         this.mapper = mapper;
     }

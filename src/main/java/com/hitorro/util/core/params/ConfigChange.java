@@ -21,7 +21,6 @@
  */
 package com.hitorro.util.core.params;
 
-import com.hitorro.util.core.string.Fmt;
 
 /**
  * User: chris
@@ -52,7 +51,7 @@ public class ConfigChange {
     }
 
     public String toString() {
-        return Fmt.S("%s : %s", type, key);
+        return String.format("%s : %s", type, key);
     }
 
     public enum ConfigChangeType {

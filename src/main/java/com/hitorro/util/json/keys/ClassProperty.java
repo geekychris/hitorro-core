@@ -22,8 +22,9 @@
 package com.hitorro.util.json.keys;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.hitorro.util.json.JsonInitable;
+import java.util.function.Function;
 import com.hitorro.util.core.classes.ClassUtil;
-import com.hitorro.util.core.iterator.Mapper;
 import com.hitorro.util.json.keys.propaccess.Propaccess;
 
 public class ClassProperty extends BaseMappingProperty<Class> {
@@ -36,7 +37,7 @@ public class ClassProperty extends BaseMappingProperty<Class> {
     }
 }
 
-class ClassPropertyMapper implements Mapper<JsonNode, Class> {
+class ClassPropertyMapper implements Function<JsonNode, Class>, JsonInitable {
     public static ClassPropertyMapper me = new ClassPropertyMapper();
 
     ClassPropertyMapper() {

@@ -22,7 +22,7 @@
 package com.hitorro.util.core.events;
 
 import com.hitorro.util.core.Log;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 /**
  * Fires an event on the LocalEventHub.
@@ -39,7 +39,7 @@ public class EventSchedulerJob {
      * @param sub   the subtopic (may be null)
      */
     public void execute(String event, String sub) {
-        if (StringUtil.nullOrEmptyString(event)) {
+        if (StringUtilCore.nullOrEmptyString(event)) {
             Log.util.error("No event name provided to the EventSchedulerJob");
             return;
         }

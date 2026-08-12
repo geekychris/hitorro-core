@@ -26,7 +26,7 @@ import com.hitorro.util.core.KeyValue;
 import com.hitorro.util.core.ListUtil;
 import com.hitorro.util.core.Log;
 import com.hitorro.util.core.Timer;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 import com.hitorro.util.html.constraint.LinkConstraint;
 import com.hitorro.util.html.constraint.TypeLinkConstraint;
 import com.hitorro.util.html.contentsniffers.ContentSniffers;
@@ -119,7 +119,7 @@ public class HTMLPage {
         String pb = null;
         if (m_header != null) {
             pb = m_header.get(XPingBack);
-            if (!StringUtil.nullOrEmptyString(pb)) {
+            if (!StringUtilCore.nullOrEmptyString(pb)) {
                 return pb;
             }
             if (includeHtmlBody) {
@@ -245,7 +245,7 @@ public class HTMLPage {
      * @param src
      */
     public void setSourceFromPlainText(String src) {
-        setSource(StringUtil.strcat("<html><body>", src, "</body></html>"));
+        setSource(StringUtilCore.strcat("<html><body>", src, "</body></html>"));
     }
 
     /**

@@ -22,7 +22,6 @@
 package com.hitorro.util.io;
 
 import com.hitorro.util.core.Log;
-import com.hitorro.util.core.string.Fmt;
 
 import java.io.*;
 import java.util.Enumeration;
@@ -74,7 +73,7 @@ public class ArchiveUtils {
     public static void extract(File jarFile, File dir)
             throws IOException, JarException {
         if (!(jarFile.getName().endsWith(".jar") || jarFile.getName().endsWith(".zip"))) {
-            throw new JarException(Fmt.S("Not a zip file: %s", jarFile.getAbsolutePath()));
+            throw new JarException(String.format("Not a zip file: %s", jarFile.getAbsolutePath()));
         }
 
         // process all entries in that JAR file
@@ -276,9 +275,9 @@ public class ArchiveUtils {
     }
 
     public static File expandIfZipped(File f) {
-        String ext = FileUtil.getFileExtension(f);
+        String ext = FileUtilCore.getFileExtension(f);
         if (ext.equals("jar") || ext.equals("zip")) {
-            File targetDir = new File(f.getParent(), FileUtil.getFileNameSansExtension(f));
+            File targetDir = new File(f.getParent(), FileUtilCore.getFileNameSansExtension(f));
 
             try {
                 extract(f, targetDir);

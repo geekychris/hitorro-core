@@ -22,11 +22,12 @@
 package com.hitorro.util.json.keys.mappers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.hitorro.util.core.iterator.Mapper;
+import java.util.function.Function;
+import com.hitorro.util.json.JsonInitable;
 
 import java.util.Set;
 
-public class ValidatedStringMapper implements Mapper<JsonNode, String> {
+public class ValidatedStringMapper implements Function<JsonNode, String>, JsonInitable {
 
     private Set<String> validatedList;
 

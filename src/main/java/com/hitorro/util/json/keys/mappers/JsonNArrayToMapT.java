@@ -22,18 +22,17 @@
 package com.hitorro.util.json.keys.mappers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.hitorro.util.core.iterator.Mapper;
-import com.hitorro.util.json.keys.BaseMappingProperty;
+import com.hitorro.util.json.JsonInitable;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-public class JsonNArrayToMapT<K, T> implements Mapper<JsonNode, Map<K, T>> {
-    private BaseMappingProperty<K> keyMapper;
+public class JsonNArrayToMapT<K, T> implements Function<JsonNode, Map<K, T>>, JsonInitable {
+    private Function<JsonNode, K> keyMapper;
     private Function<JsonNode, T> mapper;
 
-    public JsonNArrayToMapT(BaseMappingProperty<K> keyMapper, Function<JsonNode, T> mapper) {
+    public JsonNArrayToMapT(Function<JsonNode, K> keyMapper, Function<JsonNode, T> mapper) {
         this.keyMapper = keyMapper;
         this.mapper = mapper;
     }

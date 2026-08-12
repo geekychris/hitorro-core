@@ -26,7 +26,7 @@ import com.hitorro.util.core.KeyValue;
 import com.hitorro.util.core.Log;
 import com.hitorro.util.core.Timer;
 import com.hitorro.util.core.http.HTTPClient;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 import com.hitorro.util.urlparser.URLUtil;
 
 import java.io.*;
@@ -91,7 +91,7 @@ public class HTMLPageFetcher {
         HTMLPage page = new HTMLPage();
         fetchPage(m_httpClient, url, page, true);
         pagesFetched++;
-        if (!StringUtil.nullOrEmptyString(page.getSource()) && !StringUtil.nullOrEmptyString(page.getUrl())) {
+        if (!StringUtilCore.nullOrEmptyString(page.getSource()) && !StringUtilCore.nullOrEmptyString(page.getUrl())) {
             return page;
         }
         Log.httpfetcher.debug("Redirects %s accum fetch time %s, accum parseTime %s, URL: %s",
@@ -100,7 +100,7 @@ public class HTMLPageFetcher {
     }
 
     public HTMLPage fetchPageSource(HTTPClient client, String url, boolean truncate) {
-        if ((client != null) && (!StringUtil.nullOrEmptyString(url))) {
+        if ((client != null) && (!StringUtilCore.nullOrEmptyString(url))) {
             HTMLPage page = new HTMLPage();
             fetchPage(client, url, page, truncate);
             return page;
@@ -117,7 +117,7 @@ public class HTMLPageFetcher {
     private void fetchPage(HTTPClient client, String url, HTMLPage page,
                            boolean truncate) {
         try {
-            if (StringUtil.nullOrEmptyString(url)) {
+            if (StringUtilCore.nullOrEmptyString(url)) {
                 page.setDestinationUrl(null);
                 page.setSource(null);
             } else {
@@ -154,7 +154,7 @@ public class HTMLPageFetcher {
         HTMLParser parser = page.getParser();
         accumParseTime += page.getParseTime();
         String redirectUrl = parser.getRedirectURL(url);
-        if (!StringUtil.nullOrEmptyOrBlankString(redirectUrl)) {
+        if (!StringUtilCore.nullOrEmptyOrBlankString(redirectUrl)) {
             fetchRaw(client, redirectUrl, page, truncate);
             page.incrementRefresh();
             return false;

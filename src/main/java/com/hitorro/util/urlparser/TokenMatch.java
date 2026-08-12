@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.urlparser;
 
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 import com.hitorro.util.core.tandemarrays.TandemLongArraySorter;
 import com.hitorro.util.core.tandemarrays.TandemObjectArraySorterPeer;
 
@@ -38,7 +38,7 @@ public class TokenMatch {
         hashes = new long[size];
         keys = new String[size];
         for (int i = 0; i < size; i++) {
-            hashes[i] = StringUtil.hashStringCaseFree(keysIn[i]);
+            hashes[i] = StringUtilCore.hashStringCaseFree(keysIn[i]);
             keys[i] = keysIn[i];
         }
         // sort this puppy so that we can efficiently go down the hash listFiles.

@@ -23,9 +23,9 @@ package com.hitorro.util.core.params.propreaders;
 
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.hitorro.util.core.Env;
+import com.hitorro.util.core.EnvCore;
 import com.hitorro.util.core.params.HTProperties;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 import com.hitorro.util.json.keys.BooleanProperty;
 
 import java.io.File;
@@ -46,9 +46,10 @@ public class PropReaderUtil {
         }
         List<File> filesConsidered = new ArrayList();
         boolean debugMode = DebugMode.apply(cmd);
-        String serverType = Env.ServerType.apply(cmd);
+        // was: Env.ServerType.apply(cmd) — inlined to avoid EnvCore dep on property system
+        String serverType = cmd != null && cmd.has("servertype") ? cmd.get("servertype").asText() : null;
         props.readDirectory(directory, filesConsidered);
-        if (!StringUtil.nullOrEmptyString(serverType)) {
+        if (!StringUtilCore.nullOrEmptyString(serverType)) {
             File subDirFile = new File(directory, serverType);
             if (subDirFile.exists()) {
                 props.readDirectory(subDirFile, filesConsidered);

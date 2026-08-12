@@ -23,11 +23,12 @@ package com.hitorro.util.json.keys.mappers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.hitorro.util.core.Constants;
-import com.hitorro.util.core.iterator.Mapper;
+import java.util.function.Function;
+import com.hitorro.util.json.JsonInitable;
 
 import java.text.ParseException;
 
-public class BytesToLong implements Mapper<JsonNode, Long> {
+public class BytesToLong implements Function<JsonNode, Long>, JsonInitable {
     public static BytesToLong instance = new BytesToLong();
 
     public Long apply(JsonNode jsonNodes) {

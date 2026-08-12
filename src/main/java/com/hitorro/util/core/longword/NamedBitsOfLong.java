@@ -22,7 +22,7 @@
 package com.hitorro.util.core.longword;
 
 import com.hitorro.util.core.hash.FPHash64;
-import com.hitorro.util.core.string.Fmt;
+import com.hitorro.util.core.string.FmtCore;
 
 /**
  * Manipulate a bit of a long
@@ -55,7 +55,7 @@ public class NamedBitsOfLong {
     }
 
     public long getLongHash() {
-        String v = Fmt.S("%s.%s.%s", m_name, bitOffset, m_width);
+        String v = FmtCore.S("%s.%s.%s", m_name, bitOffset, m_width);
         return FPHash64.getFP(v);
     }
 

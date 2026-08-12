@@ -21,8 +21,8 @@
  */
 package com.hitorro.util.core.events.cache;
 
-import com.hitorro.util.core.iterator.Mapper;
-import com.hitorro.util.core.string.Fmt;
+import com.hitorro.util.core.string.FmtCore;
+import java.util.function.Function;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,20 +40,20 @@ public class HashCache<K, V> extends Cache<K, V> {
     private boolean m_demandBasedCacheing = true;
     private V m_flyweight = null;
 
-    private Mapper<K, V> mapper;
+    private Function<K, V> mapper;
 
-    public HashCache(Mapper<K, V> mapper) {
+    public HashCache(Function<K, V> mapper) {
         this(0, true, null, null, mapper);
     }
 
     public HashCache(String eventName,
-                     Mapper<K, V> mapper) {
+                     Function<K, V> mapper) {
         this(0, true, null, eventName, mapper);
     }
 
     public HashCache(String eventName,
                      V nullFlyweight,
-                     Mapper<K, V> mapper) {
+                     Function<K, V> mapper) {
         this(0, true, nullFlyweight, eventName, mapper);
     }
 
@@ -68,7 +68,7 @@ public class HashCache<K, V> extends Cache<K, V> {
                      boolean demandBasedCacheing,
                      V nullFlyweight,
                      String eventName,
-                     Mapper<K, V> mapper) {
+                     Function<K, V> mapper) {
         super(refreshInterval, eventName);
         m_demandBasedCacheing = demandBasedCacheing;
         m_flyweight = nullFlyweight;
@@ -88,12 +88,12 @@ public class HashCache<K, V> extends Cache<K, V> {
      * @param <V>
      * @return
      */
-    public static <K, V extends PooledObjectIntf> HashCache<K, PoolContainer<K, V>> getPooledCache(String name, int maxValues, Mapper<K, V> mapper) {
+    public static <K, V extends PooledObjectIntf> HashCache<K, PoolContainer<K, V>> getPooledCache(String name, int maxValues, Function<K, V> mapper) {
         return new HashCache(0, true, null, name, new PooledObjectContainerMapper(maxValues, mapper));
     }
 
     public String getDescription() {
-        return Fmt.S("HashCache for %s using apply %s", eventName(), mapper.getClass().getName());
+        return FmtCore.S("HashCache for %s using apply %s", eventName(), mapper.getClass().getName());
     }
 
     public V get(K key) {

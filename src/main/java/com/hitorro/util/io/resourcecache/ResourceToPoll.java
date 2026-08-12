@@ -22,7 +22,7 @@
 package com.hitorro.util.io.resourcecache;
 
 import com.hitorro.util.core.events.LocalEventHub;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 /**
  * Defines the resource we wish to poll periodically to see if there is a newer version on another node.
@@ -46,7 +46,7 @@ public class ResourceToPoll {
     }
 
     public void sendEvent() {
-        if (!StringUtil.nullOrEmptyOrBlankString(getEventTopic())) {
+        if (!StringUtilCore.nullOrEmptyOrBlankString(getEventTopic())) {
             LocalEventHub.get().event(eventTopic, eventSubTopic, null);
         }
     }

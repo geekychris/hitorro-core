@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.core.topologicalsort;
 
-import com.hitorro.util.core.Console;
+import com.hitorro.util.core.ConsoleCore;
 import com.hitorro.util.core.ListUtil;
 
 import java.util.ArrayList;
@@ -75,9 +75,9 @@ class NodeEntry<T extends NodeInterface> {
     public String toString() {
         if (tostring == null) {
             StringBuilder sb = new StringBuilder();
-            Console.bprint(sb, "node: [%s] ", node.getKey());
+            ConsoleCore.bprint(sb, "node: [%s] ", node.getKey());
             for (NodeInterface tn : dependents) {
-                Console.bprint(sb, "%s ", tn.getKey());
+                ConsoleCore.bprint(sb, "%s ", tn.getKey());
             }
             tostring = sb.toString();
         }
@@ -86,12 +86,12 @@ class NodeEntry<T extends NodeInterface> {
 
     public boolean removeDependent(NodeInterface node) {
         if (node == null) {
-            Console.println();
+            ConsoleCore.println();
         } else {
             for (int i = 0; i < dependents.size(); i++) {
                 T t = dependents.get(i);
                 if (t == null) {
-                    Console.println();
+                    ConsoleCore.println();
                 }
                 if (t.getKey().equals(node.getKey())) {
                     dependents.remove(i);

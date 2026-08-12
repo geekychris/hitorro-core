@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.urlparser;
 
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 /**
  * against.
@@ -35,7 +35,7 @@ public class PathMatch {
         hashes = new long[size];
         keys = new String[size];
         for (int i = 0; i < size; i++) {
-            hashes[i] = StringUtil.hashStringCaseFree(keysIn[i]);
+            hashes[i] = StringUtilCore.hashStringCaseFree(keysIn[i]);
             keys[i] = keysIn[i];
         }
         // dont sort its just a seperated path

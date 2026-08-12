@@ -21,8 +21,8 @@
  */
 package com.hitorro.util.io.filefilters;
 
-import com.hitorro.util.core.map.MapUtil;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.map.MapUtilCore;
+import com.hitorro.util.core.string.StringUtilCore;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -80,7 +80,7 @@ public class FileNameWildcardFilter implements FilenameFilter {
          *  current = index of the beginning of the current token.
          */
         for (int i = 0; i < _tokens.length; i++) {
-            if (!StringUtil.nullOrEmptyString(_tokens[i])) {
+            if (!StringUtilCore.nullOrEmptyString(_tokens[i])) {
                 if (i < _tokens.length - 1)                //  first token & middle tokens
                 {
                     current = name.indexOf(_tokens[i], start);
@@ -114,14 +114,14 @@ public class FileNameWildcardFilter implements FilenameFilter {
 
 
     private String getWildcard(String wildcard) {
-        Map wildcardMap = MapUtil.createMapFromArray(_wildcardMap, 2, 0, 1);
+        Map wildcardMap = MapUtilCore.createMapFromArray(_wildcardMap, 2, 0, 1);
         String wildcardValue = (String) wildcardMap.get(wildcard);
 
-        if (StringUtil.nullOrEmptyString(wildcardValue)) {
+        if (StringUtilCore.nullOrEmptyString(wildcardValue)) {
             wildcardValue = wildcard;
         }
 
-        if (StringUtil.nullOrEmptyString(wildcardValue)) {
+        if (StringUtilCore.nullOrEmptyString(wildcardValue)) {
             wildcardValue = "\\*";
         }
 

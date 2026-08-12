@@ -23,8 +23,7 @@ package com.hitorro.util.io.filedirwatch;
 
 import com.hitorro.util.core.Log;
 import com.hitorro.util.core.events.EventListener;
-import com.hitorro.util.core.string.Fmt;
-import com.hitorro.util.io.FileUtil;
+import com.hitorro.util.io.FileUtilCore;
 import com.hitorro.util.io.filefilters.FilenameExtensionFilter;
 import com.hitorro.util.io.filefilters.IsDirectoryFilenameFilter;
 import com.hitorro.util.io.filefilters.OrCollection;
@@ -177,7 +176,7 @@ public class DirectoryWatch implements EventListener {
     private long sizeRounded(File f) {
         if (f != null) {
             long size = f.length();
-            return FileUtil.roundLengthToBlockSize(size);
+            return FileUtilCore.roundLengthToBlockSize(size);
         }
         return 0;
     }
@@ -192,7 +191,7 @@ public class DirectoryWatch implements EventListener {
     }
 
     public String eventName() {
-        return Fmt.S("Directory Watcher ext: %s, path: %s task: %s",
+        return String.format("Directory Watcher ext: %s, path: %s task: %s",
                 this.dir.getAbsolutePath(),
                 this.ext,
                 this.executeme.getClass().getCanonicalName());

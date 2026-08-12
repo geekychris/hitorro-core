@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.io;
 
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -129,7 +129,7 @@ public class DirectoryScanner {
         if (numDirs <= 0) {
             return null;
         }
-        return StringUtil.toArray(dirList);
+        return StringUtilCore.toArray(dirList);
     }
 
     public String[] getIncludedFiles() {
@@ -137,7 +137,7 @@ public class DirectoryScanner {
         if (numFiles <= 0) {
             return null;
         }
-        return StringUtil.toArray(fileList);
+        return StringUtilCore.toArray(fileList);
     }
 }
 

@@ -22,8 +22,7 @@
 package com.hitorro.util.core.events.cache;
 
 import com.hitorro.util.core.events.WeakReferenceList;
-import com.hitorro.util.core.iterator.Mapper;
-import com.hitorro.util.core.iterator.mappers.BaseMapper;
+import java.util.function.Function;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +31,12 @@ public class PooledObjectCache<K, V extends PooledObjectIntf> {
     private static PoolContainer nullElem = new PoolContainer(null, 0, null, 0);
     private static WeakReferenceList<PooledObjectCache> pool = new WeakReferenceList<PooledObjectCache>();
     protected int maxElements;
-    private Mapper<K, V> mapper;
+    private Function<K, V> mapper;
     private PoolMapper poolMapper;
     private HashCache<K, PoolContainer<K, V>> hashCache;
 
     public PooledObjectCache(int maxElements, boolean demandBasedCacheing,
-                             String eventName, Mapper<K, V> mapper) {
+                             String eventName, Function<K, V> mapper) {
         this.mapper = mapper;
         poolMapper = new PoolMapper(this, maxElements);
         hashCache = new HashCache<K, PoolContainer<K, V>>(0, demandBasedCacheing, nullElem, eventName, poolMapper);
@@ -85,7 +84,7 @@ public class PooledObjectCache<K, V extends PooledObjectIntf> {
     }
 }
 
-class PoolMapper<K, V extends PooledObjectIntf> extends BaseMapper<K, PoolContainer<K, V>> {
+class PoolMapper<K, V extends PooledObjectIntf> implements Function<K, PoolContainer<K, V>> {
     private PooledObjectCache cache;
     private int generation = 0;
     private int maxElements = 0;

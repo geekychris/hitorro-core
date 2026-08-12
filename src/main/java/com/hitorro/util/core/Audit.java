@@ -21,8 +21,7 @@
  */
 package com.hitorro.util.core;
 
-import com.hitorro.util.core.string.Fmt;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 import java.util.HashMap;
 
@@ -38,7 +37,7 @@ public class   Audit {
     public static void audit(String host, String username, String topic, AuditStatus status, String message, Object... args) {
         if (Log.audit.isInfoEnabled()) {
             if (args != null && args.length > 0) {
-                message = Fmt.S(message, args);
+                message = String.format(message, args);
             }
 
             Log.audit.info("topic: %s, host: %s, username: %s, message: %s, status: %s", topic, host, username, message, status.toString());
@@ -76,7 +75,7 @@ public class   Audit {
         public static AuditStatus getStatus(String statusKey) {
             AuditStatus status = null;
 
-            if (!StringUtil.nullOrEmptyOrBlankString(statusKey)) {
+            if (!StringUtilCore.nullOrEmptyOrBlankString(statusKey)) {
                 status = m_statusMap.get(statusKey);
             }
 

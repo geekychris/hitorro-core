@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.html.contentsniffers;
 
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -74,11 +74,11 @@ public class ContentSniffers {
 
         ContentSniffer sn = null;
         String returnType = null;
-        if (!StringUtil.nullOrEmptyString(mimeTypeHint)) {
+        if (!StringUtilCore.nullOrEmptyString(mimeTypeHint)) {
             sn = m_sniffers.get(mimeTypeHint.toLowerCase());
             if (sn != null) {
                 returnType = sn.getTypeFromContent(content, mimeTypeHint);
-                if (!StringUtil.nullOrEmptyOrBlankString(returnType)) {
+                if (!StringUtilCore.nullOrEmptyOrBlankString(returnType)) {
                     // we believe this one already.
                     return returnType;
                 }
@@ -86,7 +86,7 @@ public class ContentSniffers {
         }
         for (ContentSniffer sn2 : sniffersList) {
             returnType = sn2.getTypeFromContent(content, mimeTypeHint);
-            if (!StringUtil.nullOrEmptyOrBlankString(returnType)) {
+            if (!StringUtilCore.nullOrEmptyOrBlankString(returnType)) {
                 // we believe this one already.
                 return returnType;
             }

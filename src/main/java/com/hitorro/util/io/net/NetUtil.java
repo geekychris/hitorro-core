@@ -21,10 +21,10 @@
  */
 package com.hitorro.util.io.net;
 
-import com.hitorro.util.core.Console;
-import com.hitorro.util.core.Env;
+import com.hitorro.util.core.ConsoleCore;
+import com.hitorro.util.core.EnvCore;
 import com.hitorro.util.core.Log;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 import java.io.*;
 import java.net.*;
@@ -46,7 +46,7 @@ public class NetUtil {
         Enumeration<NetworkInterface> e = NetworkInterface.getNetworkInterfaces();
         while (e.hasMoreElements()) {
             NetworkInterface ni = e.nextElement();
-            Console.println("DisplayName:%s mtu:%s, name:%s loopback:%s up:%s virtual:%s, hwaddress:%s, p2p:%s, multicastsupport:%s",
+            ConsoleCore.println("DisplayName:%s mtu:%s, name:%s loopback:%s up:%s virtual:%s, hwaddress:%s, p2p:%s, multicastsupport:%s",
                     ni.getDisplayName(), ni.getMTU(), ni.getName(), ni.isLoopback(), ni.isUp(),
                     ni.isVirtual(), ni.getHardwareAddress(), ni.isPointToPoint(), ni.supportsMulticast());
         }
@@ -81,7 +81,7 @@ public class NetUtil {
                 String value = (String) postData.get(key);
                 out.print(key);
                 out.print('=');
-                if (StringUtil.nullOrEmptyString(value)) {
+                if (StringUtilCore.nullOrEmptyString(value)) {
                     out.print("");
                 } else {
                     out.print(URLEncoder.encode(value, "UTF-8"));
@@ -145,7 +145,7 @@ public class NetUtil {
                     tryCount++;
                 }
                 // pause a bit to let the input build up
-                Env.sleepMillis(100);
+                EnvCore.sleepMillis(100);
             }
             reader.close();
         } catch (IOException exc) {
@@ -227,7 +227,7 @@ public class NetUtil {
                     // we don't want the trailing slash
                     sourceUrl = sourceUrl.substring(0, slen - 1);
                 }
-                return StringUtil.strcat(sourceUrl, href);
+                return StringUtilCore.strcat(sourceUrl, href);
             } else {
                 // absolute url
                 return href;

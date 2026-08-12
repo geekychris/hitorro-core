@@ -23,10 +23,10 @@ package com.hitorro.util.core.classes.methodanoconstraints;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.hitorro.util.core.classes.MethodAnnotation;
-import com.hitorro.util.core.opers.HTPredicate;
+import java.util.function.Predicate;
 
 
-public class MethodAnnotationMatches implements HTPredicate<MethodAnnotation> {
+public class MethodAnnotationMatches implements Predicate<MethodAnnotation> {
 
     private Class clazz;
 
@@ -35,8 +35,7 @@ public class MethodAnnotationMatches implements HTPredicate<MethodAnnotation> {
 
     }
 
-    @Override
-    public void initForPass() {
+        public void initForPass() {
     }
 
     @Override
@@ -44,8 +43,7 @@ public class MethodAnnotationMatches implements HTPredicate<MethodAnnotation> {
         return ma.containsAnnotation(clazz);
     }
 
-    @Override
-    public boolean initFromMap(final JsonNode map) {
+        public boolean initFromMap(final JsonNode map) {
         return false;
     }
 }

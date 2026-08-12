@@ -22,18 +22,17 @@
 package com.hitorro.util.core.classes;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.hitorro.util.core.opers.HTPredicate;
+import java.util.function.Predicate;
 
 
-public class MatchClass implements HTPredicate<Class> {
+public class MatchClass implements Predicate<Class> {
     private Class c;
 
     public MatchClass(Class c) {
         this.c = c;
     }
 
-    @Override
-    public void initForPass() {
+        public void initForPass() {
     }
 
     @Override
@@ -41,8 +40,7 @@ public class MatchClass implements HTPredicate<Class> {
         return c.equals(aClass);
     }
 
-    @Override
-    public boolean initFromMap(final JsonNode map) {
+        public boolean initFromMap(final JsonNode map) {
         return false;
     }
 }

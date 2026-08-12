@@ -25,11 +25,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.hitorro.util.basefile.fs.BaseFile;
-import com.hitorro.util.basefile.fs.BaseFileSystem;
-import com.hitorro.util.core.ArrayUtil;
-import com.hitorro.util.core.Console;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.ArrayUtilCore;
+import com.hitorro.util.core.ConsoleCore;
+import com.hitorro.util.core.string.StringUtilCore;
 import com.hitorro.util.json.keys.PropertyException;
 
 public class Propaccess {
@@ -180,16 +178,16 @@ public class Propaccess {
             length = 0;
             return;
         }
-        if (!StringUtil.ensureBalance(path, '[', ']')) {
+        if (!StringUtilCore.ensureBalance(path, '[', ']')) {
             throw new PropertyException("Unbalanced ");
         }
-        int count = StringUtil.countInstances(path, '[');
+        int count = StringUtilCore.countInstances(path, '[');
         if (path.length() > 0 && path.charAt(0) == '.') {
             relative = true;
             path = path.substring(1, path.length());
         }
         String p[] = path.split("\\.");
-        if (ArrayUtil.nullOrEmpty(p)) {
+        if (ArrayUtilCore.nullOrEmpty(p)) {
             parts = new IndexedPart[0];
             length = 0;
             return;
@@ -221,7 +219,7 @@ public class Propaccess {
 
     protected JsonNode getSet(VS jvs, SetMode set, JsonNode nodeIn, PAContext context, JsonNode setElem, int depth, boolean retLeaf) throws PropaccessError {
         if (setElem != null && setElem.isNull()) {
-            Console.println();
+            ConsoleCore.println();
         }
         if (length == 0) {
             return nodeIn;
@@ -338,13 +336,13 @@ public class Propaccess {
     }
 
     public void append(Part part) {
-        parts = ArrayUtil.ensureCapacity(Part.class, length + 1, length, parts);
+        parts = ArrayUtilCore.ensureCapacity(Part.class, length + 1, length, parts);
         parts[length] = part;
         length++;
     }
 
     public void append(Part partsIn[], int lengthIn) {
-        parts = ArrayUtil.ensureCapacity(Part.class, length + lengthIn, length, parts);
+        parts = ArrayUtilCore.ensureCapacity(Part.class, length + lengthIn, length, parts);
         for (int i = 0; i < lengthIn; i++) {
             parts[length + i] = partsIn[i];
             length++;

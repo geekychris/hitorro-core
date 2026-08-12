@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.json.keys;
 
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 
 /**
@@ -127,8 +127,8 @@ public class PropertyPath {
 
     private void ensureCapacity() {
         if (pathNames.length == pathLength) {
-            pathNames = StringUtil.increaseStringArray(pathNames, pathLength);
-            pathValues = StringUtil.increaseStringArray(pathValues, pathLength);
+            pathNames = StringUtilCore.increaseStringArray(pathNames, pathLength);
+            pathValues = StringUtilCore.increaseStringArray(pathValues, pathLength);
         }
     }
 }

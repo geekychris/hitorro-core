@@ -56,21 +56,10 @@ public class BaseMappingProperty<T> extends Propaccess implements Function<JsonN
         return defaultValue;
     }
 
-    public <K> MapProperty<K, T> mapProperty(String key, String description, Map<K, T> defaultValue, Function<JsonNode, K> keyMapper) {
-        return mapProperty(new Propaccess(key), description, defaultValue, keyMapper);
-    }
-
-    public <K> MapProperty<K, T> mapProperty(Propaccess key, String description, Map<K, T> defaultValue, Function<JsonNode, K> keyMapper) {
-        return new MapProperty(key, description, defaultValue, (BaseMappingProperty<T>) keyMapper, this);
-    }
-
-    public CollectionProperty<T> collection(String key, String description, List<T> defaultValue) {
-        return collection(new Propaccess(key), description, defaultValue);
-    }
-
-    public CollectionProperty<T> collection(Propaccess key, String description, List<T> defaultValue) {
-        return new CollectionProperty<T>(key, description, defaultValue, this);
-    }
+    // mapProperty() and collection() factory methods were removed here — they returned
+    // MapProperty / CollectionProperty which live in hitorro-streams (they use
+    // JsonNArrayToMapT / JsonInitableProperty respectively). Callers construct those
+    // classes directly (or use the streams-side equivalents).
 
     public String getKey() {
         return toString();
@@ -113,6 +102,20 @@ public class BaseMappingProperty<T> extends Propaccess implements Function<JsonN
             return defaultValue;
         }
         return mapper.apply(n);
+    }
+
+    /**
+     * Convenience overload for value sources ({@link com.hitorro.util.json.keys.propaccess.VS}) like JVS —
+     * unwraps to the property's underlying JsonNode before applying.
+     */
+    public T apply(com.hitorro.util.json.keys.propaccess.VS vs) {
+        try {
+            JsonNode n = vs.get(this);
+            if (n == null) return defaultValue;
+            return mapper.apply(n);
+        } catch (com.hitorro.util.json.keys.propaccess.PropaccessError e) {
+            return defaultValue;
+        }
     }
 
     protected JsonNode getNode(JsonNode node) {

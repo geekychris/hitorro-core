@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.core;
 
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 
 public class IntegerUtil {
@@ -71,7 +71,7 @@ public class IntegerUtil {
      * @return true if just digits.
      */
     public static boolean isNumber(String test) {
-        if (StringUtil.nullOrEmptyString(test)) {
+        if (StringUtilCore.nullOrEmptyString(test)) {
             return false;
         }
         int size = test.length();

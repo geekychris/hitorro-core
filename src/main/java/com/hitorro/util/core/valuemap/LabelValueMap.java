@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.core.valuemap;
 
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 /**
  */
@@ -33,6 +33,6 @@ public class LabelValueMap extends FlatValueMap {
 
     public boolean validate(String key) {
         // all key values are valid as long as they are not null
-        return !StringUtil.nullOrEmptyOrBlankString(key);
+        return !StringUtilCore.nullOrEmptyOrBlankString(key);
     }
 }

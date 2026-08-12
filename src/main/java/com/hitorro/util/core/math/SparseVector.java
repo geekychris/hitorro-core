@@ -22,7 +22,7 @@
 package com.hitorro.util.core.math;
 
 import cern.colt.matrix.impl.SparseDoubleMatrix1D;
-import com.hitorro.util.core.string.Fmt;
+import com.hitorro.util.core.string.FmtCore;
 import com.hitorro.util.core.tandemarrays.TandemArraySorterDoublePeer;
 import com.hitorro.util.core.tandemarrays.TandemLongArraySorter;
 
@@ -116,7 +116,7 @@ public final class SparseVector<R> {
     }
 
     public String toString() {
-        return Fmt.S("%s: s:%s, c:%s", referrer, m_size, elementCount);
+        return FmtCore.S("%s: s:%s, c:%s", referrer, m_size, elementCount);
     }
 
     public int getSize() {

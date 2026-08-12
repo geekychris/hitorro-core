@@ -23,10 +23,10 @@ package com.hitorro.util.core.classes.methodanoconstraints;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.hitorro.util.core.classes.MethodAnnotation;
-import com.hitorro.util.core.opers.HTPredicate;
+import java.util.function.Predicate;
 
 
-public class MethodNameMatches implements HTPredicate<MethodAnnotation> {
+public class MethodNameMatches implements Predicate<MethodAnnotation> {
 
     private String name;
     private boolean ignoreCase;
@@ -37,8 +37,7 @@ public class MethodNameMatches implements HTPredicate<MethodAnnotation> {
 
     }
 
-    @Override
-    public void initForPass() {
+        public void initForPass() {
     }
 
     @Override
@@ -50,8 +49,7 @@ public class MethodNameMatches implements HTPredicate<MethodAnnotation> {
         return n.equals(name);
     }
 
-    @Override
-    public boolean initFromMap(final JsonNode map) {
+        public boolean initFromMap(final JsonNode map) {
         return false;
     }
 }

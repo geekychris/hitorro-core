@@ -21,9 +21,9 @@
  */
 package com.hitorro.util.core.classes;
 
-import com.hitorro.util.core.ArrayUtil;
-import com.hitorro.util.core.opers.HTPredicate;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.ArrayUtilCore;
+import java.util.function.Predicate;
+import com.hitorro.util.core.string.StringUtilCore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,11 +46,11 @@ public class ClassAnoUtil {
      * @param constraint
      * @return
      */
-    public static Annotation getClassLevelAnnotation(Class c, HTPredicate<Class> constraint) {
+    public static Annotation getClassLevelAnnotation(Class c, Predicate<Class> constraint) {
         return getMatchingClass(c.getAnnotations(), constraint);
     }
 
-    public static final int getClassLevelAnnotation(Class c, HTPredicate<Class> constraint, List<Annotation> annos) {
+    public static final int getClassLevelAnnotation(Class c, Predicate<Class> constraint, List<Annotation> annos) {
         return getAllMatchingClass(c.getAnnotations(), constraint, annos);
     }
 
@@ -65,10 +65,10 @@ public class ClassAnoUtil {
      * @param annosConstraint
      * @return
      */
-    public static MemberVarAnnotations getMemberVariable(Class c, HTPredicate<MemberVarAnnotations> annosConstraint) {
+    public static MemberVarAnnotations getMemberVariable(Class c, Predicate<MemberVarAnnotations> annosConstraint) {
         for (Field field : c.getFields()) {
             Annotation[] annos = field.getAnnotations();
-            if (!ArrayUtil.nullOrEmpty(annos)) {
+            if (!ArrayUtilCore.nullOrEmpty(annos)) {
                 MemberVarAnnotations mva = new MemberVarAnnotations(field, annos);
                 if (annosConstraint == null || annosConstraint.test(mva)) {
                     return mva;
@@ -87,7 +87,7 @@ public class ClassAnoUtil {
      * @param includeSuper
      * @return
      */
-    public static final int getAllMemberVariable(Class c, HTPredicate<MemberVarAnnotations> annosConstraint, List<MemberVarAnnotations> list, boolean includeSuper) {
+    public static final int getAllMemberVariable(Class c, Predicate<MemberVarAnnotations> annosConstraint, List<MemberVarAnnotations> list, boolean includeSuper) {
         if (includeSuper) {
             int cnt = 0;
             while (c != null) {
@@ -108,11 +108,11 @@ public class ClassAnoUtil {
      * @param annosConstraint
      * @return count of matches
      */
-    public static final int getAllMemberVariable(Class c, HTPredicate<MemberVarAnnotations> annosConstraint, List<MemberVarAnnotations> list) {
+    public static final int getAllMemberVariable(Class c, Predicate<MemberVarAnnotations> annosConstraint, List<MemberVarAnnotations> list) {
         int cnt = 0;
         for (Field field : c.getDeclaredFields()) {
             Annotation[] annos = field.getAnnotations();
-            if (!ArrayUtil.nullOrEmpty(annos)) {
+            if (!ArrayUtilCore.nullOrEmpty(annos)) {
                 MemberVarAnnotations mva = new MemberVarAnnotations(field, annos);
                 if (annosConstraint == null || annosConstraint.test(mva)) {
                     list.add(mva);
@@ -134,7 +134,7 @@ public class ClassAnoUtil {
      * @param list
      * @return
      */
-    public static final int getAllBeanStyleMemberFunctions(Class c, HTPredicate<BeanStyleMethodAnnotation> annosConstraint, List<BeanStyleMethodAnnotation> list) {
+    public static final int getAllBeanStyleMemberFunctions(Class c, Predicate<BeanStyleMethodAnnotation> annosConstraint, List<BeanStyleMethodAnnotation> list) {
         Map<String, BeanStyleMethodAnnotation> fieldAnnotationMap = new HashMap();
         for (Method m : c.getDeclaredMethods()) {
             addFieldMethod(fieldAnnotationMap, m, null);
@@ -149,8 +149,8 @@ public class ClassAnoUtil {
         return cnt;
     }
 
-    public static final int getAllMemberFunctions(Class c, HTPredicate<MethodAnnotation> methodConstraint,
-                                            HTPredicate<Class> annotationConstraint,
+    public static final int getAllMemberFunctions(Class c, Predicate<MethodAnnotation> methodConstraint,
+                                            Predicate<Class> annotationConstraint,
                                             List<MethodAnnotation> list) {
         int cnt = 0;
         try {
@@ -171,8 +171,8 @@ public class ClassAnoUtil {
         return cnt;
     }
 
-    public static MethodAnnotation getMemberFunction(Class c, HTPredicate<MethodAnnotation> methodConstraint,
-                                                     HTPredicate<Class> annotationConstraint) {
+    public static MethodAnnotation getMemberFunction(Class c, Predicate<MethodAnnotation> methodConstraint,
+                                                     Predicate<Class> annotationConstraint) {
         try {
             for (Method m : c.getDeclaredMethods()) {
                 MethodAnnotation ma = new MethodAnnotation(m, annotationConstraint);
@@ -249,7 +249,7 @@ public class ClassAnoUtil {
         }
 
         // fix the camelback nature of the method name - lowercase the first letter of the field name
-        fieldName = StringUtil.strcat(Character.toLowerCase(fieldName.charAt(0)), fieldName.substring(1));
+        fieldName = StringUtilCore.strcat(Character.toLowerCase(fieldName.charAt(0)), fieldName.substring(1));
 
         // see if we already have a field annotation for this field (because we've already seen a get or set)
         BeanStyleMethodAnnotation previousA = fieldAnnotationMap.get(fieldName);
@@ -264,7 +264,7 @@ public class ClassAnoUtil {
     }
 
 
-    public static Annotation getMatchingClass(Annotation[] arr, HTPredicate<Class> c) {
+    public static Annotation getMatchingClass(Annotation[] arr, Predicate<Class> c) {
         for (Annotation a : arr) {
             Class ac = a.annotationType();
             if (c.test(ac)) {
@@ -275,7 +275,7 @@ public class ClassAnoUtil {
     }
 
 
-    public static final int getAllMatchingClass(Annotation[] arr, HTPredicate<Class> c, List<Annotation> annos) {
+    public static final int getAllMatchingClass(Annotation[] arr, Predicate<Class> c, List<Annotation> annos) {
         int cnt = 0;
         for (Annotation a : arr) {
             Class ac = a.annotationType();
@@ -317,7 +317,7 @@ public class ClassAnoUtil {
      * @param ano                  The annotations we are considering
      * @param annotationConstraint
      */
-    public static void loadAnnotation(List<Annotation> list, Annotation ano[], HTPredicate<Class> annotationConstraint) {
+    public static void loadAnnotation(List<Annotation> list, Annotation ano[], Predicate<Class> annotationConstraint) {
         for (Annotation a : ano) {
             if (annotationConstraint != null) {
                 if (annotationConstraint.test(a.getClass())) {

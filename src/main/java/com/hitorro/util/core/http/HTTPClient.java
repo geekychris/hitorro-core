@@ -22,11 +22,9 @@
 package com.hitorro.util.core.http;
 
 
-import com.hitorro.util.core.Console;
 import com.hitorro.util.core.*;
 import com.hitorro.util.core.string.Base64;
-import com.hitorro.util.core.string.Fmt;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -53,14 +51,12 @@ public class HTTPClient {
     private OutputStream out = null;
 
     private static void dumpRaw(InputStream is) throws IOException {
-
-
-        Console.println("=========================================");
+        System.out.println("=========================================");
         if (is != null) {
 
             int c = is.read();
             while (c != -1) {
-                Console.print("%s", (char) c);
+                System.out.print((char) c);
                 c = is.read();
             }
             is.close();
@@ -71,19 +67,19 @@ public class HTTPClient {
         if (client != null) {
             List<com.hitorro.util.core.KeyValue> l = client.getResponseHeader();
             for (com.hitorro.util.core.KeyValue kv : l) {
-                Console.println("%s = %s", kv.getKey(), kv.getValue());
+                System.out.println(kv.getKey() + " = " + kv.getValue());
             }
-            Console.println("Response Code: %s", client.getResponseCode());
+            System.out.println("Response Code: " + client.getResponseCode());
         }
 
-        Console.println("=========================================");
+        System.out.println("=========================================");
         if (is != null) {
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             String str = null;
 
             str = br.readLine();
             while (str != null) {
-                Console.println(str);
+                System.out.println(str);
                 str = br.readLine();
             }
             is.close();
@@ -146,13 +142,13 @@ public class HTTPClient {
                 m_connection.setRequestProperty(kv.getKey(), kv.getValue());
             }
 
-            if (!StringUtil.nullOrEmptyString(contentType)) {
+            if (!StringUtilCore.nullOrEmptyString(contentType)) {
                 m_connection.setRequestProperty("Content-Length",
                         Integer.toString(outputBuffer.length));
                 m_connection.setRequestProperty("Content-Type", contentType);
             }
             if (m_auth != null) {
-                m_connection.setRequestProperty("Authorization", StringUtil.strcat("Basic ", m_auth));
+                m_connection.setRequestProperty("Authorization", StringUtilCore.strcat("Basic ", m_auth));
             }
             m_open = true;
 
@@ -224,7 +220,7 @@ public class HTTPClient {
     }
 
     public String getUrl(String host, int port, String path) {
-        return Fmt.S("%s://%s:%s/%s", m_protocol, host, com.hitorro.util.core.Constants.getInteger(port), path);
+        return String.format("%s://%s:%s/%s", m_protocol, host, com.hitorro.util.core.Constants.getInteger(port), path);
     }
 
     public void resetKeyValueParameters() {
@@ -239,7 +235,7 @@ public class HTTPClient {
         if (user == null || password == null) {
             m_auth = null;
         } else {
-            m_auth = Base64.encode(StringUtil.strcat(user, ":", password));
+            m_auth = Base64.encode(StringUtilCore.strcat(user, ":", password));
         }
     }
 
@@ -255,7 +251,7 @@ public class HTTPClient {
      * @param stopOffset
      */
     public void setByteOffsetByRange(long startOffset, long stopOffset) {
-        addRequestParameter("Range", Fmt.S("bytes=%s-%s", startOffset, stopOffset));
+        addRequestParameter("Range", String.format("bytes=%s-%s", startOffset, stopOffset));
     }
 
     public void setContentType(String contentType) {

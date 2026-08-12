@@ -22,8 +22,8 @@
 package com.hitorro.util.core;
 
 
-import com.hitorro.util.core.string.StringUtil;
-import com.hitorro.util.io.FileUtil;
+import com.hitorro.util.core.string.StringUtilCore;
+import com.hitorro.util.io.FileUtilCore;
 
 import java.io.DataInputStream;
 import java.io.File;
@@ -127,14 +127,14 @@ public class ArrayUtil {
     }
 
     public static long[] getLongArrayFromSeperatedString(String s, String seperator) {
-        String parts[] = StringUtil.tokenizeFromSingleChar(s, seperator);
+        String parts[] = StringUtilCore.tokenizeFromSingleChar(s, seperator);
         return getLongArrayFromStringArray(parts);
     }
 
     public static long[] getLongArrayFromStringArray(String ar[]) {
         long res[] = new long[ar.length];
         for (int i = 0; i < res.length; i++) {
-            res[i] = StringUtil.getLongNumberFromText(ar[i]);
+            res[i] = StringUtilCore.getLongNumberFromText(ar[i]);
         }
         return res;
     }
@@ -142,7 +142,7 @@ public class ArrayUtil {
     public static int[] getIntArrayFromStringArray(String ar[]) {
         int res[] = new int[ar.length];
         for (int i = 0; i < res.length; i++) {
-            res[i] = StringUtil.getIntNumberFromText(ar[i]);
+            res[i] = StringUtilCore.getIntNumberFromText(ar[i]);
         }
         return res;
     }
@@ -465,7 +465,7 @@ public class ArrayUtil {
 
     public static byte[] loadByteArrayFromFile(File file) throws IOException {
         byte[] b = new byte[(int) file.length()];
-        DataInputStream dis = FileUtil.getDataInputStreamForFile(file);
+        DataInputStream dis = FileUtilCore.getDataInputStreamForFile(file);
         int i = 0;
         while (dis.available() > 0) {
             b[i] = dis.readByte();
@@ -476,7 +476,7 @@ public class ArrayUtil {
 
     public static int[] loadIntArrayFromFile(File file) throws IOException {
         int[] l = new int[(int) file.length() / 4];
-        DataInputStream dis = FileUtil.getDataInputStreamForFile(file);
+        DataInputStream dis = FileUtilCore.getDataInputStreamForFile(file);
         int i = 0;
         while (dis.available() > 0) {
             l[i] = dis.readInt();
@@ -487,7 +487,7 @@ public class ArrayUtil {
 
     public static long[] loadLongArrayFromFile(File file) throws IOException {
         long[] l = new long[(int) file.length() / 8];
-        DataInputStream dis = FileUtil.getDataInputStreamForFile(file);
+        DataInputStream dis = FileUtilCore.getDataInputStreamForFile(file);
         int i = 0;
         while (dis.available() > 0) {
             l[i] = dis.readLong();
@@ -666,9 +666,9 @@ public class ArrayUtil {
                 sb.append(",");
             }
             String a = Integer.toString(ints[j]);
-            sb.append(StringUtil.padToLength(' ', pack - a.length()));
+            sb.append(StringUtilCore.padToLength(' ', pack - a.length()));
             sb.append(a);
         }
-        Console.bprintln(sb);
+        System.out.println(sb);
     }
 }

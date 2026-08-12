@@ -22,7 +22,7 @@
 package com.hitorro.util.core;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 import java.lang.reflect.Array;
 import java.util.HashMap;
@@ -96,8 +96,8 @@ public class EnumContext<E extends Enum> {
     }
 
     private E[] getEnumsFromNamesAux(String names, boolean shortNames) {
-        String parts[] = StringUtil.tokenizeFromSingleChar(names, ",", true);
-        if (ArrayUtil.nullOrEmpty(parts)) {
+        String parts[] = StringUtilCore.tokenizeFromSingleChar(names, ",", true);
+        if (ArrayUtilCore.nullOrEmpty(parts)) {
             return null;
         }
         // see if we start enums from 0th position (if tokenizer is implied)

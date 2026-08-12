@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.io.largedata.compressedstreams;
 
-import com.hitorro.util.core.ArrayUtil;
+import com.hitorro.util.core.ArrayUtilCore;
 import com.hitorro.util.core.HTAssert;
 
 import java.io.File;
@@ -52,7 +52,7 @@ public class CompressedRepository {
 
     public static CompressedRepository getCompressedRepository(File file) throws IOException {
         CompressedRepository repo =
-                new CompressedRepository(ArrayUtil.loadByteArrayFromFile(file));
+                new CompressedRepository(ArrayUtilCore.loadByteArrayFromFile(file));
 
         return repo;
     }

@@ -21,7 +21,6 @@
  */
 package com.hitorro.util.io.largedata.compressedstreams;
 
-import com.hitorro.util.basefile.fs.BaseFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,10 +33,6 @@ import java.io.RandomAccessFile;
 
 public class FSOutputStream extends COutputStream {
     RandomAccessFile file = null;
-
-    public FSOutputStream(BaseFile path) throws IOException {
-        this(path.getLocalFileIfPossible());
-    }
 
     public FSOutputStream(File path) throws IOException {
         file = new RandomAccessFile(path, "rw");

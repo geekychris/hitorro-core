@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.core.params.propreaders;
 
-import com.hitorro.util.core.Env;
+import com.hitorro.util.core.EnvCore;
 import com.hitorro.util.core.params.HTProperties;
 
 import java.util.Map;
@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class SystemArgsPropertyReader implements PropertiesReader {
     public void getProperties(HTProperties props, Map<String, String> cmdLineArgs) {
-        props.readMap(Env.getSystemArgs(), null);
+        props.readMap(EnvCore.getSystemArgs(), null);
     }
 
     public boolean havePropertiesChanged() {

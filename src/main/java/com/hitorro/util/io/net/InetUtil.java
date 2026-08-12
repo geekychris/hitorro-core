@@ -22,7 +22,7 @@
 package com.hitorro.util.io.net;
 
 import com.hitorro.util.core.IntegerUtil;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 public class InetUtil {
     /**
@@ -95,6 +95,6 @@ public class InetUtil {
             }
         }
 
-        return StringUtil.mergeWithJoinToken(inetBytesString, ".");
+        return StringUtilCore.mergeWithJoinToken(inetBytesString, ".");
     }
 }

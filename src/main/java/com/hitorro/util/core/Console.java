@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.core;
 
-import com.hitorro.util.core.string.Fmt;
+import com.hitorro.util.core.string.FmtCore;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -57,7 +57,7 @@ public class Console {
      * @param text to print out formatted with all the arguments
      */
     public static void println(String text, Object... args) {
-        m_out.println(Fmt.S(text, args));
+        m_out.println(FmtCore.S(text, args));
     }
 
     /**
@@ -74,7 +74,7 @@ public class Console {
      * @param args to insert into formatted text
      */
     public static void print(String text, Object... args) {
-        m_out.print(Fmt.S(text, args));
+        m_out.print(FmtCore.S(text, args));
     }
 
     /**
@@ -100,7 +100,7 @@ public class Console {
      */
     public static void println(PrintStream out, String text,
                                      Object... args) {
-        out.println(Fmt.S(text, args));
+        out.println(FmtCore.S(text, args));
     }
 
     /**
@@ -118,7 +118,7 @@ public class Console {
      */
     public static void print(PrintStream out, String text,
                                    Object... args) {
-        out.print(Fmt.S(text, args));
+        out.print(FmtCore.S(text, args));
     }
 
     /**
@@ -143,7 +143,7 @@ public class Console {
      * @param text to print out formatted with all the arguments
      */
     public static void eprintln(String text, Object... args) {
-        outErr.println(Fmt.S(text, args));
+        outErr.println(FmtCore.S(text, args));
     }
 
     /**
@@ -160,7 +160,7 @@ public class Console {
      * @param args to insert into formatted text
      */
     public static void eprint(String text, Object... args) {
-        outErr.print(Fmt.S(text, args));
+        outErr.print(FmtCore.S(text, args));
     }
 
     /**
@@ -186,7 +186,7 @@ public class Console {
      */
     public static void eprintln(PrintStream out, String text,
                                       Object... args) {
-        out.println(Fmt.S(text, args));
+        out.println(FmtCore.S(text, args));
     }
 
     /**
@@ -204,7 +204,7 @@ public class Console {
      */
     public static void eprint(PrintStream out, String text,
                                     Object... args) {
-        out.print(Fmt.S(text, args));
+        out.print(FmtCore.S(text, args));
     }
 
     /**
@@ -224,7 +224,7 @@ public class Console {
      */
     public static void bprint(StringBuilder buff, String text,
                                     Object... args) {
-        Fmt.f(buff, text, args);
+        FmtCore.f(buff, text, args);
     }
 
 
@@ -266,7 +266,7 @@ public class Console {
      */
     public static void bprintln(StringBuilder buff, String text,
                                       Object... args) {
-        Fmt.f(buff, text, args);
+        FmtCore.f(buff, text, args);
         buff.append(Constants.NewLineChar);
     }
 
@@ -296,7 +296,7 @@ public class Console {
         if (out == null) {
             return;
         }
-        out.println(Fmt.S(text, args));
+        out.println(FmtCore.S(text, args));
     }
 
     /**
@@ -314,6 +314,6 @@ public class Console {
      */
     public static void print(PrintWriter out, String text,
                                    Object... args) {
-        out.print(Fmt.S(text, args));
+        out.print(FmtCore.S(text, args));
     }
 }

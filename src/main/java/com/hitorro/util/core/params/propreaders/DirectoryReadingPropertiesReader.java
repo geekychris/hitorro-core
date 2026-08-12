@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.core.params.propreaders;
 
-import com.hitorro.util.core.Env;
+import com.hitorro.util.core.EnvCore;
 import com.hitorro.util.core.params.HTProperties;
 import com.hitorro.util.io.FileChangeSet;
 
@@ -75,9 +75,9 @@ public class DirectoryReadingPropertiesReader implements PropertiesReader {
 
         switch (type) {
             case Home:
-                return new File(Env.getHome(), "config");
+                return new File(EnvCore.getHome(), "config");
             case Bin:
-                return new File(Env.getBin(), "config");
+                return new File(EnvCore.getBin(), "config");
             case Other:
                 return otherDir;
         }

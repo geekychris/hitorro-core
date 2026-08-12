@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.core.params;
 
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -52,7 +52,7 @@ public class ConfigDiffer {
                 // equal key, ensure same values
                 String oldVals = old.get(oldKey);
                 String newVals = newC.get(newKey);
-                if (!StringUtil.equals(oldVals, newVals, false)) {
+                if (!StringUtilCore.equals(oldVals, newVals, false)) {
                     changes.add(new ConfigChange(ConfigChange.ConfigChangeType.Updated, oldKey));
                 }
 
@@ -87,7 +87,7 @@ public class ConfigDiffer {
         }
         if (oldIter.hasNext()) {
             oldKey = oldIter.next();
-            of = !StringUtil.nullOrEmptyString(oldKey);
+            of = !StringUtilCore.nullOrEmptyString(oldKey);
         } else {
             of = false;
         }
@@ -99,7 +99,7 @@ public class ConfigDiffer {
         }
         if (newIter.hasNext()) {
             newKey = newIter.next();
-            nf = !StringUtil.nullOrEmptyString(newKey);
+            nf = !StringUtilCore.nullOrEmptyString(newKey);
         } else {
             nf = false;
         }

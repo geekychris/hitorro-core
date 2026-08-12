@@ -23,7 +23,7 @@ package com.hitorro.util.core.params.propreaders;
 
 import com.hitorro.util.core.params.HTProperties;
 import com.hitorro.util.io.FileChangeSet;
-import com.hitorro.util.io.FileUtil;
+import com.hitorro.util.io.FileUtilCore;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -64,7 +64,7 @@ public abstract class SingleFilePropertyReader implements PropertiesReader {
             filesConsidered.add(file);
             changeContainer = new FileChangeSet(filesConsidered);
         }
-        if (FileUtil.nullOrNotExist(file)) {
+        if (FileUtilCore.nullOrNotExist(file)) {
             return;
         }
         props.readFile(file, true);

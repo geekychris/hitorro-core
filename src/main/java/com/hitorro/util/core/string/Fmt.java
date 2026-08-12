@@ -200,7 +200,7 @@ public final class Fmt {
                             buff.append(u.toExternalForm());
                         } else if (currC == 'r') {
                             // url encode
-                            buff.append(StringUtil.encodeUrl(arg.toString()));
+                            buff.append(StringUtilCore.encodeUrl(arg.toString()));
                         }
                     }
                 }
@@ -281,7 +281,7 @@ public final class Fmt {
         long deltaHours = deltaMinutes / 60;
         long hours = deltaHours % 24;
         long days = deltaHours / 24;
-        return Fmt.S("D/h/m/s %s:%s:%s:%s", days, hours, minutes, seconds);
+        return FmtCore.S("D/h/m/s %s:%s:%s:%s", days, hours, minutes, seconds);
     }
 
     /**
@@ -392,7 +392,7 @@ public final class Fmt {
      * <p/>
      * Example:
      * <p/>
-     * Fmt.S("HTHello %s", "Chris"); = "HTHello Chris"
+     * FmtCore.S("HTHello %s", "Chris"); = "HTHello Chris"
      *
      * @param pattern
      * @param args

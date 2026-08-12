@@ -22,9 +22,9 @@
 package com.hitorro.util.json.keys;
 
 
-import com.hitorro.util.core.Env;
+import com.hitorro.util.core.EnvCore;
 import com.hitorro.util.core.params.GlobalProperties;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 import com.hitorro.util.json.keys.mappers.JsonNodeToFile;
 import com.hitorro.util.json.keys.propaccess.Propaccess;
 
@@ -59,7 +59,7 @@ public class FileProperty extends BaseMappingProperty<File> {
 
     private static File getDefaultFile(String defaultValue) {
         String resolved = GlobalProperties.resolveJsonVariable(defaultValue);
-        if (StringUtil.nullOrEmptyString(resolved)) {
+        if (StringUtilCore.nullOrEmptyString(resolved)) {
             return null;
         }
         return new File(resolved);
@@ -74,7 +74,7 @@ public class FileProperty extends BaseMappingProperty<File> {
         if (result != null && result.equals(defaultValue) && rawDefault != null
                 && rawDefault.contains("${")) {
             String resolved = resolveWithEnv(rawDefault);
-            if (!StringUtil.nullOrEmptyString(resolved) && !resolved.contains("${")) {
+            if (!StringUtilCore.nullOrEmptyString(resolved) && !resolved.contains("${")) {
                 return new File(resolved);
             }
         }
@@ -87,9 +87,9 @@ public class FileProperty extends BaseMappingProperty<File> {
      * so we use Env as the canonical source for path variables.
      */
     private String resolveWithEnv(String value) {
-        String bin = Env.getBin().getAbsolutePath();
-        String home = Env.getHome().getAbsolutePath();
-        String data = Env.getData().getAbsolutePath();
+        String bin = EnvCore.getBin().getAbsolutePath();
+        String home = EnvCore.getHome().getAbsolutePath();
+        String data = EnvCore.getData().getAbsolutePath();
         return value.replace("${HT_BIN}", bin)
                     .replace("${HT_HOME}", home)
                     .replace("${HT_DATA}", data)

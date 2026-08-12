@@ -22,10 +22,11 @@
 package com.hitorro.util.core.classes;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.hitorro.util.basefile.fs.BaseFile;
-import com.hitorro.util.core.Env;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hitorro.util.core.EnvCore;
 import com.hitorro.util.core.Log;
 
+import java.io.File;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -159,10 +160,9 @@ public class ImplementationRegistry {
 		}
 		loaded = true;
 		try {
-			BaseFile configBase = Env.getBinConfigBaseFile();
-			BaseFile configFile = configBase.getChild(CONFIG_FILE);
+			File configFile = new File(new File(EnvCore.getBin(), "config"), CONFIG_FILE);
 			if (configFile.exists()) {
-				JsonNode node = configFile.getJsonNode();
+				JsonNode node = new ObjectMapper().readTree(configFile);
 				loadFromJson(node);
 				Log.util.info("Loaded %d implementation mappings from %s",
 						registry.size(), configFile.getAbsolutePath());

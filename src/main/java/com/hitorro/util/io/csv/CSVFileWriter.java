@@ -23,7 +23,7 @@
 package com.hitorro.util.io.csv;
 
 import com.hitorro.util.core.Log;
-import com.hitorro.util.io.FileUtil;
+import com.hitorro.util.io.FileUtilCore;
 
 import java.io.*;
 import java.util.List;
@@ -39,7 +39,7 @@ public class CSVFileWriter implements CSVWriter {
 
     public CSVFileWriter(File outfile, List<String> colNames) {
         try {
-            _printer = new PrintStream(FileUtil.getBufferedFileOutputStream(outfile));
+            _printer = new PrintStream(FileUtilCore.getBufferedFileOutputStream(outfile));
         } catch (IOException ioe) {
             Log.util.error(ioe, "Error creating output for CSVFileWriter");
             _printer = null;

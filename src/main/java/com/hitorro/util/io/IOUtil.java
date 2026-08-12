@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.io;
 
-import com.hitorro.util.core.iterator.LineReaderIterator;
+import java.io.BufferedReader;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -58,13 +58,13 @@ public class IOUtil {
 
     public static Iterator<String> getLineReaderIteratorFromStream(
             InputStream is) {
-        return new LineReaderIterator(new InputStreamReader(is));
+        return new BufferedReader(new InputStreamReader(is)).lines().iterator();
     }
 
     public static Iterator<String> getLineReaderIteratorFromStream(
             InputStream is, String encoding) throws
             UnsupportedEncodingException {
-        return new LineReaderIterator(new InputStreamReader(is, encoding));
+        return new BufferedReader(new InputStreamReader(is, encoding)).lines().iterator();
     }
 
     public static InputStream getBookshelfInputStream(String a, InputStream is, String b) {
@@ -73,7 +73,7 @@ public class IOUtil {
 
     public static byte[] readByteArray(File f) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        InputStream is = FileUtil.getBufferedFileInputStream(f);
+        InputStream is = FileUtilCore.getBufferedFileInputStream(f);
         IOUtil.copyStream(is, baos);
         baos.close();
         is.close();

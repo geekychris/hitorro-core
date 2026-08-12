@@ -24,10 +24,10 @@ package com.hitorro.util.core.string;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.hitorro.util.core.ArrayUtil;
+import com.hitorro.util.core.ArrayUtilCore;
 import com.hitorro.util.core.Constants;
 import com.hitorro.util.html.HTMLEncoder;
-import com.hitorro.util.io.FileUtil;
+import com.hitorro.util.io.FileUtilCore;
 
 import java.io.*;
 import java.net.URLDecoder;
@@ -238,7 +238,7 @@ public final class StringUtil {
             if (s == null) {
                 s = Constants.EmptyString;
             }
-            result[i] = StringUtil.strcat(prependS, s);
+            result[i] = StringUtilCore.strcat(prependS, s);
         }
         return result;
     }
@@ -279,15 +279,15 @@ public final class StringUtil {
 
 
     public static String[] combineStringArrays(String arr[], String arr2[]) {
-        int size = ArrayUtil.sizeOfArrayIgnoringNull(arr);
-        size += ArrayUtil.sizeOfArrayIgnoringNull(arr2);
+        int size = ArrayUtilCore.sizeOfArrayIgnoringNull(arr);
+        size += ArrayUtilCore.sizeOfArrayIgnoringNull(arr2);
         if (size == 0) {
             return null;
         }
         String target[] = new String[size];
         int ind = 0;
-        ind += ArrayUtil.copy(target, ind, arr);
-        ind = ArrayUtil.copy(target, ind, arr2);
+        ind += ArrayUtilCore.copy(target, ind, arr);
+        ind = ArrayUtilCore.copy(target, ind, arr2);
 
         return target;
     }
@@ -295,7 +295,7 @@ public final class StringUtil {
     public static String[] combineStringArrays(String arr[][]) {
         int size = 0;
         for (int i = 0; i < arr.length; i++) {
-            size += ArrayUtil.sizeOfArrayIgnoringNull(arr[i]);
+            size += ArrayUtilCore.sizeOfArrayIgnoringNull(arr[i]);
         }
 
         if (size == 0) {
@@ -304,7 +304,7 @@ public final class StringUtil {
         String target[] = new String[size];
         int ind = 0;
         for (int i = 0; i < arr.length; i++) {
-            ind += ArrayUtil.copy(target, ind, arr[i]);
+            ind += ArrayUtilCore.copy(target, ind, arr[i]);
         }
         return target;
     }
@@ -379,7 +379,7 @@ public final class StringUtil {
         int l = s.length();
         int pL = packing.length();
         if (l < pL) {
-            return StringUtil.strcat(packing.substring(0, pL - l), s);
+            return StringUtilCore.strcat(packing.substring(0, pL - l), s);
         }
         return s;
     }
@@ -421,7 +421,7 @@ public final class StringUtil {
     }
 
     public static final String getNthPart(String s, String sep, int i) {
-        String parts[] = StringUtil.tokenizeFromSingleChar(s, sep);
+        String parts[] = StringUtilCore.tokenizeFromSingleChar(s, sep);
         if (i > parts.length - 1) {
             return null;
         }
@@ -430,7 +430,7 @@ public final class StringUtil {
     }
 
     public static final String toLowerCaseIfNotNull(String s) {
-        if (StringUtil.nullOrEmptyString(s)) {
+        if (StringUtilCore.nullOrEmptyString(s)) {
             return null;
         }
         return s.toLowerCase();
@@ -449,7 +449,7 @@ public final class StringUtil {
      * @return
      */
     public static final String getLastCanonicalPart(String s) {
-        String parts[] = StringUtil.tokenizeFromSingleChar(s, ".", true);
+        String parts[] = StringUtilCore.tokenizeFromSingleChar(s, ".", true);
         if (parts == null) {
             return null;
         }
@@ -505,7 +505,7 @@ public final class StringUtil {
      * @return
      */
     public static boolean nullOrEmptyStringOrSaysNull(String s) {
-        if (StringUtil.nullOrEmptyString(s)) {
+        if (StringUtilCore.nullOrEmptyString(s)) {
             return true;
         }
         return s.equalsIgnoreCase("null");
@@ -520,7 +520,7 @@ public final class StringUtil {
      * @return
      */
     public static final String reverseCanon(String tok) {
-        String parts[] = StringUtil.tokenizeFromSingleChar(tok, ".");
+        String parts[] = StringUtilCore.tokenizeFromSingleChar(tok, ".");
         StringBuilder sb = new StringBuilder();
         for (int i = parts.length - 1; i >= 0; i--) {
             if (sb.length() != 0) {
@@ -751,14 +751,14 @@ public final class StringUtil {
     }
 
     public static void writeStringBuilderToFile(StringBuilder sb, File f) {
-        PrintWriter pw = FileUtil.getBufferedPrintWriterFromFile(f);
+        PrintWriter pw = FileUtilCore.getBufferedPrintWriterFromFile(f);
         pw.write(sb.toString());
         pw.flush();
         pw.close();
     }
 
     public static void writeStringToFile(String sb, File f) {
-        PrintWriter pw = FileUtil.getBufferedPrintWriterFromFile(f);
+        PrintWriter pw = FileUtilCore.getBufferedPrintWriterFromFile(f);
         pw.write(sb);
         pw.flush();
         pw.close();
@@ -886,7 +886,7 @@ public final class StringUtil {
                 replace = "&quot;";
                 rlen = 6;
             } else if (cc > 255) {
-                replace = StringUtil.strcat("&#", Integer.toString(cc), ";");
+                replace = StringUtilCore.strcat("&#", Integer.toString(cc), ";");
                 rlen = replace.length();
             }
             if (replace != null) {
@@ -1025,7 +1025,7 @@ public final class StringUtil {
      * @return
      */
     public static final String getValueDefault(String val, String defaultVal) {
-        if (StringUtil.nullOrEmptyString(val)) {
+        if (StringUtilCore.nullOrEmptyString(val)) {
             return defaultVal;
         }
         return val;
@@ -1069,7 +1069,7 @@ public final class StringUtil {
      * @return
      */
     public static final String ifNotNullDefault(String val, String defaultVal) {
-        if (StringUtil.nullOrEmptyOrBlankString(val)) {
+        if (StringUtilCore.nullOrEmptyOrBlankString(val)) {
             return defaultVal;
         }
         return val;
@@ -1151,7 +1151,7 @@ public final class StringUtil {
      * @return
      */
     public static final String lowerCaseIfNotNull(String s) {
-        if (StringUtil.nullOrEmptyString(s)) {
+        if (StringUtilCore.nullOrEmptyString(s)) {
             return s;
         }
         return s.toLowerCase();
@@ -1307,7 +1307,7 @@ public final class StringUtil {
      * @return
      */
     public static boolean notNullEquals(String a, String b, boolean ignoreCase) {
-        if (!StringUtil.nullOrEmptyString(a) && !StringUtil.nullOrEmptyString(b)) {
+        if (!StringUtilCore.nullOrEmptyString(a) && !StringUtilCore.nullOrEmptyString(b)) {
             if (ignoreCase) {
                 return a.equalsIgnoreCase(b);
             }
@@ -1611,7 +1611,7 @@ public final class StringUtil {
 
     public static String[] splitByFirstToken(final String line,
                                                    final String token) {
-        if (StringUtil.nullOrEmptyOrBlankString(line)) {
+        if (StringUtilCore.nullOrEmptyOrBlankString(line)) {
             return null;
         }
         int index = line.indexOf(token);
@@ -1750,8 +1750,8 @@ public final class StringUtil {
      * Returns a new string that is a substring of this string. The substring begins at the end of 'prefix' string
      * starting with t the specified index and extends to beginning of the 'suffix' string.
      * <p/>
-     * Examples: StringUtil.substring("the slow purple fox", "the ", "fox", 0) returns "slow purple"
-     * StringUtil.substring("the slow purple fox", "the slow", "", 0) returns " purple fox"
+     * Examples: StringUtilCore.substring("the slow purple fox", "the ", "fox", 0) returns "slow purple"
+     * StringUtilCore.substring("the slow purple fox", "the slow", "", 0) returns " purple fox"
      *
      * @param buffer     the string to search against.
      * @param prefix     the substring immediately prior to the substring of interest.
@@ -1764,7 +1764,7 @@ public final class StringUtil {
         int endIndex = -1;
 
 
-        if (StringUtil.nullOrEmptyString(prefix)) {
+        if (StringUtilCore.nullOrEmptyString(prefix)) {
             prefix = "";
             beginIndex = 0;
         } else {
@@ -1773,7 +1773,7 @@ public final class StringUtil {
 
 
         if (beginIndex >= 0) {
-            if (StringUtil.nullOrEmptyString(suffix)) {
+            if (StringUtilCore.nullOrEmptyString(suffix)) {
                 endIndex = buffer.length();
             } else {
                 endIndex = buffer.indexOf(suffix, beginIndex);
@@ -1959,7 +1959,7 @@ public final class StringUtil {
 
     public static List<String> tokensFromSingleCharToList(String theString, String separator) {
         String classPath = System.getProperty("java.class.path");
-        String toks[] = StringUtil.tokenizeFromSingleChar(classPath, File.pathSeparator);
+        String toks[] = StringUtilCore.tokenizeFromSingleChar(classPath, File.pathSeparator);
         List<String> queue = new ArrayList(toks.length);
         for (String tok : toks) {
             queue.add(tok);
@@ -2073,7 +2073,7 @@ public final class StringUtil {
 
         for (int ii = 0; ii < ntok; ii++) {
             String token = tz.nextToken();
-            if (!StringUtil.nullOrEmptyString(token)) {
+            if (!StringUtilCore.nullOrEmptyString(token)) {
                 if (trimIt) {
                     token.trim();
                 }
@@ -2119,10 +2119,10 @@ public final class StringUtil {
 
     public static final String truncateDecodedTextToLengthWithPostText(String text, int max,
                                                                        String post, String defaultValue) {
-        if (!StringUtil.nullOrEmptyString(text)) {
+        if (!StringUtilCore.nullOrEmptyString(text)) {
             text = HTMLEncoder.decodeHtml(text);
             if (text.length() > max) {
-                text = StringUtil.strcat(text.substring(0, max - post.length()), post);
+                text = StringUtilCore.strcat(text.substring(0, max - post.length()), post);
             }
         } else {
             text = defaultValue;
@@ -2138,7 +2138,7 @@ public final class StringUtil {
      * @return
      */
     public static final String truncateToLength(String token, int length) {
-        if (!StringUtil.nullOrEmptyString(token) && token.length() > length) {
+        if (!StringUtilCore.nullOrEmptyString(token) && token.length() > length) {
             token = token.substring(0, length);
         }
         return token;
@@ -2152,15 +2152,15 @@ public final class StringUtil {
      */
     public static final String getBytesNeatForm(long bytes) {
         if (bytes < Constants.KBytes) {
-            return Fmt.S("%sB", bytes);
+            return String.format("%sB", bytes);
         }
         if (bytes < Constants.MBytes) {
-            return Fmt.S("%sKB", bytes / Constants.KBytes);
+            return String.format("%sKB", bytes / Constants.KBytes);
         }
         if (bytes < Constants.GBytes) {
-            return Fmt.S("%sMB", bytes / Constants.MBytes);
+            return String.format("%sMB", bytes / Constants.MBytes);
         }
-        return Fmt.S("%sGB", bytes / Constants.GBytes);
+        return String.format("%sGB", bytes / Constants.GBytes);
     }
 
 

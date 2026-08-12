@@ -23,7 +23,7 @@ package com.hitorro.util.core.string;
 
 import gnu.trove.map.hash.TLongObjectHashMap;
 import com.hitorro.util.core.hash.FPHash64;
-import com.hitorro.util.core.map.MapUtil;
+import com.hitorro.util.core.map.MapUtilCore;
 
 import java.util.List;
 
@@ -119,7 +119,7 @@ public class StringRange<P> {
 
     protected void getSpanHashMap(TLongObjectHashMap<List<StringRange<P>>> map) {
         long fp = getFP64();
-        MapUtil.add(map, fp, this);
+        MapUtilCore.add(map, fp, this);
         if (children != null) {
             for (StringRange<P> span : children) {
                 span.getSpanHashMap(map);

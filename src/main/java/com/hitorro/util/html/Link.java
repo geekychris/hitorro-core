@@ -23,7 +23,7 @@ package com.hitorro.util.html;
 
 import com.hitorro.util.core.GenericKeyValue;
 import com.hitorro.util.core.hash.FPHash64;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 import com.hitorro.util.io.StoreException;
 import com.hitorro.util.typesystem.HTObjectInputStream;
 import com.hitorro.util.typesystem.HTObjectOutputStream;
@@ -94,10 +94,10 @@ public class Link implements HTSerializable, Comparable<Link> {
         try {
             url = url.trim();
 
-            if (StringUtil.startsWithIndexIgnoreCase(url, BlockList) != -1) {
+            if (StringUtilCore.startsWithIndexIgnoreCase(url, BlockList) != -1) {
                 return url;
             }
-            if (StringUtil.startsWithIgnoreCase(url, "http")) {
+            if (StringUtilCore.startsWithIgnoreCase(url, "http")) {
                 if (l != null) {
                     l.relativeUrl = false;
                 }

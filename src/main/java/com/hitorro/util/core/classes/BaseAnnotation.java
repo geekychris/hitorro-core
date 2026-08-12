@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.core.classes;
 
-import com.hitorro.util.core.opers.HTPredicate;
+import java.util.function.Predicate;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ public class BaseAnnotation {
      * @param oper
      * @return
      */
-    public boolean containsAnnotation(HTPredicate<Class> oper) {
+    public boolean containsAnnotation(Predicate<Class> oper) {
         for (Annotation ano : anno) {
             if (oper.test(ano.annotationType())) {
                 return true;

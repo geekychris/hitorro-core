@@ -23,10 +23,11 @@ package com.hitorro.util.json.keys.mappers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.hitorro.util.core.BooleanUtil;
-import com.hitorro.util.core.iterator.Mapper;
+import java.util.function.Function;
+import com.hitorro.util.json.JsonInitable;
 
 
-public class JsonNodeToBoolean implements Mapper<JsonNode, Boolean> {
+public class JsonNodeToBoolean implements Function<JsonNode, Boolean>, JsonInitable {
     public static JsonNodeToBoolean instance = new JsonNodeToBoolean();
 
     public Boolean apply(JsonNode jsonNodes) {

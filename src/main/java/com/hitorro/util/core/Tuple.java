@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.core;
 
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public class Tuple<Type> {
     }
 
     public String[] getValsAsStringsArray() {
-        return StringUtil.objectArrayToStringArray(m_vals);
+        return StringUtilCore.objectArrayToStringArray(m_vals);
     }
 
     public void addVal(Type o) {

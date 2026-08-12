@@ -21,7 +21,6 @@
  */
 package com.hitorro.util.io.largedata.compressedstreams;
 
-import com.hitorro.util.basefile.fs.BaseFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,11 +37,6 @@ public final class FSInputStream extends CInputStream {
 
     public FSInputStream(File path) throws IOException {
         file = new Descriptor(path, "r");
-        length = file.length();
-    }
-
-    public FSInputStream(BaseFile path) throws IOException {
-        file = new Descriptor(path.getLocalFileIfPossible(), "r");
         length = file.length();
     }
 

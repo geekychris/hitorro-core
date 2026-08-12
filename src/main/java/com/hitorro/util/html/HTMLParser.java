@@ -23,13 +23,12 @@ package com.hitorro.util.html;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hitorro.util.basefile.fs.BaseFile;
 import com.hitorro.util.core.GenericKeyValue;
 import com.hitorro.util.core.ListUtil;
 import com.hitorro.util.core.Log;
-import com.hitorro.util.core.map.MapUtil;
+import com.hitorro.util.core.map.MapUtilCore;
 import com.hitorro.util.core.string.StringBuilderUtil;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 import com.hitorro.util.html.constraint.LinkConstraint;
 import com.hitorro.util.html.constraint.TypeLinkConstraint;
 import org.apache.xerces.xni.parser.XMLInputSource;
@@ -96,18 +95,6 @@ public class HTMLParser {
         setHtmlPage(htmlString);
     }
 
-    public HTMLParser(BaseFile file) throws IOException {
-        if (!file.exists()) {
-            return;
-        }
-
-        initFilters(Filters);
-
-
-        String buff = file.readString();
-        setHtmlPage(buff);
-    }
-
     public HTMLParser(File file) throws IOException {
         initFilters(Filters);
         if (!file.exists()) {
@@ -128,7 +115,7 @@ public class HTMLParser {
     public static boolean testForXML(String data) {
         int indexOf = data.indexOf("<");
         while (indexOf != -1) {
-            if (StringUtil.sloppyIndexOf(data, indexOf + 1, 20, '>') != -1) {
+            if (StringUtilCore.sloppyIndexOf(data, indexOf + 1, 20, '>') != -1) {
                 return true;
             }
             indexOf = data.indexOf("<", indexOf + 1);
@@ -168,7 +155,7 @@ public class HTMLParser {
         for (int i = 0; i < nlist.getLength(); ++i) {
             Element e = ((Element) nlist.item(i));
             String hequiv = e.getAttribute("http-equiv");
-            if (StringUtil.notNullEquals(hequiv, "refresh", true)) {
+            if (StringUtilCore.notNullEquals(hequiv, "refresh", true)) {
                 String content = e.getAttribute("content");
                 if (content != null) {
 
@@ -235,7 +222,7 @@ public class HTMLParser {
     }
 
     public void setSourceFromPlainText(String src) throws IOException {
-        this.page = StringUtil.strcat("<html><body>", src, "</body></html>");
+        this.page = StringUtilCore.strcat("<html><body>", src, "</body></html>");
         initialize();
     }
 
@@ -320,7 +307,7 @@ public class HTMLParser {
             String type = el.getAttribute("type");
             if ("application/ld+json".equalsIgnoreCase(type)) {
                 String content = el.getTextContent();
-                if (!StringUtil.nullOrEmptyString(content)) {
+                if (!StringUtilCore.nullOrEmptyString(content)) {
                     try {
                         JsonNode node = OBJECT_MAPPER.readTree(content.trim());
                         results.add(node);
@@ -348,7 +335,7 @@ public class HTMLParser {
             String property = el.getAttribute("property");
             if (property != null && property.startsWith("og:")) {
                 String content = el.getAttribute("content");
-                if (StringUtil.nullOrEmptyString(content)) {
+                if (StringUtilCore.nullOrEmptyString(content)) {
                     content = el.getAttribute("CONTENT");
                 }
                 og.put(property, content);
@@ -370,7 +357,7 @@ public class HTMLParser {
             Element el = (Element) links.item(i);
             if ("canonical".equalsIgnoreCase(el.getAttribute("rel"))) {
                 String href = el.getAttribute("href");
-                if (!StringUtil.nullOrEmptyString(href)) {
+                if (!StringUtilCore.nullOrEmptyString(href)) {
                     return href;
                 }
             }
@@ -675,7 +662,7 @@ public class HTMLParser {
                 String text = n.getTextContent();
                 Link.LinkType type = Link.LinkType.Image;
 
-                if (!StringUtil.nullOrEmptyString(text)) {
+                if (!StringUtilCore.nullOrEmptyString(text)) {
                     if (constraint == null || constraint.match(text, type, "", "image", doc, child, sourceUrl)) {
                         list.add(new Link(text, type, "", "image", sourceUrl, getAttributes(child)));
                     }
@@ -719,7 +706,7 @@ public class HTMLParser {
                 if (typeNode != null) {
                     typeString = typeNode.getTextContent();
                 }
-                if (!StringUtil.nullOrEmptyString(text)) {
+                if (!StringUtilCore.nullOrEmptyString(text)) {
                     if (constraint == null || constraint.match(text, type, title, typeString, doc, child, sourceUrl)) {
                         List<GenericKeyValue<String, String>> attr = getAttributes(child);
                         Link l = new Link(text, type, title, typeString, sourceUrl, attr);
@@ -738,13 +725,13 @@ public class HTMLParser {
             Node n = map.getNamedItem("href");
             if (n != null) {
                 String text = n.getTextContent();
-                if (!StringUtil.nullOrEmptyString(text)) {
+                if (!StringUtilCore.nullOrEmptyString(text)) {
                     String title = "";
                     Node titleNode = map.getNamedItem("content");
                     if (titleNode != null) {
                         title = titleNode.getTextContent();
                     }
-                    if (StringUtil.nullOrEmptyOrBlankString(title)) {
+                    if (StringUtilCore.nullOrEmptyOrBlankString(title)) {
                         Node fChild = child.getFirstChild();
                         if (fChild != null) {
                             title = fChild.getTextContent();
@@ -820,7 +807,7 @@ public class HTMLParser {
     }
 
     private void initFilters(String filters[]) {
-        this.filters = MapUtil.createStringIdentityMap(filters);
+        this.filters = MapUtilCore.createStringIdentityMap(filters);
     }
 
     /**
@@ -830,7 +817,7 @@ public class HTMLParser {
      * @return true if the filtered tag is on the no print listFiles
      */
     private boolean isFiltered(String tag) {
-        if (StringUtil.nullOrEmptyString(tag)) {
+        if (StringUtilCore.nullOrEmptyString(tag)) {
             return true;
         }
         return filters.containsKey(tag.toUpperCase());

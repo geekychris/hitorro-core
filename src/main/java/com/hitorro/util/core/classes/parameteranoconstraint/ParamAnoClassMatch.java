@@ -22,20 +22,19 @@
 package com.hitorro.util.core.classes.parameteranoconstraint;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.hitorro.util.core.opers.HTPredicate;
+import java.util.function.Predicate;
 
 import java.lang.annotation.Annotation;
 
 
-public class ParamAnoClassMatch implements HTPredicate<Annotation> {
+public class ParamAnoClassMatch implements Predicate<Annotation> {
     private Class classToMatch;
 
     public ParamAnoClassMatch(Class classToMatch) {
         this.classToMatch = classToMatch;
     }
 
-    @Override
-    public void initForPass() {
+        public void initForPass() {
     }
 
     @Override
@@ -44,8 +43,7 @@ public class ParamAnoClassMatch implements HTPredicate<Annotation> {
         return classToMatch == anoType;
     }
 
-    @Override
-    public boolean initFromMap(final JsonNode map) {
+        public boolean initFromMap(final JsonNode map) {
         return false;
     }
 }

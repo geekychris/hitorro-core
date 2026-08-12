@@ -22,7 +22,7 @@
 package com.hitorro.util.urlparser;
 
 import com.hitorro.util.core.Constants;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 
 
 /**
@@ -165,7 +165,7 @@ public class UrlCursor {
     }
 
     public boolean isTokenSameIgnoreCase(String buff, int pos, int size) {
-        return StringUtil.subStringEqualsIgnoreCase(m_url, tokenStart, tokenLength, buff, pos, size);
+        return StringUtilCore.subStringEqualsIgnoreCase(m_url, tokenStart, tokenLength, buff, pos, size);
     }
 
     /**
@@ -200,11 +200,11 @@ public class UrlCursor {
     }
 
     public boolean isKeyPartTokenSameIgnoreCase(String buff, int pos, int size) {
-        return StringUtil.subStringEqualsIgnoreCase(m_url, tokenStart, keyPartLength, buff, pos, size);
+        return StringUtilCore.subStringEqualsIgnoreCase(m_url, tokenStart, keyPartLength, buff, pos, size);
     }
 
     public boolean isKeyPartTokenSameIgnoreCase(String buff) {
-        return StringUtil.subStringEqualsIgnoreCase(m_url, tokenStart, keyPartLength, buff, 0, buff.length());
+        return StringUtilCore.subStringEqualsIgnoreCase(m_url, tokenStart, keyPartLength, buff, 0, buff.length());
     }
 
     public boolean isValuePartTokenSameIgnoreCase(String buff) {
@@ -213,7 +213,7 @@ public class UrlCursor {
 
     public boolean isValuePartTokenSameIgnoreCase(String buff, int pos, int size) {
         int start = tokenStart + keyPartLength + 1;
-        return StringUtil.subStringEqualsIgnoreCase(m_url, start, tokenLength - start + tokenStart, buff, pos, size);
+        return StringUtilCore.subStringEqualsIgnoreCase(m_url, start, tokenLength - start + tokenStart, buff, pos, size);
     }
 
 
@@ -284,9 +284,9 @@ public class UrlCursor {
         m_type = Part.Host;
         tokenLength = 0;
 
-        if (!StringUtil.startsWithIgnoreCase(m_url, "http")) {
+        if (!StringUtilCore.startsWithIgnoreCase(m_url, "http")) {
             // could be something starting like /blablabla
-            if (StringUtil.startsWithIgnoreCase(m_url, "/")) {
+            if (StringUtilCore.startsWithIgnoreCase(m_url, "/")) {
                 tokenStart = 1;
             }
             // no http part, thats ok.
@@ -299,7 +299,7 @@ public class UrlCursor {
         } else {
             isSecure = false;
         }
-        if (StringUtil.subStringEqualsIgnoreCase(m_url, tokenStart, 3, "://")) {
+        if (StringUtilCore.subStringEqualsIgnoreCase(m_url, tokenStart, 3, "://")) {
             tokenStart += 3;
             // we want it to still be on the / so that we can progress past it with next
             return true;

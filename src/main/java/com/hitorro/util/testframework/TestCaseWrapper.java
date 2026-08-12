@@ -23,7 +23,7 @@ package com.hitorro.util.testframework;
 
 import com.hitorro.util.core.classes.ClassAnoUtil;
 import com.hitorro.util.core.classes.MatchClass;
-import com.hitorro.util.core.string.Fmt;
+import com.hitorro.util.core.string.FmtCore;
 
 
 public class TestCaseWrapper {
@@ -63,7 +63,7 @@ public class TestCaseWrapper {
     }
 
     public String toString() {
-        return Fmt.S("class:%s level: %s", testClass.getCanonicalName(), testDef.runlevel().getName());
+        return FmtCore.S("class:%s level: %s", testClass.getCanonicalName(), testDef.runlevel().getName());
     }
 
     public boolean equals(Object o) {

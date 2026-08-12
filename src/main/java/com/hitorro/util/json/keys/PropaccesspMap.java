@@ -22,10 +22,11 @@
 package com.hitorro.util.json.keys;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.hitorro.util.core.iterator.Mapper;
+import com.hitorro.util.json.JsonInitable;
+import java.util.function.Function;
 import com.hitorro.util.json.keys.propaccess.Propaccess;
 
-public class PropaccesspMap implements Mapper<JsonNode, Propaccess> {
+public class PropaccesspMap implements Function<JsonNode, Propaccess>, JsonInitable {
     public static PropaccesspMap instance = new PropaccesspMap();
 
     public Propaccess apply(JsonNode jsonNodes) {

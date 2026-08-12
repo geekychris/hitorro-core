@@ -22,12 +22,12 @@
 package com.hitorro.util.core.map;
 
 import com.hitorro.util.core.hash.FPHash64;
-import com.hitorro.util.core.iterator.mappers.BaseMapper;
-import com.hitorro.util.core.string.StringUtil;
+import java.util.function.Function;
+import com.hitorro.util.core.string.StringUtilCore;
 
 
 public class String2HashFunctions {
-    public static BaseMapper<String, Long> string2hash = new BaseMapper<String, Long>() {
+    public static Function<String, Long> string2hash = new Function<String, Long>() {
         @Override
         public Long apply(final String string) {
             return FPHash64.getFP(string);
@@ -42,11 +42,11 @@ public class String2HashFunctions {
      * XXX Note that here we use the getFPViaChars method that does not utf-8 encode, but instead uses a char array.
      * This does not produce the same result, but is a much faster method especially in the tokenization chain
      */
-    public static BaseMapper<String, Long> stringtokens2hash = new BaseMapper<String, Long>() {
+    public static Function<String, Long> stringtokens2hash = new Function<String, Long>() {
 
         @Override
         public Long apply(final String string) {
-            String[] parts = StringUtil.tokenizeFromSingleChar(string, " ");
+            String[] parts = StringUtilCore.tokenizeFromSingleChar(string, " ");
             if (parts.length == 1) {
                 return FPHash64.getFPViaChars(string);
             }

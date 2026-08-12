@@ -25,7 +25,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.hitorro.util.core.CommandArgs;
 import com.hitorro.util.core.string.StringBuilderUtil;
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 import com.hitorro.util.json.keys.propaccess.PropaccessError;
 
 import java.io.BufferedInputStream;
@@ -143,7 +143,7 @@ public class HTMLUtil {
             if (tf.isTagEqualIgnoreCase("meta")) {
                 if (tf.findAttribute("http-equiv")) {
                     String ct = tf.getAttributeValue();
-                    if (!StringUtil.nullOrEmptyString(ct)) {
+                    if (!StringUtilCore.nullOrEmptyString(ct)) {
                         if (ct.equalsIgnoreCase("Content-Type")) {
                             if (tf.findAttribute("content")) {
                                 String ctVal = tf.getAttributeValue();
@@ -152,7 +152,7 @@ public class HTMLUtil {
                                     CommandArgs.parseArgs(ctVal, true, true, map);
                                     JsonNode charsetNode = map.get("charset");
                                     String r = charsetNode != null ? charsetNode.asText() : null;
-                                    if (!StringUtil.nullOrEmptyString(r)) {
+                                    if (!StringUtilCore.nullOrEmptyString(r)) {
                                         return r;
                                     }
                                 } catch (ParseException e) {

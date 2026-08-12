@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.html.constraint;
 
-import com.hitorro.util.core.string.StringUtil;
+import com.hitorro.util.core.string.StringUtilCore;
 import com.hitorro.util.html.Link;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -34,6 +34,6 @@ import java.net.URL;
  */
 public class RelativeLinkConstraint implements LinkConstraint {
     public boolean match(String url, Link.LinkType type, String title, String typeString, Document doc, Node elem, URL source) {
-        return !StringUtil.startsWithIgnoreCase(url, "http");
+        return !StringUtilCore.startsWithIgnoreCase(url, "http");
     }
 }
