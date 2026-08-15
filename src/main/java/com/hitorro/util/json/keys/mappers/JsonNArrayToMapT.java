@@ -52,6 +52,29 @@ public class JsonNArrayToMapT<K, T> implements Function<JsonNode, Map<K, T>>, Js
             }
             return map;
         }
+        // Also accept object shape — several config files (e.g.
+        // lucene_fields.json) declare their map as {"key1": {...}, "key2": {...}}
+        // rather than an array. Fall back to the JSON field name as the map key.
+        if (jsonNodes.isObject()) {
+            Map<K, T> map = new HashMap<K, T>();
+            var it = jsonNodes.fields();
+            while (it.hasNext()) {
+                Map.Entry<String, JsonNode> e = it.next();
+                T t = mapper.apply(e.getValue());
+                K k = keyMapper.apply(e.getValue());
+                // If the value carries its own key (a "name" property etc),
+                // prefer that; otherwise use the field name and cast — this
+                // path only kicks in when K is String, which is the case for
+                // every existing MapProperty<String, ?> declaration.
+                if (k == null) {
+                    @SuppressWarnings("unchecked")
+                    K asString = (K) e.getKey();
+                    k = asString;
+                }
+                map.put(k, t);
+            }
+            return map;
+        }
         return null;
     }
 }

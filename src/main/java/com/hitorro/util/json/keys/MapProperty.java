@@ -31,7 +31,12 @@ import java.util.function.Function;
 public class MapProperty<K, T> extends BaseMappingProperty<Map<K, T>> {
     public MapProperty(final Propaccess access, final String description,
                        final Map<K, T> defaultValue, final BaseMappingProperty<T> keyMapper, final Function<JsonNode, K> mapper) throws PropertyException {
-        super(access, description, defaultValue, (Function<JsonNode, Map<K, T>>) new JsonNArrayToMapT(keyMapper, mapper));
+        // NOTE: JsonNArrayToMapT's ctor is (keyMapper /*produces K*/,
+        // valueMapper /*produces T*/). Here the incoming ctor arg named
+        // `keyMapper` is actually the *value* extractor (BaseMappingProperty<T>)
+        // and `mapper` is the *key* extractor (Function<JsonNode, K>) — pass
+        // them in the order JsonNArrayToMapT expects.
+        super(access, description, defaultValue, (Function<JsonNode, Map<K, T>>) new JsonNArrayToMapT(mapper, keyMapper));
     }
 
     public MapProperty(final String path, final String description,
