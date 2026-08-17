@@ -60,4 +60,10 @@ public class CountingSink<E> implements Sink<E> {
     public long getCount() {
         return count;
     }
+
+    /** {@link Sink#count()} contract: return the accumulated add() count. */
+    @Override
+    public long count() {
+        return count;
+    }
 }

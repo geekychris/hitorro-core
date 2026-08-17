@@ -35,7 +35,8 @@ import java.util.function.Predicate;
  * Place where a sync of some kind of processing queue can send its data to (if we are in some kind of vectored queue
  * mode.
  */
-public interface Sink<T> extends AutoCloseable, JsonInitable, Consumer<T> {
+public interface
+Sink<T> extends AutoCloseable, JsonInitable, Consumer<T> {
 
     /**
      * Create a simple sink from a Consumer. Useful for quick lambda-based sinks.
@@ -102,5 +103,40 @@ public interface Sink<T> extends AutoCloseable, JsonInitable, Consumer<T> {
 
     default Sink<T> merge(Sink<T> in) {
         return in;
+    }
+
+    /**
+     * Number of items this sink has accepted since {@link #start()}.
+     * Default returns {@code -1} meaning "not tracked" — callers use
+     * this to distinguish "sink counts nothing" from "sink has zero
+     * items". Implementations that want to surface progress (UI job
+     * status, log summaries, exactly-once acks) should override.
+     *
+     * <p>Cheap to call — must not do I/O. Callers may poll during
+     * live runs (mesh pipelines' JobStatus reads this every second).</p>
+     */
+    default long count() {
+        return -1;
+    }
+
+    /**
+     * Idempotent write — sinks that support it dedupe by
+     * ({@code taskId}, {@code seq}) so retried producers don't
+     * double-write. Default implementation ignores the identity and
+     * calls {@link #add(Object)} (at-least-once semantics; safe when
+     * the caller never retries the same {@code seq}).
+     *
+     * <p>Sinks backed by a durable store (KV, Lucene, HTTP with an
+     * idempotency key, exactly-once Kafka) should override — track the
+     * highest {@code seq} seen per {@code taskId} and skip earlier ones.
+     * The {@code taskId} is caller-defined — any string that identifies
+     * the retryable unit of work (mesh {@code TaskDescriptor.taskId()},
+     * job id, HTTP request id, ...).</p>
+     *
+     * <p>Not distributed-execution-specific — any pub-sub or ETL flow
+     * with retries benefits.</p>
+     */
+    default boolean addIdempotent(String taskId, long seq, T o) throws IOException, StoreException {
+        return add(o);
     }
 }
