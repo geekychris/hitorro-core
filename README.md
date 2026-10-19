@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.png" alt="Hitorro Core logo" width="180">
+</p>
+
 # hitorro-core
 
 Foundation module for the HiTorro framework (v3.0.1, Java 21). This is the root dependency — all other HiTorro modules build on it. It provides JSON path navigation, file system abstraction with transparent compression, a composable iterator/mapper/sink pipeline, caching, HTML parsing, URL normalization, and 780+ utility classes.
