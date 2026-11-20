@@ -4,7 +4,7 @@
 
     <groupId>com.hitorro</groupId>
     <artifactId>hitorro-core</artifactId>
-    <version>3.0.2</version>
+    <version>3.1.0</version>
     <packaging>jar</packaging>
 
     <name>hitorro-core</name>
@@ -527,30 +527,17 @@
             <type>pom</type>
         </dependency>
 
-        <!-- Hadoop (for BaseFile filesystem abstraction) -->
+        <!-- Hadoop and the AWS SDK bundle were here for the BaseFile file
+             systems; nothing in hitorro-core uses them. hitorro-basefile now
+             declares what it needs (AWS SDK v2 for S3; Hadoop optional, for
+             HDFS). -->
+        <!-- The SLF4J binding for reload4j. It used to arrive through Hadoop;
+             declared here so logging keeps working without it. Spring Boot
+             apps exclude it (it fights logback). -->
         <dependency>
-            <groupId>org.apache.hadoop</groupId>
-            <artifactId>hadoop-client</artifactId>
-            <version>3.4.1</version>
-            <exclusions>
-                <exclusion><groupId>org.eclipse.jetty</groupId><artifactId>jetty-servlet</artifactId></exclusion>
-                <exclusion><groupId>org.eclipse.jetty</groupId><artifactId>jetty-webapp</artifactId></exclusion>
-                <exclusion><groupId>org.apache.hadoop</groupId><artifactId>hadoop-yarn-client</artifactId></exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.hadoop</groupId>
-            <artifactId>hadoop-aws</artifactId>
-            <version>3.4.1</version>
-            <exclusions>
-                <exclusion><groupId>org.eclipse.jetty</groupId><artifactId>jetty-servlet</artifactId></exclusion>
-                <exclusion><groupId>org.eclipse.jetty</groupId><artifactId>jetty-webapp</artifactId></exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>bundle</artifactId>
-            <version>2.29.29</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-reload4j</artifactId>
+            <version>2.0.20</version>
         </dependency>
 
         <!-- HTTP Components (for network I/O) -->
