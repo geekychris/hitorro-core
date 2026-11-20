@@ -21,19 +21,20 @@
  */
 package com.hitorro.util.json.keys.mappers;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import com.hitorro.util.core.params.PropertiesUtil;
 import java.util.function.Function;
 import com.hitorro.util.json.JsonInitable;
 
 import java.io.File;
+import com.hitorro.util.json.JsonValues;
 
 
 public class JsonNodeToFile implements Function<JsonNode, File>, JsonInitable {
     public static JsonNodeToFile instance = new JsonNodeToFile();
 
     public File apply(JsonNode jsonNodes) {
-        return new File(PropertiesUtil.resolveJsonVariable(jsonNodes.asText()));
+        return new File(PropertiesUtil.resolveJsonVariable(JsonValues.asText(jsonNodes)));
     }
 }
 

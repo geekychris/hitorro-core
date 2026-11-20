@@ -21,11 +21,12 @@
  */
 package com.hitorro.util.json.keys.mappers;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import java.util.function.Function;
 import com.hitorro.util.json.JsonInitable;
 
 import java.util.Set;
+import com.hitorro.util.json.JsonValues;
 
 public class ValidatedStringMapper implements Function<JsonNode, String>, JsonInitable {
 
@@ -39,14 +40,14 @@ public class ValidatedStringMapper implements Function<JsonNode, String>, JsonIn
         if (jsonNodes == null) {
             return null;
         }
-        if (jsonNodes.isTextual()) {
-            String v = jsonNodes.asText();
+        if (jsonNodes.isString()) {
+            String v = JsonValues.asText(jsonNodes);
             if (validatedList.contains(v)) {
                 return v;
             }
             return null;
         }
-        String v = jsonNodes.textValue();
+        String v = JsonValues.textValue(jsonNodes);
         if (validatedList.contains(v)) {
             return v;
         }

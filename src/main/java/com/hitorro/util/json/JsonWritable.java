@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.json;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 
 /**
  * Created by chris on 3/6/16.

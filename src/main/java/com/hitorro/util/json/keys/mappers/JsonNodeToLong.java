@@ -21,9 +21,10 @@
  */
 package com.hitorro.util.json.keys.mappers;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import java.util.function.Function;
 import com.hitorro.util.json.JsonInitable;
+import com.hitorro.util.json.JsonValues;
 
 
 public class JsonNodeToLong implements Function<JsonNode, Long>, JsonInitable {
@@ -31,8 +32,8 @@ public class JsonNodeToLong implements Function<JsonNode, Long>, JsonInitable {
 
     public Long apply(JsonNode jsonNodes) {
         if (jsonNodes.isLong()) {
-            return jsonNodes.asLong();
+            return JsonValues.asLong(jsonNodes);
         }
-        return Long.parseLong(jsonNodes.asText());
+        return Long.parseLong(JsonValues.asText(jsonNodes));
     }
 }

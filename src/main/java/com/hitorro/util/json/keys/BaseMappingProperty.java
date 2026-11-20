@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.json.keys;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import com.hitorro.util.core.KeyValue;
 import com.hitorro.util.core.params.GlobalProperties;
 import com.hitorro.util.json.JSONUtil;

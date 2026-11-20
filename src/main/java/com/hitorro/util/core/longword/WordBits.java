@@ -21,13 +21,14 @@
  */
 package com.hitorro.util.core.longword;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.node.ObjectNode;
 import com.hitorro.util.core.CommandArgs;
 import com.hitorro.util.json.keys.propaccess.PropaccessError;
 
 import java.text.ParseException;
 import java.util.*;
+import com.hitorro.util.json.JsonValues;
 
 /**
  * Container of all the bits that make up a word (long word in this case)
@@ -93,12 +94,12 @@ public class WordBits implements Iterable<NamedBitsOfLong> {
     }
 
     public long setFromMap(JsonNode map, long l) {
-        Iterator<Map.Entry<String, JsonNode>> iter = map.fields();
+        Iterator<Map.Entry<String, JsonNode>> iter = map.properties().iterator();
         while (iter.hasNext()) {
             Map.Entry<String, JsonNode> entry = iter.next();
             NamedBitsOfLong nl = handlers.get(entry.getKey().toLowerCase());
             if (nl != null) {
-                String v = entry.getValue().textValue();
+                String v = JsonValues.textValue(entry.getValue());
                 v = v.trim();
                 if (nl.hasValueMapper()) {
                     // go through the mapping layer

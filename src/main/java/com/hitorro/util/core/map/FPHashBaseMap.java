@@ -22,7 +22,7 @@
 package com.hitorro.util.core.map;
 
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import gnu.trove.map.hash.TLongLongHashMap;
 import com.hitorro.util.core.GenericKeyValue;
 import java.util.function.Function;

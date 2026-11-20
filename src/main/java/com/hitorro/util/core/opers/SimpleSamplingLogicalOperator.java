@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.core.opers;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 
 /**
  * Take every nth item that the operator comes across.

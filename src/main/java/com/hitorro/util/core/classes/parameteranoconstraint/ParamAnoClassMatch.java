@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.core.classes.parameteranoconstraint;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import java.util.function.Predicate;
 
 import java.lang.annotation.Annotation;

@@ -21,9 +21,9 @@
  */
 package com.hitorro.util.core.events.cache;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import tools.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.node.JsonNodeFactory;
+import tools.jackson.databind.node.ObjectNode;
 import com.hitorro.util.core.string.FmtCore;
 import com.hitorro.util.core.string.StringUtilCore;
 import com.hitorro.util.json.keys.BooleanProperty;

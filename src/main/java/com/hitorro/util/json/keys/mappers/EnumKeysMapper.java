@@ -21,9 +21,10 @@
  */
 package com.hitorro.util.json.keys.mappers;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 
 import java.util.function.Function;
+import com.hitorro.util.json.JsonValues;
 
 public class EnumKeysMapper<E extends Enum> implements Function<JsonNode, E> {
     private E values[];
@@ -35,7 +36,7 @@ public class EnumKeysMapper<E extends Enum> implements Function<JsonNode, E> {
 
     @Override
     public E apply(final JsonNode jsonNode) {
-        String v = jsonNode.textValue();
+        String v = JsonValues.textValue(jsonNode);
         for (E e : values) {
             if (e.name().equals(v)) {
                 return e;

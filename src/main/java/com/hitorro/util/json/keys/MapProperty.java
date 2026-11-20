@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.json.keys;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import com.hitorro.util.json.keys.mappers.JsonNArrayToMapT;
 import com.hitorro.util.json.keys.propaccess.Propaccess;
 

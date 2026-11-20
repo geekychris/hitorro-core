@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.json.keys.propaccess;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 
 public interface VS {
     JsonNode get(Propaccess pa) throws PropaccessError;

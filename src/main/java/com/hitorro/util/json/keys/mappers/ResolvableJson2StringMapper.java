@@ -21,10 +21,11 @@
  */
 package com.hitorro.util.json.keys.mappers;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import com.hitorro.util.core.params.GlobalProperties;
 import java.util.function.Function;
 import com.hitorro.util.json.JsonInitable;
+import com.hitorro.util.json.JsonValues;
 
 public class ResolvableJson2StringMapper implements Function<JsonNode, String>, JsonInitable {
     public static ResolvableJson2StringMapper instance = new ResolvableJson2StringMapper();
@@ -33,9 +34,9 @@ public class ResolvableJson2StringMapper implements Function<JsonNode, String>, 
         if (jsonNodes == null) {
             return null;
         }
-        if (jsonNodes.isTextual()) {
-            return GlobalProperties.resolveJsonVariable(jsonNodes.asText());
+        if (jsonNodes.isString()) {
+            return GlobalProperties.resolveJsonVariable(JsonValues.asText(jsonNodes));
         }
-        return GlobalProperties.resolveJsonVariable(jsonNodes.textValue());
+        return GlobalProperties.resolveJsonVariable(JsonValues.textValue(jsonNodes));
     }
 }

@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.json;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 
 public interface JsonDeInit {
     boolean deinit(JsonNode node);

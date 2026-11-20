@@ -21,10 +21,11 @@
  */
 package com.hitorro.util.json.keys;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import com.hitorro.util.json.JsonInitable;
 import java.util.function.Function;
 import com.hitorro.util.json.keys.propaccess.Propaccess;
+import com.hitorro.util.json.JsonValues;
 
 public class PropaccesspMap implements Function<JsonNode, Propaccess>, JsonInitable {
     public static PropaccesspMap instance = new PropaccesspMap();
@@ -33,9 +34,9 @@ public class PropaccesspMap implements Function<JsonNode, Propaccess>, JsonInita
         if (jsonNodes == null) {
             return null;
         }
-        if (jsonNodes.isTextual()) {
-            return new Propaccess(jsonNodes.asText());
+        if (jsonNodes.isString()) {
+            return new Propaccess(JsonValues.asText(jsonNodes));
         }
-        return new Propaccess(jsonNodes.textValue());
+        return new Propaccess(JsonValues.textValue(jsonNodes));
     }
 }

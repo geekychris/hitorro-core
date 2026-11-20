@@ -21,13 +21,14 @@
  */
 package com.hitorro.util.json.keys.mappers;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import com.hitorro.util.core.params.PropertiesUtil;
 import java.util.function.Function;
 import com.hitorro.util.json.JsonInitable;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import com.hitorro.util.json.JsonValues;
 
 
 public class JsonNodeToUrl implements Function<JsonNode, URL>, JsonInitable {
@@ -35,7 +36,7 @@ public class JsonNodeToUrl implements Function<JsonNode, URL>, JsonInitable {
 
     public URL apply(JsonNode jsonNodes) {
         try {
-            return new URL(PropertiesUtil.resolveJsonVariable(jsonNodes.asText()));
+            return new URL(PropertiesUtil.resolveJsonVariable(JsonValues.asText(jsonNodes)));
         } catch (MalformedURLException e) {
             return null;
         }

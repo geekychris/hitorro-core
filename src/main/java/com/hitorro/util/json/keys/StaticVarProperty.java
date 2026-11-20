@@ -21,13 +21,14 @@
  */
 package com.hitorro.util.json.keys;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import com.hitorro.util.core.classes.ClassUtil;
 import com.hitorro.util.core.string.StringUtilCore;
 import com.hitorro.util.json.keys.propaccess.Propaccess;
 
 import java.lang.reflect.Field;
 import java.util.function.Function;
+import com.hitorro.util.json.JsonValues;
 
 /**
  * Created by chris on 12/31/16.
@@ -86,10 +87,10 @@ class SVPM<T> implements Function<JsonNode, T> {
     public T apply(JsonNode node) {
         String sValue;
 
-        if (node.isTextual()) {
-            sValue = node.textValue();
+        if (node.isString()) {
+            sValue = JsonValues.textValue(node);
         } else {
-            sValue = node.asText();
+            sValue = JsonValues.asText(node);
         }
 
         return (T) StaticVarProperty.getValidated(sValue, superC, key);

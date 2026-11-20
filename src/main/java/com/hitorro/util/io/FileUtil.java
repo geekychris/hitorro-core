@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.io;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import com.hitorro.util.core.*;
 import com.hitorro.util.core.string.StringUtilCore;
 import com.hitorro.util.io.filefilters.IsDirectoryFilenameFilter;

@@ -68,7 +68,7 @@ mvn dependency:tree -pl hitorro-core
 <dependency>
     <groupId>com.hitorro</groupId>
     <artifactId>hitorro-core</artifactId>
-    <version>3.0.1</version>
+    <version>4.0.0</version>
 </dependency>
 ```
 
@@ -704,7 +704,7 @@ hitorro-core depends only on third-party libraries (no HiTorro module dependenci
 
 | Dependency | Version | Purpose |
 |------------|---------|---------|
-| Jackson | 2.18.2 | JSON processing (databind, core, annotations) |
+| Jackson | 3.1.8 (`tools.jackson`; annotations 2.21) | JSON processing (databind, core, smile). Shared mappers: `JsonMappers`; Jackson 2 accessor semantics: `JsonValues` |
 | Hadoop Client | 3.4.1 | HDFS and S3A file system support |
 | AWS SDK v2 | 2.29.29 | S3 via hadoop-aws |
 | Apache HttpClient | 4.5.14 / 5.4.1 | HTTP I/O |
