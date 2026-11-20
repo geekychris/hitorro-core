@@ -73,7 +73,8 @@ public final class YamlMappers {
 
     /** A YAML mapper builder with Jackson 2 scalar typing, defaults and stream limits. */
     public static YAMLMapper.Builder builder() {
-        return YAMLMapper.builder(factory()).configureForJackson2();
+        return YAMLMapper.builder(factory()).configureForJackson2()
+                .addModule(new Jackson2JdkModule());
     }
 
     /** Shared, immutable YAML mapper ({@code builder().build()}): the 4.0.0 {@code new YAMLMapper()}. */

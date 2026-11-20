@@ -44,6 +44,9 @@ import tools.jackson.dataformat.smile.SmileMapper;
  * writing) and raised the string length to 100 MB, and {@code builderWithJackson2Defaults()}
  * restores neither.
  *
+ * <p>JDK types that Jackson 3 writes or reads differently (Locale, Month, {@code byte[]} trees) are
+ * restored by {@link Jackson2JdkModule}, which every builder here registers.
+ *
  * <p>Jackson 3 mappers are immutable and thread safe; to change a setting, start from
  * {@link #builder()} (or {@code json().rebuild()}) and build a new mapper.
  */
@@ -80,7 +83,8 @@ public final class JsonMappers {
      * It is {@link JsonMapper#builderWithJackson2Defaults()} plus Jackson 2's stream limits.
      */
     public static JsonMapper.Builder builder() {
-        return JsonMapper.builder(jsonFactory()).configureForJackson2();
+        return JsonMapper.builder(jsonFactory()).configureForJackson2()
+                .addModule(new Jackson2JdkModule());
     }
 
     /** The JSON token stream factory under {@link #builder()}: Jackson 2 defaults and limits. */
@@ -109,7 +113,8 @@ public final class JsonMappers {
                 .streamReadConstraints(JACKSON2_READ_CONSTRAINTS)
                 .streamWriteConstraints(JACKSON2_WRITE_CONSTRAINTS)
                 .build();
-        return SmileMapper.builder(factory).configureForJackson2();
+        return SmileMapper.builder(factory).configureForJackson2()
+                .addModule(new Jackson2JdkModule());
     }
 
     /**
