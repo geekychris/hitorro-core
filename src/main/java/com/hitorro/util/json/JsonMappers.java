@@ -21,7 +21,11 @@
  */
 package com.hitorro.util.json;
 
+import tools.jackson.core.StreamReadConstraints;
+import tools.jackson.core.StreamWriteConstraints;
+import tools.jackson.core.json.JsonFactory;
 import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.dataformat.smile.SmileFactory;
 import tools.jackson.dataformat.smile.SmileMapper;
 
 /**
@@ -35,10 +39,35 @@ import tools.jackson.dataformat.smile.SmileMapper;
  * used to write {@code new ObjectMapper()} uses {@link #json()} (or {@link #builder()} when it
  * changes settings); {@code new ObjectMapper(new SmileFactory())} becomes {@link #smile()}.
  *
+ * <p>The stream limits are Jackson 2.18's too ({@link #JACKSON2_READ_CONSTRAINTS},
+ * {@link #JACKSON2_WRITE_CONSTRAINTS}): Jackson 3 halved the nesting depth to 500 (reading and
+ * writing) and raised the string length to 100 MB, and {@code builderWithJackson2Defaults()}
+ * restores neither.
+ *
  * <p>Jackson 3 mappers are immutable and thread safe; to change a setting, start from
  * {@link #builder()} (or {@code json().rebuild()}) and build a new mapper.
  */
 public final class JsonMappers {
+
+    /**
+     * Jackson 2.18's default read limits (measured from 2.18.12; 2.21 is the same): nesting
+     * depth 1000 (Jackson 3: 500), string length 20,000,000 chars (Jackson 3: 100,000,000),
+     * number length 1000, property name length 50,000, document length and token count
+     * unlimited.
+     */
+    public static final StreamReadConstraints JACKSON2_READ_CONSTRAINTS = StreamReadConstraints.builder()
+            .maxNestingDepth(1000)
+            .maxStringLength(20_000_000)
+            .maxNumberLength(1000)
+            .maxNameLength(50_000)
+            .maxDocumentLength(-1L)
+            .maxTokenCount(-1L)
+            .build();
+
+    /** Jackson 2.18's default write limits: nesting depth 1000 (Jackson 3: 500). */
+    public static final StreamWriteConstraints JACKSON2_WRITE_CONSTRAINTS = StreamWriteConstraints.builder()
+            .maxNestingDepth(1000)
+            .build();
 
     private static final JsonMapper JSON = builder().build();
     private static final SmileMapper SMILE = smileBuilder().build();
@@ -47,11 +76,19 @@ public final class JsonMappers {
     }
 
     /**
-     * A builder for a JSON mapper with Jackson 2 defaults
-     * ({@link JsonMapper#builderWithJackson2Defaults()}): what {@code new ObjectMapper()} was.
+     * A builder for a JSON mapper with Jackson 2 defaults: what {@code new ObjectMapper()} was.
+     * It is {@link JsonMapper#builderWithJackson2Defaults()} plus Jackson 2's stream limits.
      */
     public static JsonMapper.Builder builder() {
-        return JsonMapper.builderWithJackson2Defaults();
+        return JsonMapper.builder(jsonFactory()).configureForJackson2();
+    }
+
+    /** The JSON token stream factory under {@link #builder()}: Jackson 2 defaults and limits. */
+    public static JsonFactory jsonFactory() {
+        return JsonFactory.builderWithJackson2Defaults()
+                .streamReadConstraints(JACKSON2_READ_CONSTRAINTS)
+                .streamWriteConstraints(JACKSON2_WRITE_CONSTRAINTS)
+                .build();
     }
 
     /**
@@ -62,10 +99,17 @@ public final class JsonMappers {
     }
 
     /**
-     * A builder for a Smile (binary JSON) mapper with Jackson 2 defaults.
+     * A builder for a Smile (binary JSON) mapper with Jackson 2 defaults and limits.
+     * ({@code SmileMapper.builder().configureForJackson2()} alone sets only the mapper's
+     * features, not the factory's.)
      */
     public static SmileMapper.Builder smileBuilder() {
-        return SmileMapper.builder().configureForJackson2();
+        SmileFactory factory = SmileFactory.builder()
+                .configureForJackson2()
+                .streamReadConstraints(JACKSON2_READ_CONSTRAINTS)
+                .streamWriteConstraints(JACKSON2_WRITE_CONSTRAINTS)
+                .build();
+        return SmileMapper.builder(factory).configureForJackson2();
     }
 
     /**
