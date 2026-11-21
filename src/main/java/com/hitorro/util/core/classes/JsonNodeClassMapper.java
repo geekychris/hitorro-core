@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.core.classes;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import com.hitorro.util.json.JsonInitable;
 import java.util.function.Function;
 import com.hitorro.util.core.ArrayUtilCore;

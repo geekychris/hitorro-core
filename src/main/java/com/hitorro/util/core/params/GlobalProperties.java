@@ -21,11 +21,12 @@
  */
 package com.hitorro.util.core.params;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.node.JsonNodeFactory;
+import tools.jackson.databind.node.ObjectNode;
 
 import java.util.function.Supplier;
+import com.hitorro.util.json.JsonValues;
 
 /**
  * Static holder for the global properties JsonNode.
@@ -77,6 +78,6 @@ public class GlobalProperties {
         if (node == null || node.isMissingNode()) {
             return null;
         }
-        return node.asText();
+        return JsonValues.asText(node);
     }
 }

@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.core.classes.methodanoconstraints;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import com.hitorro.util.core.classes.MethodAnnotation;
 import java.util.function.Predicate;
 

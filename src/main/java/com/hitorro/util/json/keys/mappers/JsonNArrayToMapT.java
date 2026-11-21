@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.json.keys.mappers;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import com.hitorro.util.json.JsonInitable;
 
 import java.util.HashMap;
@@ -57,7 +57,7 @@ public class JsonNArrayToMapT<K, T> implements Function<JsonNode, Map<K, T>>, Js
         // rather than an array. Fall back to the JSON field name as the map key.
         if (jsonNodes.isObject()) {
             Map<K, T> map = new HashMap<K, T>();
-            var it = jsonNodes.fields();
+            var it = jsonNodes.properties().iterator();
             while (it.hasNext()) {
                 Map.Entry<String, JsonNode> e = it.next();
                 T t = mapper.apply(e.getValue());

@@ -21,18 +21,19 @@
  */
 package com.hitorro.util.json.keys.mappers;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import com.hitorro.util.core.Constants;
 import java.util.function.Function;
 import com.hitorro.util.json.JsonInitable;
 
 import java.text.ParseException;
+import com.hitorro.util.json.JsonValues;
 
 public class BytesToLong implements Function<JsonNode, Long>, JsonInitable {
     public static BytesToLong instance = new BytesToLong();
 
     public Long apply(JsonNode jsonNodes) {
-        String sValue = jsonNodes.textValue();
+        String sValue = JsonValues.textValue(jsonNodes);
         try {
             return Constants.getBytesFromString(sValue);
         } catch (ParseException e) {

@@ -21,11 +21,11 @@
  */
 package com.hitorro.util.core.params;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.MissingNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.node.JsonNodeFactory;
+import tools.jackson.databind.node.MissingNode;
+import tools.jackson.databind.node.ObjectNode;
 import com.hitorro.util.core.ConsoleCore;
 import com.hitorro.util.core.Constants;
 import com.hitorro.util.core.Log;
@@ -37,6 +37,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
+import com.hitorro.util.json.JsonValues;
 
 
 public class PropertiesUtil {
@@ -65,7 +66,7 @@ public class PropertiesUtil {
             valueNode = args.get(variable);
         }
         if (valueNode != null && !valueNode.isNull()) {
-            return valueNode.asText();
+            return JsonValues.asText(valueNode);
         }
         return null;
     }
@@ -172,7 +173,7 @@ public class PropertiesUtil {
             for (String s : entry.getValue()) {
                 an.add(s);
             }
-            on.put(entry.getKey(), an);
+            on.set(entry.getKey(), an);
         }
         return on;
     }
@@ -214,7 +215,7 @@ public class PropertiesUtil {
                 return null;
             }
             n = JsonNodeFactory.instance.arrayNode();
-            ((ObjectNode) par).put(pp.getName(), n);
+            ((ObjectNode) par).set(pp.getName(), n);
         }
         if (n.isArray()) {
             return (ArrayNode) n;
@@ -260,7 +261,7 @@ public class PropertiesUtil {
 
     private static void addToParent(JsonNode root, int depth, JsonNode prev, PropertyParts pp, JsonNode curr) {
         if (depth == 0) {
-            ((ObjectNode) root).put(pp.getParts()[0], curr);
+            ((ObjectNode) root).set(pp.getParts()[0], curr);
         }
         boolean isNumber = pp.getNumber()[depth - 1];
         if (isNumber) {
@@ -278,7 +279,7 @@ public class PropertiesUtil {
             }
             if (an == null) {
                 an = JsonNodeFactory.instance.arrayNode();
-                ((ObjectNode) prev).put(arrayName, an);
+                ((ObjectNode) prev).set(arrayName, an);
             }
             int i = Integer.parseInt(pp.getParts()[depth - 1]);
             if (!an.has(i)) {
@@ -287,7 +288,7 @@ public class PropertiesUtil {
                 an.set(i, curr);
             }
         } else {
-            ((ObjectNode) prev).put(pp.getParts()[depth - 1], curr);
+            ((ObjectNode) prev).set(pp.getParts()[depth - 1], curr);
         }
     }
 

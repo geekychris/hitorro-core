@@ -21,12 +21,13 @@
  */
 package com.hitorro.util.json.keys.mappers;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import com.hitorro.util.core.string.StringUtilCore;
 import java.util.function.Function;
 import com.hitorro.util.json.JsonInitable;
 
 import java.util.List;
+import com.hitorro.util.json.JsonValues;
 
 public class StringListMapper implements Function<JsonNode, List<String>>, JsonInitable {
     private String seperator;
@@ -36,7 +37,7 @@ public class StringListMapper implements Function<JsonNode, List<String>>, JsonI
     }
 
     public List<String> apply(JsonNode jsonNodes) {
-        String vals = jsonNodes.textValue();
+        String vals = JsonValues.textValue(jsonNodes);
         if (vals != null) {
             String res[] = StringUtilCore.tokenizeFromSingleChar(vals, this.seperator, true);
             if (res != null) {

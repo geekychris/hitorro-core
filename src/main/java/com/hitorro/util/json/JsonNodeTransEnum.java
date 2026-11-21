@@ -21,18 +21,18 @@
  */
 package com.hitorro.util.json;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.node.JsonNodeFactory;
 
 public class JsonNodeTransEnum {
 
     public JsonNode string2Json(String s) {
-        return JsonNodeFactory.instance.textNode(s);
+        return JsonNodeFactory.instance.stringNode(s);
     }
 
 
     public String string2Json(JsonNode s) {
-        return s.textValue();
+        return JsonValues.textValue(s);
     }
 
 }

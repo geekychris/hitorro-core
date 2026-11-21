@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.core.date;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import com.hitorro.util.core.Constants;
 import com.hitorro.util.core.UTCDateUtil;
 import java.util.function.Function;
@@ -30,6 +30,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import com.hitorro.util.json.JsonValues;
 
 /**
  * Formats dates to different resolutions and also represents the resolution a date is to be measured to The duration is
@@ -149,7 +150,7 @@ class Json2DateMapper implements Function<JsonNode, Date> {
 
     public Date apply(JsonNode jsonNodes) {
         try {
-            return dr.parse(jsonNodes.asText());
+            return dr.parse(JsonValues.asText(jsonNodes));
         } catch (ParseException e) {
             return null;
         }

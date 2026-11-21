@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.core.opers;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import com.hitorro.util.io.StoreException;
 import com.hitorro.util.typesystem.HTObjectInputStream;
 import com.hitorro.util.typesystem.HTObjectOutputStream;

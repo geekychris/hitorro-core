@@ -21,8 +21,9 @@
  */
 package com.hitorro.util.html;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
+import com.hitorro.util.json.JsonMappers;
 import com.hitorro.util.core.GenericKeyValue;
 import com.hitorro.util.core.ListUtil;
 import com.hitorro.util.core.Log;
@@ -50,7 +51,7 @@ import java.util.*;
  */
 
 public class HTMLParser {
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER = JsonMappers.json();
     public static final String PAGE_TITLE = "TITLE";
     public static final String PAGE_META = "META";
     public static final String PAGE_META_KEYWORDS = "META-KEYWORDS";

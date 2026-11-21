@@ -21,10 +21,10 @@
  */
 package com.hitorro.util.json;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.node.JsonNodeFactory;
+import tools.jackson.databind.node.ObjectNode;
 import com.hitorro.util.core.date.DateResolution;
 import com.hitorro.util.core.params.JsonKeyMap;
 
@@ -52,7 +52,7 @@ public class JSONUtil {
         JsonNode values[] = new JsonNode[on.size()];
         JSONUtil.populateKeyValue(on, keys, values);
         for (JsonNode n : values) {
-            String s = n.textValue();
+            String s = JsonValues.textValue(n);
             if (builder.length() > 0) {
                 builder.append(mergeToken);
             }
@@ -67,7 +67,7 @@ public class JSONUtil {
         if (childKeys == null) {
             return list;
         }
-        Iterator<Map.Entry<String, JsonNode>> iter = childKeys.fields();
+        Iterator<Map.Entry<String, JsonNode>> iter = childKeys.properties().iterator();
         while (iter.hasNext()) {
             Map.Entry<String, JsonNode> e = iter.next();
             list.add(new JsonKeyMap(e.getKey(), e.getValue()));
@@ -130,7 +130,7 @@ public class JSONUtil {
         return switch (value) {
             case null -> null;
             case JsonNode jn -> jn;
-            case String s -> JsonNodeFactory.instance.textNode(s);
+            case String s -> JsonNodeFactory.instance.stringNode(s);
             case Integer i -> JsonNodeFactory.instance.numberNode(i);
             case Long l -> JsonNodeFactory.instance.numberNode(l);
             case Float f -> JsonNodeFactory.instance.numberNode(f);
@@ -147,7 +147,7 @@ public class JSONUtil {
         if (n == null) {
             return null;
         }
-        return n.textValue();
+        return JsonValues.textValue(n);
     }
 
     public static Date getDate(JsonNode n) {
@@ -158,7 +158,7 @@ public class JSONUtil {
         try {
             Date d = new Date();
             String s = DateResolution.json.getFormatted(d);
-            return DateResolution.json.parse(n.textValue());
+            return DateResolution.json.parse(JsonValues.textValue(n));
         } catch (ParseException e) {
             return null;
         }
@@ -170,7 +170,7 @@ public class JSONUtil {
         }
         ArrayList<String> l = new ArrayList();
         for (JsonNode elem : n) {
-            l.add(elem.textValue());
+            l.add(JsonValues.textValue(elem));
         }
         return l;
     }
@@ -181,7 +181,7 @@ public class JSONUtil {
         }
         long[] ret = new long[n.size()];
         for (int i = 0; i < n.size(); i++) {
-            ret[i] = n.get(i).longValue();
+            ret[i] = JsonValues.longValue(n.get(i));
         }
         return ret;
     }
@@ -190,14 +190,14 @@ public class JSONUtil {
         if (n == null) {
             return defaultVal;
         }
-        return n.doubleValue();
+        return JsonValues.doubleValue(n);
     }
 
     public static final long getLong(JsonNode n, long defaultVal) {
         if (n == null) {
             return defaultVal;
         }
-        return n.longValue();
+        return JsonValues.longValue(n);
     }
 
 
@@ -209,7 +209,7 @@ public class JSONUtil {
      * @param val
      */
     public static void populateKeyValue(ObjectNode node, String key[], JsonNode val[]) {
-        Iterator<Map.Entry<String, JsonNode>> iter = node.fields();
+        Iterator<Map.Entry<String, JsonNode>> iter = node.properties().iterator();
         int i = 0;
         while (iter.hasNext()) {
             Map.Entry<String, JsonNode> e = iter.next();

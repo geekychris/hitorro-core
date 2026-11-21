@@ -1,0 +1,12 @@
+tree={"z":1,"a":"x","n":null,"d":1.0,"f":1.5,"bd":1.10,"e":1.0E20,"big":123456789012345678901234567890,"u":"é <>&\"\\/\t","t":true,"arr":[1,"two",null,{}],"bin":"AQID","l":-9223372036854775808}
+treeToString={"z":1,"a":"x","n":null,"d":1.0,"f":1.5,"bd":1.10,"e":1.0E20,"big":123456789012345678901234567890,"u":"é <>&\"\\/\t","t":true,"arr":[1,"two",null,{}],"bin":"AQID","l":-9223372036854775808}
+treePretty={\n  "z" : 1,\n  "a" : "x",\n  "n" : null,\n  "d" : 1.0,\n  "f" : 1.5,\n  "bd" : 1.10,\n  "e" : 1.0E20,\n  "big" : 123456789012345678901234567890,\n  "u" : "é <>&\"\\/\t",\n  "t" : true,\n  "arr" : [ 1, "two", null, { } ],\n  "bin" : "AQID",\n  "l" : -9223372036854775808\n}
+mapperPretty={\n  "z" : 1,\n  "a" : "x",\n  "n" : null,\n  "d" : 1.0,\n  "f" : 1.5,\n  "bd" : 1.10,\n  "e" : 1.0E20,\n  "big" : 123456789012345678901234567890,\n  "u" : "é <>&\"\\/\t",\n  "t" : true,\n  "arr" : [ 1, "two", null, { } ],\n  "bin" : "AQID",\n  "l" : -9223372036854775808\n}
+bean={"count":3,"name":"n","when":1700000000123,"ratio":0.5,"nothing":null,"tags":["b","a"],"scores":{"z":1},"id":42,"active":true}
+beanTree={"count":3,"name":"n","when":1700000000123,"ratio":0.5,"nothing":null,"tags":["b","a"],"scores":{"z":1},"id":42,"active":true}
+map={"b":1,"a":0,"c":null,"d":[1,2],"e":"c"}
+smileHex=3a290a01fa807ac280614078806e21806429003f7800000000000000806628037e0000008162642a8481370080652900440a6b63574556184082626967268d00635d107f5b0673703b4963782b1280758ac3a9e280a83c3e26225c2f0980742382617272f8c24274776f21fafbf98262696ee88300404003806c25037f7f7f7f7f7f7f7fbffb
+readNumbers={"i":1,"l":12345678901,"bi":123456789012345678901234567890,"d":1.1,"e":"Infinity"}
+readNumberTypes=i:IntNode,l:LongNode,bi:BigIntegerNode,d:DoubleNode,
+smileRead={"z":1,"a":"x","n":null,"d":1.0,"f":1.5,"bd":1.1,"e":1.0E20,"big":123456789012345678901234567890,"u":"é <>&\"\\/\t","t":true,"arr":[1,"two",null,{}],"bin":"AQID","l":-9223372036854775808}
+jsonRead={"z":1,"a":"x","n":null,"d":1.0,"f":1.5,"bd":1.1,"e":1.0E20,"big":123456789012345678901234567890,"u":"é <>&\"\\/\t","t":true,"arr":[1,"two",null,{}],"bin":"AQID","l":-9223372036854775808}

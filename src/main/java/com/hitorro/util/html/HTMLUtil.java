@@ -21,8 +21,8 @@
  */
 package com.hitorro.util.html;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.node.ObjectNode;
 import com.hitorro.util.core.CommandArgs;
 import com.hitorro.util.core.string.StringBuilderUtil;
 import com.hitorro.util.core.string.StringUtilCore;
@@ -31,6 +31,7 @@ import com.hitorro.util.json.keys.propaccess.PropaccessError;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.text.ParseException;
+import com.hitorro.util.json.JsonValues;
 
 /**
  */
@@ -147,11 +148,11 @@ public class HTMLUtil {
                         if (ct.equalsIgnoreCase("Content-Type")) {
                             if (tf.findAttribute("content")) {
                                 String ctVal = tf.getAttributeValue();
-                                ObjectNode map = com.fasterxml.jackson.databind.node.JsonNodeFactory.instance.objectNode();
+                                ObjectNode map = tools.jackson.databind.node.JsonNodeFactory.instance.objectNode();
                                 try {
                                     CommandArgs.parseArgs(ctVal, true, true, map);
                                     JsonNode charsetNode = map.get("charset");
-                                    String r = charsetNode != null ? charsetNode.asText() : null;
+                                    String r = charsetNode != null ? JsonValues.asText(charsetNode) : null;
                                     if (!StringUtilCore.nullOrEmptyString(r)) {
                                         return r;
                                     }

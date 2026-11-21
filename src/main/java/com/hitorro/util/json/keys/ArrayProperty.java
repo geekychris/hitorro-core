@@ -21,8 +21,8 @@
  */
 package com.hitorro.util.json.keys;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.node.ArrayNode;
 import com.hitorro.util.json.keys.propaccess.Propaccess;
 
 import java.util.ArrayList;

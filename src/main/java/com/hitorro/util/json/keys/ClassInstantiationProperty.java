@@ -21,11 +21,12 @@
  */
 package com.hitorro.util.json.keys;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import com.hitorro.util.core.classes.ClassUtil;
 import com.hitorro.util.json.keys.propaccess.Propaccess;
 
 import java.util.function.Function;
+import com.hitorro.util.json.JsonValues;
 
 public class ClassInstantiationProperty<T> extends BaseMappingProperty<T> {
     public ClassInstantiationProperty(final Propaccess access, final String description, final T defaultValue, final Class superC) throws PropertyException {
@@ -50,10 +51,10 @@ class ClassInstantiationMapper<T> implements Function<JsonNode, T> {
             return null;
         }
         String className;
-        if (jsonNode.isTextual()) {
-            className = jsonNode.textValue();
+        if (jsonNode.isString()) {
+            className = JsonValues.textValue(jsonNode);
         } else {
-            className = jsonNode.asText();
+            className = JsonValues.asText(jsonNode);
         }
         return (T) ClassUtil.getInstanceSwallowError(className, superC);
     }

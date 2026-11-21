@@ -21,8 +21,8 @@
  */
 package com.hitorro.util.core.classes;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.JsonNode;
+import com.hitorro.util.json.JsonMappers;
 import com.hitorro.util.core.EnvCore;
 import com.hitorro.util.core.Log;
 
@@ -30,6 +30,7 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import com.hitorro.util.json.JsonValues;
 
 /**
  * Maps symbolic implementation names to Java class names.
@@ -116,14 +117,14 @@ public class ImplementationRegistry {
 		if (node == null || !node.isObject()) {
 			return;
 		}
-		Iterator<Map.Entry<String, JsonNode>> iter = node.fields();
+		Iterator<Map.Entry<String, JsonNode>> iter = node.properties().iterator();
 		while (iter.hasNext()) {
 			Map.Entry<String, JsonNode> entry = iter.next();
 			String symbolicName = entry.getKey();
 			JsonNode value = entry.getValue();
-			if (value.isTextual()) {
+			if (value.isString()) {
 				// Don't overwrite programmatic registrations
-				registry.putIfAbsent(symbolicName, value.asText());
+				registry.putIfAbsent(symbolicName, JsonValues.asText(value));
 			}
 		}
 	}
@@ -162,7 +163,7 @@ public class ImplementationRegistry {
 		try {
 			File configFile = new File(new File(EnvCore.getBin(), "config"), CONFIG_FILE);
 			if (configFile.exists()) {
-				JsonNode node = new ObjectMapper().readTree(configFile);
+				JsonNode node = JsonMappers.json().readTree(configFile);
 				loadFromJson(node);
 				Log.util.info("Loaded %d implementation mappings from %s",
 						registry.size(), configFile.getAbsolutePath());

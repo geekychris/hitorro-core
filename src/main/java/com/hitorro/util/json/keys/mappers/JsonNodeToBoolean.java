@@ -21,10 +21,11 @@
  */
 package com.hitorro.util.json.keys.mappers;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import com.hitorro.util.core.BooleanUtil;
 import java.util.function.Function;
 import com.hitorro.util.json.JsonInitable;
+import com.hitorro.util.json.JsonValues;
 
 
 public class JsonNodeToBoolean implements Function<JsonNode, Boolean>, JsonInitable {
@@ -32,8 +33,8 @@ public class JsonNodeToBoolean implements Function<JsonNode, Boolean>, JsonInita
 
     public Boolean apply(JsonNode jsonNodes) {
         if (jsonNodes.isBoolean()) {
-            return jsonNodes.asBoolean();
+            return JsonValues.asBoolean(jsonNodes);
         }
-        return BooleanUtil.getBoolean(jsonNodes.asText());
+        return BooleanUtil.getBoolean(JsonValues.asText(jsonNodes));
     }
 }

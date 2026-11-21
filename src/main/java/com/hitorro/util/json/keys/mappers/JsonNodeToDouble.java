@@ -21,9 +21,10 @@
  */
 package com.hitorro.util.json.keys.mappers;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import java.util.function.Function;
 import com.hitorro.util.json.JsonInitable;
+import com.hitorro.util.json.JsonValues;
 
 
 public class JsonNodeToDouble implements Function<JsonNode, Double>, JsonInitable {
@@ -31,8 +32,8 @@ public class JsonNodeToDouble implements Function<JsonNode, Double>, JsonInitabl
 
     public Double apply(JsonNode jsonNodes) {
         if (jsonNodes.isFloatingPointNumber()) {
-            return jsonNodes.asDouble();
+            return JsonValues.asDouble(jsonNodes);
         }
-        return Double.parseDouble(jsonNodes.asText());
+        return Double.parseDouble(JsonValues.asText(jsonNodes));
     }
 }

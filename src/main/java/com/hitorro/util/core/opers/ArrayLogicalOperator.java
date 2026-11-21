@@ -21,7 +21,7 @@
  */
 package com.hitorro.util.core.opers;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 
 /**
  * Given an array of some object.  see if any or all of its values test the embedded logical operator.
